@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design to Code - Presentation</title>
+  <style>
+    /* ── Fonts ── */
+    @font-face {
+      font-family: 'Minecraft';
+      src: url('fonts/1_MinecraftRegular1.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Almoni';
+      src: url('fonts/Almoni DL AAA.ttf') format('truetype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Almoni';
+      src: url('fonts/almoni-dl-aaa-bold.otf') format('opentype');
+      font-weight: 700;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #000;
+      color: #fff;
+      font-family: 'Almoni', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* ── Slide system ── */
+    .slides-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      overflow: hidden;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ── Scaling wrapper — design is 1920x1080 ── */
+    .slide-inner {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      top: 50%;
+      left: 50%;
+      transform-origin: center center;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 1 — Hero (from Figma)
+    ═══════════════════════════════════════ */
+
+    /* Grid background */
+    .s1-grid {
+      position: absolute;
+      top: -242px;
+      left: 158px;
+      width: 1564px;
+      height: 1573px;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .s1-grid img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Title block — centered */
+    .s1-title-block {
+      position: absolute;
+      width: 429px;
+      height: 423px;
+      left: calc(50% - 20.5px);
+      top: calc(50% - 211.5px);
+      transform: translate(-50%, -50%);
+    }
+
+    .s1-title-group {
+      position: absolute;
+      left: 1.24px;
+      top: 0;
+      width: 444px;
+      height: 423px;
+    }
+
+    /* "DESIGN" shadow text (yellow) */
+    .s1-design-shadow {
+      position: absolute;
+      left: 7.42px;
+      top: 0;
+      font-family: 'Minecraft', monospace;
+      font-size: 124px;
+      text-transform: uppercase;
+      color: #ffc937;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    /* "DESIGN" main text (white) */
+    .s1-design {
+      position: absolute;
+      left: 11.13px;
+      top: 3.71px;
+      font-family: 'Minecraft', monospace;
+      font-size: 124px;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    /* Triangle shape */
+    .s1-triangle {
+      position: absolute;
+      left: 91px;
+      top: 126px;
+      width: 254px;
+      height: 256px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .s1-triangle-inner {
+      width: 254px;
+      height: 256px;
+      position: relative;
+      transform: rotate(180deg);
+    }
+
+    .s1-triangle-mask {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .s1-triangle-mask img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .s1-triangle-gradient {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .s1-triangle-gradient img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .s1-triangle-noise {
+      position: absolute;
+      inset: 0;
+      mix-blend-mode: overlay;
+      opacity: 0.8;
+    }
+
+    .s1-noise-1 {
+      position: absolute;
+      inset: 0;
+      background-size: 307px 307px;
+      background-position: top left;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .s1-noise-2 {
+      position: absolute;
+      inset: 0;
+      background-size: 410px 410px;
+      background-position: top left;
+      mix-blend-mode: overlay;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    /* "CODE" shadow text (pink) */
+    .s1-code-shadow {
+      position: absolute;
+      left: 4.95px;
+      top: 202.6px;
+      font-family: 'Minecraft', monospace;
+      font-size: 184px;
+      text-transform: uppercase;
+      color: #ff2b9b;
+      line-height: 1;
+    }
+
+    /* "CODE" main text (white) */
+    .s1-code {
+      position: absolute;
+      left: 1.24px;
+      top: 198.89px;
+      font-family: 'Minecraft', monospace;
+      font-size: 184px;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1;
+    }
+
+    /* "T0" text */
+    .s1-to {
+      position: absolute;
+      left: 147px;
+      top: 105px;
+      width: 149px;
+      height: 149px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Minecraft', monospace;
+      font-style: italic;
+      font-size: 124px;
+      text-transform: uppercase;
+      color: #ff2b9b;
+      text-align: center;
+      line-height: 1;
+    }
+
+    /* Subtitle */
+    .s1-subtitle {
+      position: absolute;
+      left: 50%;
+      top: 579px;
+      transform: translate(-50%, -50%);
+      width: 725px;
+      font-family: 'Almoni', sans-serif;
+      font-size: 32px;
+      color: #fff;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    /* Profiles section */
+    .s1-profiles {
+      position: absolute;
+      left: 50%;
+      top: 723px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .s1-profile-card {
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding-right: 100px;
+    }
+
+    .s1-profile-bg {
+      background: #262629;
+      border-radius: 20px;
+      width: 315px;
+      height: 114px;
+      display: flex;
+      align-items: center;
+      padding: 20px 24px;
+      margin-right: -100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .s1-profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .s1-profile-name {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 40px;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: 2px;
+      line-height: 1.2;
+    }
+
+    .s1-profile-last {
+      font-family: 'Almoni', sans-serif;
+      font-size: 20px;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .s1-avatar {
+      width: 159px;
+      height: 159px;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+      margin-right: -100px;
+      flex-shrink: 0;
+    }
+
+    .s1-avatar img {
+      position: absolute;
+      display: block;
+    }
+
+    .s1-avatar-daniel img {
+      width: 136.61%;
+      height: 136.61%;
+      left: -19.63%;
+      top: -14.76%;
+    }
+
+    .s1-avatar-hani {
+      background: #5958cc;
+    }
+
+    .s1-avatar-hani img {
+      width: 117%;
+      height: 171.6%;
+      left: -13.13%;
+      top: -8.7%;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 2 — "The World We Knew" (from Figma)
+    ═══════════════════════════════════════ */
+
+    /* Globe image */
+    .s2-globe {
+      position: absolute;
+      left: calc(50% - 16.5px);
+      top: 829px;
+      width: 841px;
+      height: 561px;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .s2-globe img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Title + subtitle block */
+    .s2-text-block {
+      position: absolute;
+      left: 50%;
+      top: 634px;
+      transform: translateX(-50%);
+      width: 676px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 3;
+    }
+
+    .s2-text-block h2 {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 72px;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: -1.44px;
+      line-height: 1.1;
+    }
+
+    .s2-text-block p {
+      font-family: 'Almoni', sans-serif;
+      font-size: 32px;
+      color: #fff;
+      opacity: 0.7;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    /* Card */
+    .s2-card {
+      position: absolute;
+      left: 179px;
+      top: 328px;
+      width: 431px;
+      height: 143px;
+      background: #262629;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px;
+      z-index: 5;
+    }
+
+    .s2-card h3 {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #fcfcfc;
+      text-transform: capitalize;
+      letter-spacing: -0.64px;
+      line-height: 1.1;
+    }
+
+    /* Connector arrow */
+    .s2-connector {
+      position: absolute;
+      left: 440px;
+      top: 471px;
+      width: 203px;
+      height: 163px;
+      z-index: 4;
+      transform: scaleY(-1) rotate(180deg);
+    }
+
+    .s2-connector img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Bullet list */
+    .s2-bullets {
+      position: absolute;
+      left: 179px;
+      top: 576px;
+      width: 345px;
+      list-style: none;
+      border-radius: 12px;
+      z-index: 5;
+    }
+
+    .s2-bullets li {
+      font-family: 'Almoni', sans-serif;
+      font-size: 28px;
+      color: #fff;
+      height: 65px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      line-height: 1.1;
+    }
+
+    .s2-bullets li:last-child {
+      border-bottom: none;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 3 — "The World We Knew" + Endless Iterations (from Figma)
+    ═══════════════════════════════════════ */
+
+    /* Reuse globe, title from s2 positions */
+    .s3-globe { position: absolute; left: calc(50% - 16.5px); top: 829px; width: 841px; height: 561px; transform: translateX(-50%); z-index: 1; }
+    .s3-globe img { width: 100%; height: 100%; display: block; }
+
+    .s3-text-block { position: absolute; left: 50%; top: 634px; transform: translateX(-50%); width: 676px; display: flex; flex-direction: column; gap: 16px; z-index: 3; }
+    .s3-text-block h2 { font-family: 'Minecraft', monospace; font-weight: 400; font-size: 72px; text-transform: uppercase; color: #fff; letter-spacing: -1.44px; line-height: 1.1; }
+    .s3-text-block p { font-family: 'Almoni', sans-serif; font-size: 32px; color: #fff; opacity: 0.7; text-align: center; line-height: 1.1; }
+
+    /* Card 1 — faded */
+    .s3-card1 { position: absolute; left: 179px; top: 328px; width: 431px; height: 143px; background: #262629; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; padding: 40px; z-index: 5; opacity: 0.3; }
+    .s3-card1 h3 { font-family: 'Almoni', sans-serif; font-weight: 700; font-size: 32px; color: #fcfcfc; text-transform: capitalize; letter-spacing: -0.64px; line-height: 1.1; }
+
+    .s3-connector1 { position: absolute; left: 440px; top: 471px; width: 203px; height: 163px; z-index: 4; transform: scaleY(-1) rotate(180deg); opacity: 0.3; }
+    .s3-connector1 img { width: 100%; height: 100%; display: block; }
+
+    .s3-bullets1 { position: absolute; left: 179px; top: 576px; width: 345px; list-style: none; border-radius: 12px; z-index: 5; opacity: 0.3; }
+    .s3-bullets1 li { font-family: 'Almoni', sans-serif; font-size: 28px; color: #fff; height: 65px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.2); line-height: 1.1; }
+    .s3-bullets1 li:last-child { border-bottom: none; }
+
+    /* Card 2 — active */
+    .s3-card2 { position: absolute; left: 728px; top: 168px; width: 431px; height: 143px; background: #262629; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; padding: 40px; z-index: 5; }
+    .s3-card2 h3 { font-family: 'Almoni', sans-serif; font-weight: 700; font-size: 32px; color: #fcfcfc; text-transform: capitalize; letter-spacing: -0.64px; line-height: 1.1; }
+
+    .s3-connector2 { position: absolute; left: 946px; top: 310.5px; width: 86px; height: 281.5px; z-index: 4; transform: scaleY(-1) rotate(180deg); }
+    .s3-connector2 img { width: 100%; height: 100%; display: block; }
+
+    .s3-bullets2 { position: absolute; left: 1069px; top: 374px; width: 399px; list-style: none; border-radius: 12px; z-index: 5; }
+    .s3-bullets2 li { font-family: 'Almoni', sans-serif; font-size: 32px; color: #fff; height: 65px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.2); line-height: 1.1; }
+    .s3-bullets2 li:last-child { border-bottom: none; }
+
+    /* ═══════════════════════════════════════
+       SLIDE 4 — "The World We Knew" + Lost In Translation (from Figma)
+    ═══════════════════════════════════════ */
+
+    .s4-globe { position: absolute; left: calc(50% - 16.5px); top: 829px; width: 841px; height: 561px; transform: translateX(-50%); z-index: 1; }
+    .s4-globe img { width: 100%; height: 100%; display: block; }
+
+    .s4-text-block { position: absolute; left: 50%; top: 634px; transform: translateX(-50%); width: 676px; display: flex; flex-direction: column; gap: 16px; z-index: 3; }
+    .s4-text-block h2 { font-family: 'Minecraft', monospace; font-weight: 400; font-size: 72px; text-transform: uppercase; color: #fff; letter-spacing: -1.44px; line-height: 1.1; }
+    .s4-text-block p { font-family: 'Almoni', sans-serif; font-size: 32px; color: #fff; opacity: 0.7; text-align: center; line-height: 1.1; }
+
+    /* Card 1 — faded */
+    .s4-card1 { position: absolute; left: 179px; top: 328px; width: 431px; height: 143px; background: #262629; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; padding: 40px; z-index: 5; opacity: 0.3; }
+    .s4-card1 h3 { font-family: 'Almoni', sans-serif; font-weight: 700; font-size: 32px; color: #fcfcfc; text-transform: capitalize; letter-spacing: -0.64px; line-height: 1.1; }
+
+    .s4-connector1 { position: absolute; left: 440px; top: 471px; width: 203px; height: 163px; z-index: 4; transform: scaleY(-1) rotate(180deg); opacity: 0.3; }
+    .s4-connector1 img { width: 100%; height: 100%; display: block; }
+
+    /* Card 2 — faded */
+    .s4-card2 { position: absolute; left: 728px; top: 168px; width: 431px; height: 143px; background: #262629; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; padding: 40px; z-index: 5; opacity: 0.3; }
+    .s4-card2 h3 { font-family: 'Almoni', sans-serif; font-weight: 700; font-size: 32px; color: #fcfcfc; text-transform: capitalize; letter-spacing: -0.64px; line-height: 1.1; }
+
+    .s4-connector2 { position: absolute; left: 946px; top: 310.5px; width: 86px; height: 281.5px; z-index: 4; transform: scaleY(-1) rotate(180deg); opacity: 0.3; }
+    .s4-connector2 img { width: 100%; height: 100%; display: block; }
+
+    /* Card 3 — active */
+    .s4-card3 { position: absolute; left: 1383px; top: 323px; width: 431px; height: 143px; background: #262629; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; padding: 40px; z-index: 5; }
+    .s4-card3 h3 { font-family: 'Almoni', sans-serif; font-weight: 700; font-size: 32px; color: #fcfcfc; text-transform: capitalize; letter-spacing: -0.64px; line-height: 1.1; }
+
+    .s4-connector3 { position: absolute; left: 1317px; top: 466px; width: 168px; height: 162px; z-index: 4; transform: scaleY(-1) rotate(180deg); }
+    .s4-connector3 img { width: 100%; height: 100%; display: block; }
+
+    .s4-bullets3 { position: absolute; left: 1521px; top: 518px; width: 399px; list-style: none; border-radius: 12px; z-index: 5; }
+    .s4-bullets3 li { font-family: 'Almoni', sans-serif; font-size: 32px; color: #fff; height: 65px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.2); line-height: 1.1; }
+    .s4-bullets3 li:last-child { border-bottom: none; }
+
+    /* ═══════════════════════════════════════
+       SLIDE 5 — "The World We're Building" (from Figma)
+    ═══════════════════════════════════════ */
+
+    .s5-grid { position: absolute; top: -242px; left: 158px; width: 1564px; height: 1573px; pointer-events: none; opacity: 0.7; }
+    .s5-grid img { width: 100%; height: 100%; display: block; }
+
+    /* Big cool shape — top center */
+    .s5-shape-big {
+      position: absolute;
+      left: 540px;
+      top: -80px;
+      width: 514px;
+      height: 514px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .s5-shape-big img {
+      width: 376px;
+      height: 376px;
+      transform: rotate(30deg);
+    }
+
+    /* Small cool shape — bottom center */
+    .s5-shape-small {
+      position: absolute;
+      left: 1079px;
+      top: 854px;
+      width: 123px;
+      height: 123px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 6;
+    }
+    .s5-shape-small img {
+      width: 110px;
+      height: 110px;
+      transform: rotate(7.33deg);
+      filter: blur(4px);
+    }
+
+    /* Center text */
+    .s5-center-text {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(calc(-50% + 0.5px), calc(-50% + 0.5px));
+      width: 901px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      z-index: 5;
+    }
+
+    .s5-label {
+      font-family: 'Inter', 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      text-transform: capitalize;
+      letter-spacing: 2px;
+      color: #fff;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .s5-title {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 72px;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: -1.44px;
+      line-height: 1.1;
+      width: 100%;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    /* White cards */
+    .s5-card {
+      position: absolute;
+      background: #fff;
+      border-radius: 20px;
+      width: 431px;
+      height: 143px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 44px 91px;
+      text-transform: capitalize;
+      white-space: nowrap;
+      z-index: 5;
+    }
+
+    .s5-card h3 {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #140101;
+      letter-spacing: -0.64px;
+      line-height: 1.1;
+    }
+
+    .s5-card p {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      color: #140101;
+      letter-spacing: -0.48px;
+      line-height: 1.1;
+    }
+
+    .s5-card-1 { left: 46px; top: 293px; }
+    .s5-card-2 { left: 375px; top: 808px; }
+    .s5-card-3 { left: 1291px; top: 176px; }
+
+    /* Connectors */
+    .s5-conn-1 { position: absolute; left: 307px; top: 436px; width: 203px; height: 163px; z-index: 4; transform: scaleY(-1) rotate(180deg); }
+    .s5-conn-1 img { width: 100%; height: 100%; display: block; }
+
+    .s5-conn-2 { position: absolute; left: 698px; top: 643px; width: 203px; height: 163px; z-index: 4; transform: rotate(180deg); }
+    .s5-conn-2 img { width: 100%; height: 100%; display: block; }
+
+    .s5-conn-3 { position: absolute; left: 1304px; top: 319px; width: 203px; height: 163px; z-index: 4; }
+    .s5-conn-3 img { width: 100%; height: 100%; display: block; }
+
+    /* Planet ring — bottom right */
+    .s5-planet {
+      position: absolute;
+      left: calc(50% + 691.5px);
+      top: 670px;
+      width: 1123px;
+      height: 887px;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+    .s5-planet img { width: 100%; height: 100%; display: block; }
+
+    /* ═══════════════════════════════════════
+       SLIDES 8-9 — Toys vs Tools (from Figma)
+    ═══════════════════════════════════════ */
+
+    /* Left side — Toys */
+    .s8-left {
+      position: absolute;
+      left: 120px;
+      top: 422px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .s8-left-title {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 56px;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: -1.12px;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .s8-toy-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .s8-toy-card {
+      width: 373px;
+      height: 132px;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .s8-toy-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .s8-toy-card-dark {
+      background: #1b1b1b;
+      padding: 25px 28px;
+    }
+
+    .s8-toy-card-dark img {
+      width: auto;
+      height: 82px;
+      object-fit: contain;
+    }
+
+    /* Right side — Tools */
+    .s8-right {
+      position: absolute;
+      left: 1034px;
+      top: 120px;
+      width: 766px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .s8-right-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .s8-right-label {
+      font-family: 'Inter', 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      text-transform: capitalize;
+      letter-spacing: 2px;
+      color: #7bed52;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .s8-right-title {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 56px;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: -1.12px;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .s8-tool-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .s8-tool-card {
+      width: 373px;
+      height: 132px;
+      background: #fff;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px 28px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .s8-tool-card img {
+      max-width: 100%;
+      max-height: 82px;
+      object-fit: contain;
+    }
+
+    /* Cursor logo — clean cube icon */
+    .s8-tool-card-cursor {
+      padding: 24px 28px;
+    }
+    .s8-tool-card-cursor img {
+      max-height: 84px;
+    }
+
+    /* Claude Code logo — rounded icon */
+    .s8-tool-card-claude {
+      padding: 22px 28px;
+    }
+    .s8-tool-card-claude img {
+      max-height: 88px;
+      border-radius: 16px;
+    }
+
+    /* GitHub logo — octocat + text, ensure fully visible */
+    .s8-tool-card-github {
+      padding: 28px 50px;
+    }
+    .s8-tool-card-github img {
+      max-height: 76px;
+      max-width: 100%;
+      width: auto;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 10 — Lovable Screenshot + Pain Points
+    ═══════════════════════════════════════ */
+
+    .s10-screenshot {
+      position: absolute;
+      left: 76px;
+      top: 50%;
+      transform: translateY(calc(-50% + 0.5px));
+      width: 1094px;
+      height: 709px;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .s10-screenshot img {
+      position: absolute;
+      width: 108.1%;
+      height: 104.24%;
+      left: -4.01%;
+      top: -2.06%;
+      display: block;
+    }
+
+    .s10-right {
+      position: absolute;
+      left: 1290px;
+      top: 325px;
+      width: 512px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .s10-shape {
+      width: 158px;
+      height: 158px;
+      transform: rotate(180deg);
+    }
+
+    .s10-shape img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .s10-pain-points {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .s10-pain-points p {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 44px;
+      color: #fff;
+      text-transform: capitalize;
+      line-height: 1.1;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 11 — Restricted (from Figma)
+    ═══════════════════════════════════════ */
+
+    /* Faded screenshot */
+    .s11-screenshot {
+      position: absolute;
+      left: 76px;
+      top: 50%;
+      transform: translateY(calc(-50% + 0.5px));
+      width: 1094px;
+      height: 709px;
+      overflow: hidden;
+      border-radius: 12px;
+      opacity: 0.2;
+    }
+
+    .s11-screenshot img {
+      position: absolute;
+      width: 108.1%;
+      height: 104.24%;
+      left: -4.01%;
+      top: -2.06%;
+      display: block;
+    }
+
+    /* Diagonal strikethrough line */
+    .s11-strikethrough {
+      position: absolute;
+      left: 95px;
+      top: 228px;
+      width: 1062.5px;
+      height: 641.5px;
+      z-index: 2;
+    }
+
+    .s11-strikethrough img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* RESTRICTED text */
+    .s11-restricted {
+      position: absolute;
+      left: 607px;
+      top: 548px;
+      transform: translate(-50%, -50%);
+      width: 766px;
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 56px;
+      text-transform: uppercase;
+      color: #ff383c;
+      text-align: center;
+      letter-spacing: -1.12px;
+      line-height: 1.1;
+      z-index: 3;
+    }
+
+    /* Reuse right side from s10 */
+    .s11-right {
+      position: absolute;
+      left: 1288px;
+      top: 325px;
+      width: 512px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 12 — Cursor IDE + GitHub Card (from Figma)
+    ═══════════════════════════════════════ */
+
+    /* Main Cursor IDE card */
+    .s12-cursor-card {
+      position: absolute;
+      left: 125px;
+      top: 428px;
+      width: 968px;
+      height: 463px;
+      background: #1b1b1b;
+      border-radius: 23px;
+      padding: 21px 0 0 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 5;
+    }
+
+    .s12-cursor-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    .s12-cursor-header-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .s12-cursor-icon {
+      width: 58px;
+      height: 55px;
+      flex-shrink: 0;
+    }
+
+    .s12-cursor-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .s12-cursor-title {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 28px;
+      color: #fff;
+      text-transform: capitalize;
+      line-height: 1.1;
+    }
+
+    .s12-avatars {
+      display: flex;
+      align-items: center;
+      padding-right: 9px;
+    }
+
+    .s12-avatar {
+      width: 47px;
+      height: 47px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: -9px;
+      flex-shrink: 0;
+    }
+
+    .s12-avatar img {
+      width: 110%;
+      height: 110%;
+      object-fit: cover;
+      margin: -5%;
+    }
+
+    .s12-cursor-divider {
+      width: 100%;
+      height: 1px;
+      margin-top: 24px;
+    }
+
+    .s12-cursor-divider img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Screenshot in bottom of card */
+    .s12-cursor-screenshot {
+      position: absolute;
+      left: 125px;
+      top: 527px;
+      width: 968px;
+      height: 361px;
+      overflow: hidden;
+      border-radius: 0 0 27px 27px;
+      z-index: 6;
+    }
+
+    .s12-cursor-screenshot img {
+      position: absolute;
+      width: 100%;
+      height: 100.83%;
+      left: 0;
+      top: -0.04%;
+      display: block;
+    }
+
+    /* GitHub card */
+    .s12-github-card {
+      position: absolute;
+      left: 862px;
+      top: 211px;
+      width: 363px;
+      height: 414px;
+      background: #2a282d;
+      border-radius: 20px;
+      padding: 20px 16px;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .s12-github-logo {
+      width: 36px;
+      height: 42px;
+      overflow: hidden;
+    }
+
+    .s12-github-logo img {
+      width: 246%;
+      height: 105%;
+      position: relative;
+      left: -135%;
+      top: -3%;
+    }
+
+    .s12-github-branch {
+      position: absolute;
+      left: 889px;
+      top: 327px;
+      width: 67px;
+      height: 275px;
+      z-index: 3;
+    }
+
+    .s12-github-branch img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Gray pill elements inside github card */
+    .s12-gh-pill {
+      position: absolute;
+      height: 16px;
+      background: #494747;
+      border-radius: 100px;
+    }
+
+    .s12-gh-pill-1 { left: 104px; top: 109px; width: 54px; }
+    .s12-gh-pill-2 { left: 101px; top: 166px; width: 30px; }
+    .s12-gh-pill-3 { left: 101px; top: 223px; width: 30px; }
+
+    .s12-github-divider {
+      position: absolute;
+      left: 0;
+      top: 74px;
+      width: 100%;
+      height: 1px;
+    }
+
+    .s12-github-divider img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Right side — benefits */
+    .s12-right {
+      position: absolute;
+      left: 1357px;
+      top: 389px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .s12-benefits {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .s12-benefits p {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 44px;
+      color: #fff;
+      text-transform: capitalize;
+      line-height: 1.1;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDES 13-16 — The Unfair Advantage (from Figma)
+    ═══════════════════════════════════════ */
+
+    .s13-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(128deg, #000 38.5%, #06150f 97.6%);
+    }
+
+    /* Center text */
+    .s13-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .s13-label {
+      font-family: 'Inter', 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      text-transform: capitalize;
+      letter-spacing: 2px;
+      color: #7bed52;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .s13-title {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 80px;
+      text-transform: uppercase;
+      color: #fff;
+      text-align: center;
+      letter-spacing: -1.6px;
+      line-height: 1.1;
+      width: 930px;
+    }
+
+    /* White cards */
+    .s13-card {
+      position: absolute;
+      background: #fff;
+      border-radius: 20px;
+      width: 431px;
+      height: 143px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 44px 91px;
+      text-transform: capitalize;
+      white-space: nowrap;
+      z-index: 3;
+    }
+
+    .s13-card h3 {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #140101;
+      letter-spacing: -0.64px;
+      line-height: 1.1;
+    }
+
+    .s13-card p {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      color: #140101;
+      letter-spacing: -0.48px;
+      line-height: 1.1;
+    }
+
+    /* Card positions */
+    .s13-card-1 { left: 260px; top: 137px; }
+    .s13-card-2 { left: 1209px; top: 78px; }
+    .s13-card-3 { left: 96px; top: 705px; }
+    .s13-card-4 { left: 1338px; top: 769px; }
+
+    /* Connectors */
+    .s13-conn { position: absolute; width: 203px; height: 163px; z-index: 2; }
+    .s13-conn img { width: 100%; height: 100%; display: block; }
+
+    .s13-conn-1 { left: 427px; top: 285px; transform: scaleY(-1) rotate(180deg); }
+    .s13-conn-2 { left: 1239px; top: 221px; }
+    .s13-conn-3 { left: 419px; top: 540px; transform: rotate(180deg); }
+    .s13-conn-4 { left: 1334px; top: 606px; transform: scaleY(-1); }
+
+    /* ═══════════════════════════════════════
+       SLIDE 17 — The Gap (from Figma)
+    ═══════════════════════════════════════ */
+
+    .s17-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .s17-label {
+      font-family: 'Inter', 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      text-transform: capitalize;
+      letter-spacing: 2px;
+      color: #7bed52;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .s17-title {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 80px;
+      text-transform: uppercase;
+      color: #fff;
+      text-align: center;
+      letter-spacing: -1.6px;
+      line-height: 1.1;
+      width: 1082px;
+    }
+
+    .s17-line-top {
+      position: absolute;
+      left: calc(50% + 0.5px);
+      top: 49px;
+      width: 15px;
+      height: 354px;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .s17-line-bottom {
+      position: absolute;
+      left: calc(50% + 0.5px);
+      top: 677px;
+      width: 15px;
+      height: 354px;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .s17-line-top img,
+    .s17-line-bottom img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 18 — The Gap + Subtitle (animated)
+    ═══════════════════════════════════════ */
+
+    /* Subtitle that fades in */
+    .s18-subtitle {
+      position: absolute;
+      left: 50%;
+      top: 711.5px;
+      transform: translate(-50%, -50%);
+      width: 676px;
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 32px;
+      color: #fff;
+      opacity: 0;
+      text-align: center;
+      line-height: 1.1;
+      z-index: 2;
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+      transform: translate(-50%, calc(-50% + 20px));
+    }
+
+    .slide.active .s18-subtitle {
+      opacity: 0.7;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Bottom line that shrinks and moves down */
+    .s18-line-bottom {
+      position: absolute;
+      left: calc(50% + 0.5px);
+      top: 677px;
+      width: 15px;
+      height: 354px;
+      transform: translateX(-50%);
+      z-index: 1;
+      transition: top 0.8s ease, height 0.8s ease;
+    }
+
+    .slide.active .s18-line-bottom {
+      top: 827px;
+      height: 204px;
+    }
+
+    .s18-line-bottom img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 19 — By The End Of Today (from Figma)
+    ═══════════════════════════════════════ */
+
+    .s19-grid {
+      position: absolute;
+      left: 601px;
+      top: -242px;
+      width: 677px;
+      height: 681px;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .s19-grid img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .s19-center {
+      position: absolute;
+      left: calc(50% + 0.5px);
+      top: calc(50% - 183px);
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .s19-label {
+      font-family: 'Inter', 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      text-transform: capitalize;
+      letter-spacing: 2px;
+      color: #7bed52;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .s19-title {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 80px;
+      text-transform: uppercase;
+      color: #fff;
+      text-align: center;
+      letter-spacing: -1.6px;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    /* Steps row: numbers + dashed lines */
+    .s19-steps {
+      position: absolute;
+      left: 136px;
+      top: 549px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      z-index: 2;
+    }
+
+    .s19-step-num {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 40px;
+      color: #fff;
+      opacity: 0.3;
+      text-align: center;
+      letter-spacing: -0.8px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .s19-step-dash {
+      width: 303.5px;
+      height: 2px;
+      flex-shrink: 0;
+      margin: 0 29px;
+    }
+
+    .s19-step-dash img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Cards row */
+    .s19-cards {
+      position: absolute;
+      left: calc(50% + 0.25px);
+      top: 618px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      z-index: 3;
+    }
+
+    .s19-card {
+      width: 386px;
+      height: 143px;
+      background: #1b1b1b;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 10px;
+      padding: 44px 40px;
+      text-transform: capitalize;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .s19-card:first-child {
+      width: 385px;
+      padding: 20px 40px;
+    }
+
+    .s19-card h3 {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #f8fcfd;
+      letter-spacing: -0.64px;
+      line-height: 1.1;
+    }
+
+    .s19-card p {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      color: #f8fcfd;
+      letter-spacing: -0.48px;
+      line-height: 1.1;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 20 — Step 1 Highlight (from Figma)
+    ═══════════════════════════════════════ */
+
+    .s20-step-num-active {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 40px;
+      color: #fff;
+      opacity: 1;
+      text-align: center;
+      letter-spacing: -0.8px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .s20-card-highlight {
+      width: 385px;
+      height: 143px;
+      background: #ffffff;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px 40px;
+      text-transform: capitalize;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .s20-card-highlight h3 {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #140101;
+      letter-spacing: -0.64px;
+      line-height: 1.1;
+    }
+
+    .s20-card-highlight p {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      color: #140101;
+      letter-spacing: -0.48px;
+      line-height: 1.1;
+    }
+
+    /* ═══════════════════════════════════════
+       Navigation Bar
+    ═══════════════════════════════════════ */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      z-index: 1000;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-home {
+      position: absolute;
+      left: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: rgba(255,255,255,0.35);
+      font-family: 'Almoni', sans-serif;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .nav-home:hover {
+      color: #fff;
+    }
+
+    .nav-home svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .nav-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .nav-arrow:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.35);
+    }
+
+    .nav-arrow:disabled {
+      opacity: 0.2;
+      cursor: default;
+    }
+
+    .nav-arrow:disabled:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .nav-dots {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .nav-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .nav-dot.active {
+      background: #fff;
+      transform: scale(1.35);
+    }
+
+    .nav-dot:hover:not(.active) {
+      background: rgba(255,255,255,0.4);
+    }
+
+    .nav-counter {
+      font-family: 'Almoni', sans-serif;
+      font-size: 14px;
+      color: rgba(255,255,255,0.35);
+      min-width: 44px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="slides-container">
+
+  <!-- ═══════ SLIDE 1 — Hero ═══════ -->
+  <div class="slide active" data-slide="0">
+    <div class="slide-inner" id="s1-inner">
+
+      <!-- Grid -->
+      <div class="s1-grid">
+        <img src="assets/grid.svg" alt="" />
+      </div>
+
+      <!-- Title block -->
+      <div class="s1-title-block">
+        <div class="s1-title-group">
+          <!-- DESIGN (yellow shadow) -->
+          <div class="s1-design-shadow">design</div>
+          <!-- DESIGN (white) -->
+          <div class="s1-design">design</div>
+
+          <!-- Triangle shape -->
+          <div class="s1-triangle">
+            <div class="s1-triangle-inner">
+              <div class="s1-triangle-mask">
+                <img src="assets/triangle-mask.svg" alt="" />
+              </div>
+              <div class="s1-triangle-gradient">
+                <img src="assets/triangle-gradient.svg" alt="" />
+              </div>
+              <div class="s1-triangle-noise">
+                <div class="s1-noise-1" style="background-image: url('assets/noise1.png')"></div>
+                <div class="s1-noise-2" style="background-image: url('assets/noise2.png')"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CODE (pink shadow) -->
+          <div class="s1-code-shadow">code</div>
+          <!-- CODE (white) -->
+          <div class="s1-code">code</div>
+
+          <!-- T0 -->
+          <div class="s1-to">t0</div>
+        </div>
+      </div>
+
+      <!-- Subtitle -->
+      <div class="s1-subtitle">
+        Master the tools that transform you from a handoff-dependent designer into a product creator.
+      </div>
+
+      <!-- Profiles -->
+      <div class="s1-profiles">
+        <div class="s1-profile-card">
+          <div class="s1-profile-bg">
+            <div class="s1-profile-info">
+              <span class="s1-profile-name">dANIEL</span>
+              <span class="s1-profile-last">BOARON</span>
+            </div>
+          </div>
+          <div class="s1-avatar s1-avatar-daniel">
+            <img src="assets/daniel.png" alt="Daniel Boaron" />
+          </div>
+        </div>
+
+        <div class="s1-profile-card">
+          <div class="s1-profile-bg">
+            <div class="s1-profile-info">
+              <span class="s1-profile-name">HANI</span>
+              <span class="s1-profile-last">BUSKILA</span>
+            </div>
+          </div>
+          <div class="s1-avatar s1-avatar-hani">
+            <img src="assets/hani.png" alt="Hani Buskila" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
+
+<!-- Navigation Bar -->
+<nav class="nav-bar">
+  <a href="class-2.html" class="nav-home">
+    <svg viewBox="0 0 16 16"><path d="M8 1.4L1 7v7.6h5V10h4v4.6h5V7L8 1.4z"/></svg>
+    All Classes
+  </a>
+</nav>
+
+<script>
+  // ── Responsive scaling ──
+  function scaleSlides() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight - 64; // minus nav height
+    const scaleX = vw / 1920;
+    const scaleY = vh / 1080;
+    const scale = Math.min(scaleX, scaleY);
+
+    document.querySelectorAll('.slide-inner').forEach(inner => {
+      inner.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    });
+  }
+
+  scaleSlides();
+  window.addEventListener('resize', scaleSlides);
+
+</script>
+
+</body>
+</html>

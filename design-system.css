@@ -1,0 +1,663 @@
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN SYSTEM — Extracted from Design to Code Presentation
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Fonts ── */
+@font-face {
+  font-family: 'Minecraft';
+  src: url('fonts/1_MinecraftRegular1.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Almoni';
+  src: url('fonts/Almoni DL AAA.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Almoni';
+  src: url('fonts/almoni-dl-aaa-bold.otf') format('opentype');
+  font-weight: 700;
+}
+
+/* ── CSS Custom Properties (Design Tokens) ── */
+:root {
+  /* ─── Typography ─── */
+  --font-display: 'Minecraft', monospace;
+  --font-body: 'Almoni', sans-serif;
+
+  /* Font Sizes — Display (Minecraft) */
+  --text-display-xl: 124px;   /* Hero titles: "DESIGN", "CODE" */
+  --text-display-lg: 80px;    /* Section titles */
+  --text-display-md: 72px;    /* Sub-section titles */
+  --text-display-sm: 56px;    /* Feature titles */
+  --text-display-xs: 40px;    /* Step numbers, names */
+
+  /* Font Sizes — Body (Almoni) */
+  --text-body-xl: 44px;       /* Pain points, benefit lists */
+  --text-body-lg: 32px;       /* Card titles, subtitles */
+  --text-body-md: 28px;       /* Card descriptions, bullet items */
+  --text-body-sm: 24px;       /* Secondary descriptions */
+  --text-body-xs: 20px;       /* Labels, tags */
+  --text-body-xxs: 14px;      /* Nav counter, small text */
+
+  /* Line Heights */
+  --leading-tight: 1.1;
+  --leading-normal: 1.2;
+
+  /* Letter Spacing */
+  --tracking-tightest: -1.6px;  /* Large display text */
+  --tracking-tighter: -1.12px;  /* Medium display text */
+  --tracking-tight: -0.8px;     /* Body large */
+  --tracking-normal: -0.48px;   /* Body medium */
+  --tracking-wide: 2px;         /* Labels, tags */
+
+  /* ─── Colors ─── */
+  /* Backgrounds */
+  --color-bg-primary: #000000;
+  --color-bg-card-dark: #262629;
+  --color-bg-card-darker: #1b1b1b;
+  --color-bg-card-purple: #2a282d;
+  --color-bg-card-white: #ffffff;
+  --color-bg-pill: #494747;
+  --color-bg-nav: rgba(0, 0, 0, 0.75);
+  --color-bg-btn: rgba(255, 255, 255, 0.04);
+  --color-bg-btn-hover: rgba(255, 255, 255, 0.1);
+
+  /* Gradient */
+  --gradient-dark-green: linear-gradient(128deg, #000 38.5%, #06150f 97.6%);
+
+  /* Text */
+  --color-text-primary: #ffffff;
+  --color-text-on-white: #140101;
+  --color-text-secondary: #f8fcfd;
+  --color-text-muted: rgba(255, 255, 255, 0.35);
+
+  /* Accent */
+  --color-accent-yellow: #ffc937;
+  --color-accent-pink: #ff2b9b;
+  --color-accent-green: #7bed52;
+  --color-accent-red: #ff383c;
+
+  /* Borders */
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-border-light: rgba(255, 255, 255, 0.2);
+  --color-border-dot-inactive: rgba(255, 255, 255, 0.18);
+
+  /* ─── Spacing ─── */
+  --space-2xs: 8px;
+  --space-xs: 10px;
+  --space-sm: 16px;
+  --space-md: 20px;
+  --space-lg: 24px;
+  --space-xl: 28px;
+  --space-2xl: 40px;
+  --space-3xl: 44px;
+
+  /* ─── Border Radius ─── */
+  --radius-sm: 12px;      /* Screenshots, bullet lists */
+  --radius-md: 16px;      /* Logos */
+  --radius-lg: 20px;      /* Cards */
+  --radius-xl: 23px;      /* IDE cards */
+  --radius-pill: 100px;   /* Pills, tags */
+  --radius-circle: 50%;   /* Avatars, round buttons */
+
+  /* ─── Shadows & Effects ─── */
+  --blur-sm: blur(4px);
+  --blur-md: blur(12px);
+
+  /* ─── Transitions ─── */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease;
+  --transition-slide: 0.5s ease;
+  --transition-slow: 0.8s ease;
+
+  /* ─── Layout ─── */
+  --slide-width: 1920px;
+  --slide-height: 1080px;
+  --nav-height: 64px;
+  --nav-btn-size: 40px;
+  --nav-dot-size: 10px;
+
+  /* ─── Opacity Scale ─── */
+  --opacity-disabled: 0.2;
+  --opacity-faded: 0.3;
+  --opacity-muted: 0.35;
+  --opacity-medium: 0.6;
+  --opacity-overlay: 0.7;
+  --opacity-glass: 0.75;
+  --opacity-high: 0.8;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   TYPOGRAPHY UTILITIES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Display headings (Minecraft) */
+.display-xl {
+  font-family: var(--font-display);
+  font-size: var(--text-display-xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tightest);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+.display-lg {
+  font-family: var(--font-display);
+  font-size: var(--text-display-lg);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tightest);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+.display-md {
+  font-family: var(--font-display);
+  font-size: var(--text-display-md);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+.display-sm {
+  font-family: var(--font-display);
+  font-size: var(--text-display-sm);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+.display-xs {
+  font-family: var(--font-display);
+  font-size: var(--text-display-xs);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+/* Body text (Almoni) */
+.body-xl {
+  font-family: var(--font-body);
+  font-size: var(--text-body-xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-text-primary);
+}
+
+.body-lg {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-tight);
+  color: var(--color-text-primary);
+}
+
+.body-md {
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  line-height: var(--leading-tight);
+  color: var(--color-text-primary);
+}
+
+.body-sm {
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-tight);
+  color: var(--color-text-primary);
+}
+
+/* Labels */
+.label {
+  font-family: var(--font-body);
+  font-size: var(--text-body-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+.label--green { color: var(--color-accent-green); }
+.label--pink  { color: var(--color-accent-pink); }
+.label--yellow { color: var(--color-accent-yellow); }
+
+/* Text modifiers */
+.text-bold { font-weight: 700; }
+.text-capitalize { text-transform: capitalize; }
+.text-muted { color: var(--color-text-muted); }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   CARD COMPONENTS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Base Card ── */
+.card {
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl) var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card__title {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+}
+
+.card__description {
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-tight);
+  margin-top: var(--space-2xs);
+}
+
+/* ── Card Variant: Dark ── */
+/* Use for pain points, problems, dark-themed content blocks */
+.card--dark {
+  background: var(--color-bg-card-dark);
+  color: var(--color-text-primary);
+}
+
+.card--dark .card__title {
+  color: var(--color-text-primary);
+}
+
+/* ── Card Variant: Darker ── */
+/* Use for step cards, iteration cards on dark backgrounds */
+.card--darker {
+  background: var(--color-bg-card-darker);
+  color: var(--color-text-secondary);
+}
+
+/* ── Card Variant: White ── */
+/* Use for features, solutions, highlighted content */
+.card--white {
+  background: var(--color-bg-card-white);
+  color: var(--color-text-on-white);
+}
+
+.card--white .card__title {
+  color: var(--color-text-on-white);
+}
+
+.card--white .card__description {
+  color: var(--color-text-on-white);
+}
+
+/* ── Card Variant: Purple ── */
+/* Use for GitHub/info cards */
+.card--purple {
+  background: var(--color-bg-card-purple);
+  color: var(--color-text-primary);
+}
+
+/* ── Card Sizes ── */
+.card--sm {
+  /* ~431px × 143px — standard content card */
+  width: 431px;
+  height: 143px;
+}
+
+.card--md {
+  /* ~386px × 143px — step/iteration card */
+  width: 386px;
+  height: 143px;
+}
+
+.card--lg {
+  /* ~363px × 414px — info/GitHub card */
+  width: 363px;
+  height: 414px;
+  padding: var(--space-md) var(--space-sm);
+}
+
+.card--xl {
+  /* ~968px × 463px — IDE showcase card */
+  width: 968px;
+  height: 463px;
+  border-radius: var(--radius-xl);
+  padding: 0;
+}
+
+/* Card with padding variation for compact first-card in step rows */
+.card--compact {
+  padding: var(--space-md) var(--space-2xl);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   BULLET LIST COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
+
+.bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bullet-list__item {
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  color: var(--color-text-primary);
+  height: 65px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.bullet-list__item:last-child {
+  border-bottom: none;
+}
+
+/* Large variant for feature lists */
+.bullet-list--lg .bullet-list__item {
+  font-size: var(--text-body-lg);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PILL / TAG COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-pill);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: var(--text-body-xs);
+  color: var(--color-text-primary);
+  padding: var(--space-2xs) var(--space-sm);
+  white-space: nowrap;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   AVATAR COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
+
+.avatar {
+  border-radius: var(--radius-circle);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar--sm {
+  width: 47px;
+  height: 47px;
+}
+
+.avatar--lg {
+  width: 159px;
+  height: 159px;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Avatar group (overlapping) */
+.avatar-group {
+  display: flex;
+}
+
+.avatar-group .avatar + .avatar {
+  margin-left: -12px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PROFILE CARD COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.profile-card__name {
+  font-family: var(--font-display);
+  font-size: var(--text-display-xs);
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+}
+
+.profile-card__role {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  color: var(--color-text-primary);
+  opacity: var(--opacity-medium);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   IDE CARD COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
+
+.ide-card {
+  background: var(--color-bg-card-darker);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ide-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-xl);
+}
+
+.ide-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+}
+
+.ide-card__title {
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  font-weight: 700;
+  flex: 1;
+}
+
+.ide-card__divider {
+  width: 100%;
+  height: 1px;
+  background: var(--color-border-light);
+}
+
+.ide-card__screenshot {
+  width: 100%;
+  flex: 1;
+  object-fit: cover;
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   STEP PROGRESSION COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
+
+.steps {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.step-number {
+  font-family: var(--font-display);
+  font-size: var(--text-display-xs);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  line-height: var(--leading-tight);
+}
+
+.step-number--active {
+  color: var(--color-text-on-white);
+}
+
+.step-connector {
+  /* Dashed line between steps — use dashed-line.svg or dashed-line-green.svg */
+  flex-shrink: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   NAVIGATION BAR COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
+
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: var(--color-bg-nav);
+  backdrop-filter: var(--blur-md);
+  -webkit-backdrop-filter: var(--blur-md);
+  border-top: 1px solid var(--color-border-subtle);
+  z-index: 1000;
+}
+
+.nav-btn {
+  width: var(--nav-btn-size);
+  height: var(--nav-btn-size);
+  border-radius: var(--radius-circle);
+  border: 1px solid var(--color-border-light);
+  background: var(--color-bg-btn);
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.nav-btn:hover {
+  background: var(--color-bg-btn-hover);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.nav-btn:disabled {
+  opacity: var(--opacity-disabled);
+  cursor: default;
+}
+
+.nav-btn:disabled:hover {
+  background: var(--color-bg-btn);
+  border-color: var(--color-border-light);
+}
+
+.nav-dots {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+.nav-dot {
+  width: var(--nav-dot-size);
+  height: var(--nav-dot-size);
+  border-radius: var(--radius-circle);
+  background: var(--color-border-dot-inactive);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.nav-dot:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.nav-dot--active {
+  background: var(--color-text-primary);
+  transform: scale(1.35);
+}
+
+.nav-counter {
+  font-family: var(--font-body);
+  font-size: var(--text-body-xxs);
+  color: var(--color-text-muted);
+  min-width: 44px;
+  text-align: center;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   GRID / BACKGROUND COMPONENTS
+   ═══════════════════════════════════════════════════════════════ */
+
+.bg-grid {
+  position: absolute;
+  pointer-events: none;
+  opacity: var(--opacity-overlay);
+}
+
+.bg-grid img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Noise overlay — for textured sections */
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url('assets/noise1.png');
+  background-size: 307px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT UTILITIES
+   ═══════════════════════════════════════════════════════════════ */
+
+.flex-col    { display: flex; flex-direction: column; }
+.flex-row    { display: flex; flex-direction: row; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.text-center { text-align: center; }
+
+.gap-2xs { gap: var(--space-2xs); }
+.gap-xs  { gap: var(--space-xs); }
+.gap-sm  { gap: var(--space-sm); }
+.gap-md  { gap: var(--space-md); }
+.gap-lg  { gap: var(--space-lg); }
+.gap-xl  { gap: var(--space-xl); }
+.gap-2xl { gap: var(--space-2xl); }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATION UTILITIES
+   ═══════════════════════════════════════════════════════════════ */
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in--delayed {
+  transition-delay: 0.2s;
+}

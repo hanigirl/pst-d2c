@@ -1,0 +1,3492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design to Code - Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Fonts ── */
+    @font-face {
+      font-family: 'Minecraft';
+      src: url('fonts/1_MinecraftRegular1.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Almoni';
+      src: url('fonts/Almoni DL AAA.ttf') format('truetype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Almoni';
+      src: url('fonts/almoni-dl-aaa-bold.otf') format('opentype');
+      font-weight: 700;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #000;
+      color: #fff;
+      font-family: 'Almoni', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* ── Slide system ── */
+    .slides-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      overflow: hidden;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ── Scaling wrapper — design is 1920x1080 ── */
+    .slide-inner {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      top: 50%;
+      left: 50%;
+      transform-origin: center center;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 1 — Hero (from Figma)
+    ═══════════════════════════════════════ */
+
+    /* Grid background */
+    .s1-grid {
+      position: absolute;
+      top: -242px;
+      left: 158px;
+      width: 1564px;
+      height: 1573px;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .s1-grid img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Title block — centered */
+    .s1-title-block {
+      position: absolute;
+      width: 429px;
+      height: 423px;
+      left: calc(50% - 20.5px);
+      top: calc(50% - 211.5px);
+      transform: translate(-50%, -50%);
+    }
+
+    .s1-title-group {
+      position: absolute;
+      left: 1.24px;
+      top: 0;
+      width: 444px;
+      height: 423px;
+    }
+
+    /* "DESIGN" shadow text (yellow) */
+    .s1-design-shadow {
+      position: absolute;
+      left: 7.42px;
+      top: 0;
+      font-family: 'Minecraft', monospace;
+      font-size: 124px;
+      text-transform: uppercase;
+      color: #ffc937;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    /* "DESIGN" main text (white) */
+    .s1-design {
+      position: absolute;
+      left: 11.13px;
+      top: 3.71px;
+      font-family: 'Minecraft', monospace;
+      font-size: 124px;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    /* Triangle shape */
+    .s1-triangle {
+      position: absolute;
+      left: 91px;
+      top: 126px;
+      width: 254px;
+      height: 256px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .s1-triangle-inner {
+      width: 254px;
+      height: 256px;
+      position: relative;
+      transform: rotate(180deg);
+    }
+
+    .s1-triangle-mask {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .s1-triangle-mask img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .s1-triangle-gradient {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .s1-triangle-gradient img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .s1-triangle-noise {
+      position: absolute;
+      inset: 0;
+      mix-blend-mode: overlay;
+      opacity: 0.8;
+    }
+
+    .s1-noise-1 {
+      position: absolute;
+      inset: 0;
+      background-size: 307px 307px;
+      background-position: top left;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .s1-noise-2 {
+      position: absolute;
+      inset: 0;
+      background-size: 410px 410px;
+      background-position: top left;
+      mix-blend-mode: overlay;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    /* "CODE" shadow text (pink) */
+    .s1-code-shadow {
+      position: absolute;
+      left: 4.95px;
+      top: 202.6px;
+      font-family: 'Minecraft', monospace;
+      font-size: 184px;
+      text-transform: uppercase;
+      color: #ff2b9b;
+      line-height: 1;
+    }
+
+    /* "CODE" main text (white) */
+    .s1-code {
+      position: absolute;
+      left: 1.24px;
+      top: 198.89px;
+      font-family: 'Minecraft', monospace;
+      font-size: 184px;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1;
+    }
+
+    /* "T0" text */
+    .s1-to {
+      position: absolute;
+      left: 147px;
+      top: 105px;
+      width: 149px;
+      height: 149px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Minecraft', monospace;
+      font-style: italic;
+      font-size: 124px;
+      text-transform: uppercase;
+      color: #ff2b9b;
+      text-align: center;
+      line-height: 1;
+    }
+
+    /* Subtitle */
+    .s1-subtitle {
+      position: absolute;
+      left: 50%;
+      top: 579px;
+      transform: translate(-50%, -50%);
+      width: 725px;
+      font-family: 'Almoni', sans-serif;
+      font-size: 32px;
+      color: #fff;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    /* Profiles section */
+    .s1-profiles {
+      position: absolute;
+      left: 50%;
+      top: 723px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .s1-profile-card {
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding-right: 100px;
+    }
+
+    .s1-profile-bg {
+      background: #262629;
+      border-radius: 20px;
+      width: 315px;
+      height: 114px;
+      display: flex;
+      align-items: center;
+      padding: 20px 24px;
+      margin-right: -100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .s1-profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .s1-profile-name {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 40px;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: 2px;
+      line-height: 1.2;
+    }
+
+    .s1-profile-last {
+      font-family: 'Almoni', sans-serif;
+      font-size: 20px;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .s1-avatar {
+      width: 159px;
+      height: 159px;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+      margin-right: -100px;
+      flex-shrink: 0;
+    }
+
+    .s1-avatar img {
+      position: absolute;
+      display: block;
+    }
+
+    .s1-avatar-daniel img {
+      width: 136.61%;
+      height: 136.61%;
+      left: -19.63%;
+      top: -14.76%;
+    }
+
+    .s1-avatar-hani {
+      background: #5958cc;
+    }
+
+    .s1-avatar-hani img {
+      width: 117%;
+      height: 171.6%;
+      left: -13.13%;
+      top: -8.7%;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 2 — "The World We Knew" (from Figma)
+    ═══════════════════════════════════════ */
+
+    /* Globe image */
+    .s2-globe {
+      position: absolute;
+      left: calc(50% - 16.5px);
+      top: 829px;
+      width: 841px;
+      height: 561px;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .s2-globe img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Title + subtitle block */
+    .s2-text-block {
+      position: absolute;
+      left: 50%;
+      top: 634px;
+      transform: translateX(-50%);
+      width: 676px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 3;
+    }
+
+    .s2-text-block h2 {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 72px;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: -1.44px;
+      line-height: 1.1;
+    }
+
+    .s2-text-block p {
+      font-family: 'Almoni', sans-serif;
+      font-size: 32px;
+      color: #fff;
+      opacity: 0.7;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    /* Card */
+    .s2-card {
+      position: absolute;
+      left: 179px;
+      top: 328px;
+      width: 431px;
+      height: 143px;
+      background: #262629;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px;
+      z-index: 5;
+    }
+
+    .s2-card h3 {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #fcfcfc;
+      text-transform: capitalize;
+      letter-spacing: -0.64px;
+      line-height: 1.1;
+    }
+
+    /* Connector arrow */
+    .s2-connector {
+      position: absolute;
+      left: 440px;
+      top: 471px;
+      width: 203px;
+      height: 163px;
+      z-index: 4;
+      transform: scaleY(-1) rotate(180deg);
+    }
+
+    .s2-connector img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Bullet list */
+    .s2-bullets {
+      position: absolute;
+      left: 179px;
+      top: 576px;
+      width: 345px;
+      list-style: none;
+      border-radius: 12px;
+      z-index: 5;
+    }
+
+    .s2-bullets li {
+      font-family: 'Almoni', sans-serif;
+      font-size: 28px;
+      color: #fff;
+      height: 65px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      line-height: 1.1;
+    }
+
+    .s2-bullets li:last-child {
+      border-bottom: none;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 3 — "The World We Knew" + Endless Iterations (from Figma)
+    ═══════════════════════════════════════ */
+
+    /* Reuse globe, title from s2 positions */
+    .s3-globe { position: absolute; left: calc(50% - 16.5px); top: 829px; width: 841px; height: 561px; transform: translateX(-50%); z-index: 1; }
+    .s3-globe img { width: 100%; height: 100%; display: block; }
+
+    .s3-text-block { position: absolute; left: 50%; top: 634px; transform: translateX(-50%); width: 676px; display: flex; flex-direction: column; gap: 16px; z-index: 3; }
+    .s3-text-block h2 { font-family: 'Minecraft', monospace; font-weight: 400; font-size: 72px; text-transform: uppercase; color: #fff; letter-spacing: -1.44px; line-height: 1.1; }
+    .s3-text-block p { font-family: 'Almoni', sans-serif; font-size: 32px; color: #fff; opacity: 0.7; text-align: center; line-height: 1.1; }
+
+    /* Card 1 — faded */
+    .s3-card1 { position: absolute; left: 179px; top: 328px; width: 431px; height: 143px; background: #262629; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; padding: 40px; z-index: 5; opacity: 0.3; }
+    .s3-card1 h3 { font-family: 'Almoni', sans-serif; font-weight: 700; font-size: 32px; color: #fcfcfc; text-transform: capitalize; letter-spacing: -0.64px; line-height: 1.1; }
+
+    .s3-connector1 { position: absolute; left: 440px; top: 471px; width: 203px; height: 163px; z-index: 4; transform: scaleY(-1) rotate(180deg); opacity: 0.3; }
+    .s3-connector1 img { width: 100%; height: 100%; display: block; }
+
+    .s3-bullets1 { position: absolute; left: 179px; top: 576px; width: 345px; list-style: none; border-radius: 12px; z-index: 5; opacity: 0.3; }
+    .s3-bullets1 li { font-family: 'Almoni', sans-serif; font-size: 28px; color: #fff; height: 65px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.2); line-height: 1.1; }
+    .s3-bullets1 li:last-child { border-bottom: none; }
+
+    /* Card 2 — active */
+    .s3-card2 { position: absolute; left: 728px; top: 168px; width: 431px; height: 143px; background: #262629; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; padding: 40px; z-index: 5; }
+    .s3-card2 h3 { font-family: 'Almoni', sans-serif; font-weight: 700; font-size: 32px; color: #fcfcfc; text-transform: capitalize; letter-spacing: -0.64px; line-height: 1.1; }
+
+    .s3-connector2 { position: absolute; left: 946px; top: 310.5px; width: 86px; height: 281.5px; z-index: 4; transform: scaleY(-1) rotate(180deg); }
+    .s3-connector2 img { width: 100%; height: 100%; display: block; }
+
+    .s3-bullets2 { position: absolute; left: 1069px; top: 374px; width: 399px; list-style: none; border-radius: 12px; z-index: 5; }
+    .s3-bullets2 li { font-family: 'Almoni', sans-serif; font-size: 32px; color: #fff; height: 65px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.2); line-height: 1.1; }
+    .s3-bullets2 li:last-child { border-bottom: none; }
+
+    /* ═══════════════════════════════════════
+       SLIDE 4 — "The World We Knew" + Lost In Translation (from Figma)
+    ═══════════════════════════════════════ */
+
+    .s4-globe { position: absolute; left: calc(50% - 16.5px); top: 829px; width: 841px; height: 561px; transform: translateX(-50%); z-index: 1; }
+    .s4-globe img { width: 100%; height: 100%; display: block; }
+
+    .s4-text-block { position: absolute; left: 50%; top: 634px; transform: translateX(-50%); width: 676px; display: flex; flex-direction: column; gap: 16px; z-index: 3; }
+    .s4-text-block h2 { font-family: 'Minecraft', monospace; font-weight: 400; font-size: 72px; text-transform: uppercase; color: #fff; letter-spacing: -1.44px; line-height: 1.1; }
+    .s4-text-block p { font-family: 'Almoni', sans-serif; font-size: 32px; color: #fff; opacity: 0.7; text-align: center; line-height: 1.1; }
+
+    /* Card 1 — faded */
+    .s4-card1 { position: absolute; left: 179px; top: 328px; width: 431px; height: 143px; background: #262629; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; padding: 40px; z-index: 5; opacity: 0.3; }
+    .s4-card1 h3 { font-family: 'Almoni', sans-serif; font-weight: 700; font-size: 32px; color: #fcfcfc; text-transform: capitalize; letter-spacing: -0.64px; line-height: 1.1; }
+
+    .s4-connector1 { position: absolute; left: 440px; top: 471px; width: 203px; height: 163px; z-index: 4; transform: scaleY(-1) rotate(180deg); opacity: 0.3; }
+    .s4-connector1 img { width: 100%; height: 100%; display: block; }
+
+    /* Card 2 — faded */
+    .s4-card2 { position: absolute; left: 728px; top: 168px; width: 431px; height: 143px; background: #262629; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; padding: 40px; z-index: 5; opacity: 0.3; }
+    .s4-card2 h3 { font-family: 'Almoni', sans-serif; font-weight: 700; font-size: 32px; color: #fcfcfc; text-transform: capitalize; letter-spacing: -0.64px; line-height: 1.1; }
+
+    .s4-connector2 { position: absolute; left: 946px; top: 310.5px; width: 86px; height: 281.5px; z-index: 4; transform: scaleY(-1) rotate(180deg); opacity: 0.3; }
+    .s4-connector2 img { width: 100%; height: 100%; display: block; }
+
+    /* Card 3 — active */
+    .s4-card3 { position: absolute; left: 1383px; top: 323px; width: 431px; height: 143px; background: #262629; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; padding: 40px; z-index: 5; }
+    .s4-card3 h3 { font-family: 'Almoni', sans-serif; font-weight: 700; font-size: 32px; color: #fcfcfc; text-transform: capitalize; letter-spacing: -0.64px; line-height: 1.1; }
+
+    .s4-connector3 { position: absolute; left: 1317px; top: 466px; width: 168px; height: 162px; z-index: 4; transform: scaleY(-1) rotate(180deg); }
+    .s4-connector3 img { width: 100%; height: 100%; display: block; }
+
+    .s4-bullets3 { position: absolute; left: 1521px; top: 518px; width: 399px; list-style: none; border-radius: 12px; z-index: 5; }
+    .s4-bullets3 li { font-family: 'Almoni', sans-serif; font-size: 32px; color: #fff; height: 65px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.2); line-height: 1.1; }
+    .s4-bullets3 li:last-child { border-bottom: none; }
+
+    /* ═══════════════════════════════════════
+       SLIDE 5 — "The World We're Building" (from Figma)
+    ═══════════════════════════════════════ */
+
+    .s5-grid { position: absolute; top: -242px; left: 158px; width: 1564px; height: 1573px; pointer-events: none; opacity: 0.7; }
+    .s5-grid img { width: 100%; height: 100%; display: block; }
+
+    /* Big cool shape — top center */
+    .s5-shape-big {
+      position: absolute;
+      left: 540px;
+      top: -80px;
+      width: 514px;
+      height: 514px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .s5-shape-big img {
+      width: 376px;
+      height: 376px;
+      transform: rotate(30deg);
+    }
+
+    /* Small cool shape — bottom center */
+    .s5-shape-small {
+      position: absolute;
+      left: 1079px;
+      top: 854px;
+      width: 123px;
+      height: 123px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 6;
+    }
+    .s5-shape-small img {
+      width: 110px;
+      height: 110px;
+      transform: rotate(7.33deg);
+      filter: blur(4px);
+    }
+
+    /* Center text */
+    .s5-center-text {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(calc(-50% + 0.5px), calc(-50% + 0.5px));
+      width: 901px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      z-index: 5;
+    }
+
+    .s5-label {
+      font-family: 'Inter', 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      text-transform: capitalize;
+      letter-spacing: 2px;
+      color: #fff;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .s5-title {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 72px;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: -1.44px;
+      line-height: 1.1;
+      width: 100%;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    /* White cards */
+    .s5-card {
+      position: absolute;
+      background: #fff;
+      border-radius: 20px;
+      width: 431px;
+      height: 143px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 44px 91px;
+      text-transform: capitalize;
+      white-space: nowrap;
+      z-index: 5;
+    }
+
+    .s5-card h3 {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #140101;
+      letter-spacing: -0.64px;
+      line-height: 1.1;
+    }
+
+    .s5-card p {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      color: #140101;
+      letter-spacing: -0.48px;
+      line-height: 1.1;
+    }
+
+    .s5-card-1 { left: 46px; top: 293px; }
+    .s5-card-2 { left: 375px; top: 808px; }
+    .s5-card-3 { left: 1291px; top: 176px; }
+
+    /* Connectors */
+    .s5-conn-1 { position: absolute; left: 307px; top: 436px; width: 203px; height: 163px; z-index: 4; transform: scaleY(-1) rotate(180deg); }
+    .s5-conn-1 img { width: 100%; height: 100%; display: block; }
+
+    .s5-conn-2 { position: absolute; left: 698px; top: 643px; width: 203px; height: 163px; z-index: 4; transform: rotate(180deg); }
+    .s5-conn-2 img { width: 100%; height: 100%; display: block; }
+
+    .s5-conn-3 { position: absolute; left: 1304px; top: 319px; width: 203px; height: 163px; z-index: 4; }
+    .s5-conn-3 img { width: 100%; height: 100%; display: block; }
+
+    /* Planet ring — bottom right */
+    .s5-planet {
+      position: absolute;
+      left: calc(50% + 691.5px);
+      top: 670px;
+      width: 1123px;
+      height: 887px;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+    .s5-planet img { width: 100%; height: 100%; display: block; }
+
+    /* ═══════════════════════════════════════
+       SLIDES 8-9 — Toys vs Tools (from Figma)
+    ═══════════════════════════════════════ */
+
+    /* Left side — Toys */
+    .s8-left {
+      position: absolute;
+      left: 120px;
+      top: 422px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .s8-left-title {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 56px;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: -1.12px;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .s8-toy-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .s8-toy-card {
+      width: 373px;
+      height: 132px;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .s8-toy-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .s8-toy-card-dark {
+      background: #1b1b1b;
+      padding: 25px 28px;
+    }
+
+    .s8-toy-card-dark img {
+      width: auto;
+      height: 82px;
+      object-fit: contain;
+    }
+
+    /* Right side — Tools */
+    .s8-right {
+      position: absolute;
+      left: 1034px;
+      top: 120px;
+      width: 766px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .s8-right-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .s8-right-label {
+      font-family: 'Inter', 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      text-transform: capitalize;
+      letter-spacing: 2px;
+      color: #7bed52;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .s8-right-title {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 56px;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: -1.12px;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .s8-tool-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .s8-tool-card {
+      width: 373px;
+      height: 132px;
+      background: #fff;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px 28px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .s8-tool-card img {
+      max-width: 100%;
+      max-height: 82px;
+      object-fit: contain;
+    }
+
+    /* Cursor logo — clean cube icon */
+    .s8-tool-card-cursor {
+      padding: 24px 28px;
+    }
+    .s8-tool-card-cursor img {
+      max-height: 84px;
+    }
+
+    /* Claude Code logo — rounded icon */
+    .s8-tool-card-claude {
+      padding: 22px 28px;
+    }
+    .s8-tool-card-claude img {
+      max-height: 88px;
+      border-radius: 16px;
+    }
+
+    /* GitHub logo — octocat + text, ensure fully visible */
+    .s8-tool-card-github {
+      padding: 28px 50px;
+    }
+    .s8-tool-card-github img {
+      max-height: 76px;
+      max-width: 100%;
+      width: auto;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 10 — Lovable Screenshot + Pain Points
+    ═══════════════════════════════════════ */
+
+    .s10-screenshot {
+      position: absolute;
+      left: 76px;
+      top: 50%;
+      transform: translateY(calc(-50% + 0.5px));
+      width: 1094px;
+      height: 709px;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .s10-screenshot img {
+      position: absolute;
+      width: 108.1%;
+      height: 104.24%;
+      left: -4.01%;
+      top: -2.06%;
+      display: block;
+    }
+
+    .s10-right {
+      position: absolute;
+      left: 1290px;
+      top: 325px;
+      width: 512px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .s10-shape {
+      width: 158px;
+      height: 158px;
+      transform: rotate(180deg);
+    }
+
+    .s10-shape img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .s10-pain-points {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .s10-pain-points p {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 44px;
+      color: #fff;
+      text-transform: capitalize;
+      line-height: 1.1;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 11 — Restricted (from Figma)
+    ═══════════════════════════════════════ */
+
+    /* Faded screenshot */
+    .s11-screenshot {
+      position: absolute;
+      left: 76px;
+      top: 50%;
+      transform: translateY(calc(-50% + 0.5px));
+      width: 1094px;
+      height: 709px;
+      overflow: hidden;
+      border-radius: 12px;
+      opacity: 0.2;
+    }
+
+    .s11-screenshot img {
+      position: absolute;
+      width: 108.1%;
+      height: 104.24%;
+      left: -4.01%;
+      top: -2.06%;
+      display: block;
+    }
+
+    /* Diagonal strikethrough line */
+    .s11-strikethrough {
+      position: absolute;
+      left: 95px;
+      top: 228px;
+      width: 1062.5px;
+      height: 641.5px;
+      z-index: 2;
+    }
+
+    .s11-strikethrough img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* RESTRICTED text */
+    .s11-restricted {
+      position: absolute;
+      left: 607px;
+      top: 548px;
+      transform: translate(-50%, -50%);
+      width: 766px;
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 56px;
+      text-transform: uppercase;
+      color: #ff383c;
+      text-align: center;
+      letter-spacing: -1.12px;
+      line-height: 1.1;
+      z-index: 3;
+    }
+
+    /* Reuse right side from s10 */
+    .s11-right {
+      position: absolute;
+      left: 1288px;
+      top: 325px;
+      width: 512px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 12 — Cursor IDE + GitHub Card (from Figma)
+    ═══════════════════════════════════════ */
+
+    /* Main Cursor IDE card */
+    .s12-cursor-card {
+      position: absolute;
+      left: 125px;
+      top: 428px;
+      width: 968px;
+      height: 463px;
+      background: #1b1b1b;
+      border-radius: 23px;
+      padding: 21px 0 0 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 5;
+    }
+
+    .s12-cursor-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    .s12-cursor-header-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .s12-cursor-icon {
+      width: 58px;
+      height: 55px;
+      flex-shrink: 0;
+    }
+
+    .s12-cursor-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .s12-cursor-title {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 28px;
+      color: #fff;
+      text-transform: capitalize;
+      line-height: 1.1;
+    }
+
+    .s12-avatars {
+      display: flex;
+      align-items: center;
+      padding-right: 9px;
+    }
+
+    .s12-avatar {
+      width: 47px;
+      height: 47px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: -9px;
+      flex-shrink: 0;
+    }
+
+    .s12-avatar img {
+      width: 110%;
+      height: 110%;
+      object-fit: cover;
+      margin: -5%;
+    }
+
+    .s12-cursor-divider {
+      width: 100%;
+      height: 1px;
+      margin-top: 24px;
+    }
+
+    .s12-cursor-divider img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Screenshot in bottom of card */
+    .s12-cursor-screenshot {
+      position: absolute;
+      left: 125px;
+      top: 527px;
+      width: 968px;
+      height: 361px;
+      overflow: hidden;
+      border-radius: 0 0 27px 27px;
+      z-index: 6;
+    }
+
+    .s12-cursor-screenshot img {
+      position: absolute;
+      width: 100%;
+      height: 100.83%;
+      left: 0;
+      top: -0.04%;
+      display: block;
+    }
+
+    /* GitHub card */
+    .s12-github-card {
+      position: absolute;
+      left: 862px;
+      top: 211px;
+      width: 363px;
+      height: 414px;
+      background: #2a282d;
+      border-radius: 20px;
+      padding: 20px 16px;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .s12-github-logo {
+      width: 36px;
+      height: 42px;
+      overflow: hidden;
+    }
+
+    .s12-github-logo img {
+      width: 246%;
+      height: 105%;
+      position: relative;
+      left: -135%;
+      top: -3%;
+    }
+
+    .s12-github-branch {
+      position: absolute;
+      left: 889px;
+      top: 327px;
+      width: 67px;
+      height: 275px;
+      z-index: 3;
+    }
+
+    .s12-github-branch img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Gray pill elements inside github card */
+    .s12-gh-pill {
+      position: absolute;
+      height: 16px;
+      background: #494747;
+      border-radius: 100px;
+    }
+
+    .s12-gh-pill-1 { left: 104px; top: 109px; width: 54px; }
+    .s12-gh-pill-2 { left: 101px; top: 166px; width: 30px; }
+    .s12-gh-pill-3 { left: 101px; top: 223px; width: 30px; }
+
+    .s12-github-divider {
+      position: absolute;
+      left: 0;
+      top: 74px;
+      width: 100%;
+      height: 1px;
+    }
+
+    .s12-github-divider img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Right side — benefits */
+    .s12-right {
+      position: absolute;
+      left: 1357px;
+      top: 389px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .s12-benefits {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .s12-benefits p {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 44px;
+      color: #fff;
+      text-transform: capitalize;
+      line-height: 1.1;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDES 13-16 — The Unfair Advantage (from Figma)
+    ═══════════════════════════════════════ */
+
+    .s13-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(128deg, #000 38.5%, #06150f 97.6%);
+    }
+
+    /* Center text */
+    .s13-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .s13-label {
+      font-family: 'Inter', 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      text-transform: capitalize;
+      letter-spacing: 2px;
+      color: #7bed52;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .s13-title {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 80px;
+      text-transform: uppercase;
+      color: #fff;
+      text-align: center;
+      letter-spacing: -1.6px;
+      line-height: 1.1;
+      width: 930px;
+    }
+
+    /* White cards */
+    .s13-card {
+      position: absolute;
+      background: #fff;
+      border-radius: 20px;
+      width: 431px;
+      height: 143px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 44px 91px;
+      text-transform: capitalize;
+      white-space: nowrap;
+      z-index: 3;
+    }
+
+    .s13-card h3 {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #140101;
+      letter-spacing: -0.64px;
+      line-height: 1.1;
+    }
+
+    .s13-card p {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      color: #140101;
+      letter-spacing: -0.48px;
+      line-height: 1.1;
+    }
+
+    /* Card positions */
+    .s13-card-1 { left: 260px; top: 137px; }
+    .s13-card-2 { left: 1209px; top: 78px; }
+    .s13-card-3 { left: 96px; top: 705px; }
+    .s13-card-4 { left: 1338px; top: 769px; }
+
+    /* Connectors */
+    .s13-conn { position: absolute; width: 203px; height: 163px; z-index: 2; }
+    .s13-conn img { width: 100%; height: 100%; display: block; }
+
+    .s13-conn-1 { left: 427px; top: 285px; transform: scaleY(-1) rotate(180deg); }
+    .s13-conn-2 { left: 1239px; top: 221px; }
+    .s13-conn-3 { left: 419px; top: 540px; transform: rotate(180deg); }
+    .s13-conn-4 { left: 1334px; top: 606px; transform: scaleY(-1); }
+
+    /* ═══════════════════════════════════════
+       SLIDE 17 — The Gap (from Figma)
+    ═══════════════════════════════════════ */
+
+    .s17-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .s17-label {
+      font-family: 'Inter', 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      text-transform: capitalize;
+      letter-spacing: 2px;
+      color: #7bed52;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .s17-title {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 80px;
+      text-transform: uppercase;
+      color: #fff;
+      text-align: center;
+      letter-spacing: -1.6px;
+      line-height: 1.1;
+      width: 1082px;
+    }
+
+    .s17-line-top {
+      position: absolute;
+      left: calc(50% + 0.5px);
+      top: 49px;
+      width: 15px;
+      height: 354px;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .s17-line-bottom {
+      position: absolute;
+      left: calc(50% + 0.5px);
+      top: 677px;
+      width: 15px;
+      height: 354px;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .s17-line-top img,
+    .s17-line-bottom img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 18 — The Gap + Subtitle (animated)
+    ═══════════════════════════════════════ */
+
+    /* Subtitle that fades in */
+    .s18-subtitle {
+      position: absolute;
+      left: 50%;
+      top: 711.5px;
+      transform: translate(-50%, -50%);
+      width: 676px;
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 32px;
+      color: #fff;
+      opacity: 0;
+      text-align: center;
+      line-height: 1.1;
+      z-index: 2;
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+      transform: translate(-50%, calc(-50% + 20px));
+    }
+
+    .slide.active .s18-subtitle {
+      opacity: 0.7;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Bottom line that shrinks and moves down */
+    .s18-line-bottom {
+      position: absolute;
+      left: calc(50% + 0.5px);
+      top: 677px;
+      width: 15px;
+      height: 354px;
+      transform: translateX(-50%);
+      z-index: 1;
+      transition: top 0.8s ease, height 0.8s ease;
+    }
+
+    .slide.active .s18-line-bottom {
+      top: 827px;
+      height: 204px;
+    }
+
+    .s18-line-bottom img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 19 — By The End Of Today (from Figma)
+    ═══════════════════════════════════════ */
+
+    .s19-grid {
+      position: absolute;
+      left: 601px;
+      top: -242px;
+      width: 677px;
+      height: 681px;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .s19-grid img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .s19-center {
+      position: absolute;
+      left: calc(50% + 0.5px);
+      top: calc(50% - 183px);
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .s19-label {
+      font-family: 'Inter', 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      text-transform: capitalize;
+      letter-spacing: 2px;
+      color: #7bed52;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .s19-title {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 80px;
+      text-transform: uppercase;
+      color: #fff;
+      text-align: center;
+      letter-spacing: -1.6px;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    /* Steps row: numbers + dashed lines */
+    .s19-steps {
+      position: absolute;
+      left: 136px;
+      top: 549px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      z-index: 2;
+    }
+
+    .s19-step-num {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 40px;
+      color: #fff;
+      opacity: 0.3;
+      text-align: center;
+      letter-spacing: -0.8px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .s19-step-dash {
+      width: 303.5px;
+      height: 2px;
+      flex-shrink: 0;
+      margin: 0 29px;
+    }
+
+    .s19-step-dash img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Cards row */
+    .s19-cards {
+      position: absolute;
+      left: calc(50% + 0.25px);
+      top: 618px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      z-index: 3;
+    }
+
+    .s19-card {
+      width: 386px;
+      height: 143px;
+      background: #1b1b1b;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 10px;
+      padding: 44px 40px;
+      text-transform: capitalize;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .s19-card:first-child {
+      width: 385px;
+      padding: 20px 40px;
+    }
+
+    .s19-card h3 {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #f8fcfd;
+      letter-spacing: -0.64px;
+      line-height: 1.1;
+    }
+
+    .s19-card p {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      color: #f8fcfd;
+      letter-spacing: -0.48px;
+      line-height: 1.1;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 21 — Why Node.js
+    ═══════════════════════════════════════ */
+
+    .s21-subtitle {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 26px;
+      color: rgba(248, 252, 253, 0.7);
+      text-align: center;
+      letter-spacing: -0.3px;
+      line-height: 1.3;
+      max-width: 900px;
+      margin-top: 8px;
+    }
+
+    .s21-subtitle strong {
+      color: #f8fcfd;
+      font-weight: 700;
+    }
+
+    .s21-subtitle .code {
+      color: #f8fcfd;
+    }
+
+    .s21-install {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDES 35–37 — Where Do Your Files Live?
+    ═══════════════════════════════════════ */
+    .sloc-stage {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 1000px;
+      height: 780px;
+    }
+    .sloc-node {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      color: rgba(248, 252, 253, 0.55);
+      transition: color 420ms ease, top 520ms cubic-bezier(.4, 0, .2, 1), opacity 420ms ease;
+    }
+    .sloc-svg {
+      width: 360px;
+      height: auto;
+      display: block;
+    }
+    .sloc-cloud    { top: 0;   left: 320px; }
+    .sloc-computer { top: 560px; left: 320px; }
+    .sloc-active   { color: #7bed52; }
+    .sloc-dim      { opacity: 0.28; }
+
+    .sloc-files { left: 0; width: 280px; justify-content: center; }
+    .sloc-files-mid    { top: 300px; }
+    .sloc-files-top    { top: 80px; }
+    .sloc-files-bottom { top: 540px; }
+
+    .sloc-files-img {
+      width: 144px;
+      height: 144px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .sloc-anno {
+      position: absolute;
+      left: 720px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      color: #7bed52;
+      opacity: 0;
+      transition: opacity 420ms ease;
+    }
+    .sloc-anno-line {
+      margin-top: 18px;
+    }
+    .sloc-anno-show { opacity: 1; }
+    .sloc-anno-cloud    { top: 145px; }
+    .sloc-anno-computer { top: 715px; }
+    .sloc-anno-line {
+      width: 120px;
+      height: 2px;
+      background-image: linear-gradient(to right, #7bed52 6px, transparent 6px);
+      background-size: 12px 2px;
+      background-repeat: repeat-x;
+    }
+    .sloc-anno-text {
+      font-family: 'Fira Code', monospace;
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.3px;
+    }
+    .sloc-anno-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sloc-anno-sub {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 18px;
+      color: #f8fcfd;
+      letter-spacing: -0.2px;
+    }
+
+    .s23-diagram {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 1400px;
+      z-index: 2;
+    }
+
+    /* Generic box — role tag + content */
+    .s23-box {
+      position: relative;
+      border: 2px solid;
+      border-radius: 20px;
+      padding: 56px 40px 40px;
+    }
+
+    .s23-box + .s23-box {
+      margin-top: 24px;
+    }
+
+    .s23-box-tag {
+      position: absolute;
+      top: -14px;
+      left: 32px;
+      background: #0a0a0a;
+      padding: 0 14px;
+      font-family: 'Fira Code', monospace;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    .s23-box-tag small {
+      text-transform: uppercase;
+      opacity: 0.55;
+      letter-spacing: 2px;
+      margin-left: 8px;
+      font-size: 13px;
+    }
+
+    /* Outer — node.js (environment) */
+    .s23-env {
+      border-color: rgba(123, 237, 82, 0.45);
+      background: rgba(123, 237, 82, 0.03);
+    }
+    .s23-env > .s23-box-tag { color: #7bed52; }
+
+    /* npm (package manager) — sits inside env */
+    .s23-pkg {
+      border-color: rgba(232, 77, 77, 0.5);
+      background: rgba(232, 77, 77, 0.04);
+    }
+    .s23-pkg > .s23-box-tag { color: #e84d4d; }
+    .s23-pkg-note {
+      font-family: 'Almoni', sans-serif;
+      font-size: 22px;
+      color: rgba(248, 252, 253, 0.55);
+      letter-spacing: -0.2px;
+    }
+
+    /* Framework — next.js */
+    .s23-fw {
+      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .s23-fw > .s23-box-tag { color: #f8fcfd; }
+
+    /* Libraries row inside framework */
+    .s23-libs {
+      display: flex;
+      gap: 20px;
+    }
+
+    .s23-lib {
+      flex: 1;
+      position: relative;
+      border: 2px solid rgba(56, 189, 248, 0.4);
+      background: rgba(56, 189, 248, 0.04);
+      border-radius: 16px;
+      padding: 40px 24px 24px;
+      text-align: center;
+    }
+
+    .s23-lib > .s23-box-tag {
+      color: #38bdf8;
+      font-size: 13px;
+    }
+
+    .s23-lib-name {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 700;
+      font-size: 34px;
+      color: #f8fcfd;
+      letter-spacing: -0.4px;
+    }
+
+    /* Placeholder state for not-yet-taught items */
+    .placeholder {
+      border-style: dashed !important;
+      opacity: 0.55;
+    }
+
+    /* Slide 24 — framework (orange) + libraries (yellow) active */
+    .s23-fw.active-fw {
+      border-color: rgba(255, 149, 0, 0.7) !important;
+      background: rgba(255, 149, 0, 0.06) !important;
+      opacity: 1 !important;
+    }
+    .s23-fw.active-fw > .s23-box-tag {
+      color: #ff9500;
+    }
+
+    .s23-lib.active-lib {
+      border-color: rgba(255, 216, 77, 0.7) !important;
+      background: rgba(255, 216, 77, 0.06) !important;
+      opacity: 1 !important;
+    }
+    .s23-lib.active-lib > .s23-box-tag {
+      color: #ffd84d;
+    }
+
+    /* Slides with lowercase titles (npm, shadcn) */
+    #s22-inner .s19-title {
+      text-transform: lowercase;
+    }
+
+    /* Inline code — black rectangle with Fira Code */
+    .code {
+      font-family: 'Fira Code', monospace;
+      font-weight: 500;
+      background: #000;
+      color: #7bed52;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      letter-spacing: 0;
+      display: inline-block;
+      line-height: 1.4;
+    }
+
+    .s21-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .s21-icon {
+      color: #f8fcfd;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 20 — Step 1 Highlight (from Figma)
+    ═══════════════════════════════════════ */
+
+    .s20-step-num-active {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 40px;
+      color: #fff;
+      opacity: 1;
+      text-align: center;
+      letter-spacing: -0.8px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .s20-card-highlight {
+      width: 385px;
+      height: 143px;
+      background: #ffffff;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px 40px;
+      text-transform: capitalize;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .s20-card-highlight h3 {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #140101;
+      letter-spacing: -0.64px;
+      line-height: 1.1;
+    }
+
+    .s20-card-highlight p {
+      font-family: 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      color: #140101;
+      letter-spacing: -0.48px;
+      line-height: 1.1;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDES 19.1 – 19.3 — Claude Code Options
+    ═══════════════════════════════════════ */
+    .sopt-head {
+      position: absolute;
+      top: 88px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+      width: 1400px;
+      text-align: center;
+    }
+
+    .sopt-label {
+      font-family: 'Inter', 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      text-transform: capitalize;
+      letter-spacing: 2px;
+      color: #7bed52;
+      line-height: 1.1;
+    }
+
+    .sopt-title {
+      font-family: 'Minecraft', monospace;
+      font-weight: 400;
+      font-size: 72px;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: -1.4px;
+      line-height: 1.05;
+    }
+
+    .sopt-subtitle {
+      font-family: 'Inter', 'Almoni', sans-serif;
+      font-weight: 400;
+      font-size: 26px;
+      color: #b7b7b7;
+      letter-spacing: -0.3px;
+      line-height: 1.3;
+      max-width: 1200px;
+    }
+
+    .sopt-image {
+      position: absolute;
+      left: 50%;
+      top: 360px;
+      transform: translateX(-50%);
+      width: 1480px;
+      max-width: calc(100% - 120px);
+      z-index: 1;
+    }
+
+    .sopt-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 20 — Cursor Annotated
+    ═══════════════════════════════════════ */
+    .scur-head {
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 3;
+      text-align: center;
+      width: 1400px;
+    }
+
+    .scur-img {
+      position: absolute;
+      left: 50%;
+      top: 280px;
+      transform: translateX(-50%);
+      width: 980px;
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+      z-index: 1;
+    }
+
+    .scur-svg {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .scur-anno {
+      position: absolute;
+      font-family: 'Inter', 'Almoni', sans-serif;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.5px;
+      color: #7bed52;
+      padding: 10px 18px;
+      border: 1px dashed #7bed52;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.65);
+      white-space: nowrap;
+      z-index: 3;
+    }
+
+    .scur-anno-tl { left: 80px; top: 340px; }
+    .scur-anno-tr { right: 80px; top: 340px; }
+    .scur-anno-bl { left: 80px; top: 700px; }
+    .scur-anno-br { right: 80px; top: 700px; }
+
+    .scur-dot {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #7bed52;
+      box-shadow: 0 0 0 4px rgba(123, 237, 82, 0.2);
+      z-index: 2;
+    }
+
+    /* ═══════════════════════════════════════
+       Navigation Bar
+    ═══════════════════════════════════════ */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      z-index: 1000;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-home {
+      position: absolute;
+      left: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: rgba(255,255,255,0.35);
+      font-family: 'Almoni', sans-serif;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .nav-home:hover {
+      color: #fff;
+    }
+
+    .nav-home svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .nav-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .nav-arrow:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.35);
+    }
+
+    .nav-arrow:disabled {
+      opacity: 0.2;
+      cursor: default;
+    }
+
+    .nav-arrow:disabled:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .nav-dots {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .nav-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .nav-dot.active {
+      background: #fff;
+      transform: scale(1.35);
+    }
+
+    .nav-dot:hover:not(.active) {
+      background: rgba(255,255,255,0.4);
+    }
+
+    .nav-counter {
+      font-family: 'Almoni', sans-serif;
+      font-size: 14px;
+      color: rgba(255,255,255,0.35);
+      min-width: 44px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="slides-container">
+
+  <!-- ═══════ SLIDE 2 — The World We Knew (from Figma) ═══════ -->
+  <div class="slide active" data-slide="1">
+    <div class="slide-inner" id="s2-inner">
+
+      <!-- Card -->
+      <div class="s2-card">
+        <h3>Static hand-offs</h3>
+      </div>
+
+      <!-- Connector line -->
+      <div class="s2-connector">
+        <img src="assets/connector.svg" alt="" />
+      </div>
+
+      <!-- Bullet list -->
+      <ul class="s2-bullets">
+        <li>No control</li>
+        <li>Dependency on dev timeline</li>
+        <li>Changes require new tickets</li>
+      </ul>
+
+      <!-- Title block -->
+      <div class="s2-text-block">
+        <h2>The World We Knew</h2>
+        <p>The friction points that slow down every design project</p>
+      </div>
+
+      <!-- Globe -->
+      <div class="s2-globe">
+        <img src="assets/globe.png" alt="" />
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 3 — Endless Iterations (from Figma) ═══════ -->
+  <div class="slide" data-slide="2">
+    <div class="slide-inner" id="s3-inner">
+
+      <!-- Card 1 — faded -->
+      <div class="s3-card1">
+        <h3>Static hand-offs</h3>
+      </div>
+      <div class="s3-connector1">
+        <img src="assets/connector.svg" alt="" />
+      </div>
+      <ul class="s3-bullets1">
+        <li>No control</li>
+        <li>Dependency on dev timeline</li>
+        <li>Changes require new tickets</li>
+      </ul>
+
+      <!-- Card 2 — active -->
+      <div class="s3-card2">
+        <h3>Endless terations</h3>
+      </div>
+      <div class="s3-connector2">
+        <img src="assets/connector2.svg" alt="" />
+      </div>
+      <ul class="s3-bullets2">
+        <li>Weeks of back-and-forth</li>
+        <li>Context lost between meetings</li>
+        <li>Design intent misunderstood</li>
+      </ul>
+
+      <!-- Title block -->
+      <div class="s3-text-block">
+        <h2>The World We Knew</h2>
+        <p>The friction points that slow down every design project</p>
+      </div>
+
+      <!-- Globe -->
+      <div class="s3-globe">
+        <img src="assets/globe.png" alt="" />
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 4 — Lost In Translation (from Figma) ═══════ -->
+  <div class="slide" data-slide="3">
+    <div class="slide-inner" id="s4-inner">
+
+      <!-- Card 1 — faded -->
+      <div class="s4-card1">
+        <h3>Static hand-offs</h3>
+      </div>
+      <div class="s4-connector1">
+        <img src="assets/connector.svg" alt="" />
+      </div>
+
+      <!-- Card 2 — faded -->
+      <div class="s4-card2">
+        <h3>Endless terations</h3>
+      </div>
+      <div class="s4-connector2">
+        <img src="assets/connector2.svg" alt="" />
+      </div>
+
+      <!-- Card 3 — active -->
+      <div class="s4-card3">
+        <h3>Lost in Translation</h3>
+      </div>
+      <div class="s4-connector3">
+        <img src="assets/connector3.svg" alt="" />
+      </div>
+      <ul class="s4-bullets3">
+        <li>Typography choices ignored</li>
+        <li>Design system slowly erodes</li>
+        <li>Pixel perfect? Not quite.</li>
+      </ul>
+
+      <!-- Title block -->
+      <div class="s4-text-block">
+        <h2>The World We Knew</h2>
+        <p>The friction points that slow down every design project</p>
+      </div>
+
+      <!-- Globe -->
+      <div class="s4-globe">
+        <img src="assets/globe.png" alt="" />
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 5 — Designers Who Ship ═══════ -->
+  <div class="slide" data-slide="4">
+    <div class="slide-inner" id="s5-inner">
+      <div class="s5-grid"><img src="assets/grid.svg" alt="" /></div>
+      <div class="s5-shape-big"><img src="assets/Cool Shape.svg" alt="" /></div>
+      <div class="s5-shape-small"><img src="assets/Cool Shape-small.svg" alt="" /></div>
+      <div class="s5-center-text">
+        <div class="s5-label">THE OPPORTONITY</div>
+        <div class="s5-title">The World We're Building</div>
+      </div>
+
+      <!-- Card 1 — active -->
+      <div class="s5-card s5-card-1">
+        <h3>Designers Who Ship</h3>
+        <p>Design it &rarr; Build it &rarr; Ship it</p>
+      </div>
+      <div class="s5-conn-1"><img src="assets/connector.svg" alt="" /></div>
+
+      <div class="s5-planet"><img src="assets/planet-ring.png" alt="" /></div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 6 — + Pixel-Perfect Control ═══════ -->
+  <div class="slide" data-slide="5">
+    <div class="slide-inner" id="s6-inner">
+      <div class="s5-grid"><img src="assets/grid.svg" alt="" /></div>
+      <div class="s5-shape-big"><img src="assets/Cool Shape.svg" alt="" /></div>
+      <div class="s5-shape-small"><img src="assets/Cool Shape-small.svg" alt="" /></div>
+      <div class="s5-center-text">
+        <div class="s5-label">THE OPPORTONITY</div>
+        <div class="s5-title">The World We're Building</div>
+      </div>
+
+      <!-- Card 1 — still visible -->
+      <div class="s5-card s5-card-1">
+        <h3>Designers Who Ship</h3>
+        <p>Design it &rarr; Build it &rarr; Ship it</p>
+      </div>
+      <div class="s5-conn-1"><img src="assets/connector.svg" alt="" /></div>
+
+      <!-- Card 2 — active -->
+      <div class="s5-card s5-card-2">
+        <h3>Pixel-Perfect Control</h3>
+        <p>Your design system, your code</p>
+      </div>
+      <div class="s5-conn-2"><img src="assets/connector-up.svg" alt="" /></div>
+
+      <div class="s5-planet"><img src="assets/planet-ring.png" alt="" /></div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 7 — + AI-Augmented Creation ═══════ -->
+  <div class="slide" data-slide="6">
+    <div class="slide-inner" id="s7-inner">
+      <div class="s5-grid"><img src="assets/grid.svg" alt="" /></div>
+      <div class="s5-shape-big"><img src="assets/Cool Shape.svg" alt="" /></div>
+      <div class="s5-shape-small"><img src="assets/Cool Shape-small.svg" alt="" /></div>
+      <div class="s5-center-text">
+        <div class="s5-label">THE OPPORTONITY</div>
+        <div class="s5-title">The World We're Building</div>
+      </div>
+
+      <!-- Card 1 — still visible -->
+      <div class="s5-card s5-card-1">
+        <h3>Designers Who Ship</h3>
+        <p>Design it &rarr; Build it &rarr; Ship it</p>
+      </div>
+      <div class="s5-conn-1"><img src="assets/connector.svg" alt="" /></div>
+
+      <!-- Card 2 — still visible -->
+      <div class="s5-card s5-card-2">
+        <h3>Pixel-Perfect Control</h3>
+        <p>Your design system, your code</p>
+      </div>
+      <div class="s5-conn-2"><img src="assets/connector-up.svg" alt="" /></div>
+
+      <!-- Card 3 — active -->
+      <div class="s5-card s5-card-3">
+        <h3>AI-Augmented Creation</h3>
+        <p>Cursor + Claude = Your coding partner</p>
+      </div>
+      <div class="s5-conn-3"><img src="assets/connector-right.svg" alt="" /></div>
+
+      <div class="s5-planet"><img src="assets/planet-ring.png" alt="" /></div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 8 — Toys Are For Playing ═══════ -->
+  <div class="slide" data-slide="7">
+    <div class="slide-inner" id="s8-inner">
+
+      <!-- Left side: Toys -->
+      <div class="s8-left">
+        <div class="s8-left-title">Toys are for playing.</div>
+        <div class="s8-toy-cards">
+          <div class="s8-toy-card">
+            <img src="assets/lovable.png" alt="Lovable" />
+          </div>
+          <div class="s8-toy-card s8-toy-card-dark">
+            <img src="assets/bolt.png" alt="bolt.new" />
+          </div>
+          <div class="s8-toy-card s8-toy-card-dark">
+            <img src="assets/base44.png" alt="Base44" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 9 — + Tools Are For Building ═══════ -->
+  <div class="slide" data-slide="8">
+    <div class="slide-inner" id="s9-inner">
+
+      <!-- Left side: Toys (still visible) -->
+      <div class="s8-left">
+        <div class="s8-left-title">Toys are for playing.</div>
+        <div class="s8-toy-cards">
+          <div class="s8-toy-card">
+            <img src="assets/lovable.png" alt="Lovable" />
+          </div>
+          <div class="s8-toy-card s8-toy-card-dark">
+            <img src="assets/bolt.png" alt="bolt.new" />
+          </div>
+          <div class="s8-toy-card s8-toy-card-dark">
+            <img src="assets/base44.png" alt="Base44" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side: Tools (appended) -->
+      <div class="s8-right">
+        <div class="s8-right-header">
+          <div class="s8-right-label">THE CHOISE</div>
+          <div class="s8-right-title">Tools are for building.</div>
+        </div>
+        <div class="s8-tool-cards">
+          <div class="s8-tool-card s8-tool-card-cursor">
+            <img src="assets/cursor-logo.png" alt="Cursor" />
+          </div>
+          <div class="s8-tool-card s8-tool-card-claude">
+            <img src="assets/download.png" alt="Claude Code" />
+          </div>
+          <div class="s8-tool-card s8-tool-card-github">
+            <img src="assets/download.jpg" alt="GitHub" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 10 — Lovable Screenshot + Pain Points ═══════ -->
+  <div class="slide" data-slide="9">
+    <div class="slide-inner" id="s10-inner">
+
+      <!-- Screenshot -->
+      <div class="s10-screenshot">
+        <img src="assets/lovable-screenshot.png" alt="Lovable app builder" />
+      </div>
+
+      <!-- Right side: shape + pain points -->
+      <div class="s10-right">
+        <!-- Arrows down shape -->
+        <div class="s10-shape">
+          <img src="assets/arrows-down.svg" alt="" />
+        </div>
+
+        <!-- Pain point list -->
+        <div class="s10-pain-points">
+          <p>No Context</p>
+          <p>Not Design Oriented</p>
+          <p>Inconsistency</p>
+          <p>Can't Iterate On Existing Code</p>
+          <p>One-Off Experiments</p>
+          <p>No Version Control</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 11 — Restricted ═══════ -->
+  <div class="slide" data-slide="10">
+    <div class="slide-inner" id="s11-inner">
+
+      <!-- Faded screenshot -->
+      <div class="s11-screenshot">
+        <img src="assets/lovable-screenshot.png" alt="" />
+      </div>
+
+      <!-- Diagonal strikethrough -->
+      <div class="s11-strikethrough">
+        <img src="assets/strikethrough-line.svg" alt="" />
+      </div>
+
+      <!-- RESTRICTED text -->
+      <div class="s11-restricted">RESTRICTED</div>
+
+      <!-- Right side: shape + pain points -->
+      <div class="s11-right">
+        <div class="s10-shape">
+          <img src="assets/arrows-down.svg" alt="" />
+        </div>
+        <div class="s10-pain-points">
+          <p>No Context</p>
+          <p>Not Design Oriented</p>
+          <p>Inconsistency</p>
+          <p>Can't Iterate On Existing Code</p>
+          <p>One-Off Experiments</p>
+          <p>No Version Control</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 12 — Cursor IDE + GitHub Card ═══════ -->
+  <div class="slide" data-slide="11">
+    <div class="slide-inner" id="s12-inner">
+
+      <!-- Cursor IDE card -->
+      <div class="s12-cursor-card">
+        <div class="s12-cursor-header">
+          <div class="s12-cursor-header-left">
+            <div class="s12-cursor-icon">
+              <img src="assets/cursor-icon.png" alt="Cursor" />
+            </div>
+            <div class="s12-cursor-title">Real Code, Real Control</div>
+          </div>
+          <div class="s12-avatars">
+            <div class="s12-avatar"><img src="assets/avatar1.png" alt="" /></div>
+            <div class="s12-avatar"><img src="assets/avatar2.png" alt="" /></div>
+            <div class="s12-avatar"><img src="assets/avatar3.png" alt="" /></div>
+          </div>
+        </div>
+        <div class="s12-cursor-divider">
+          <img src="assets/divider-line.svg" alt="" />
+        </div>
+      </div>
+
+      <!-- Cursor IDE screenshot (bottom portion) -->
+      <div class="s12-cursor-screenshot">
+        <img src="assets/cursor-ide-screenshot.png" alt="" />
+      </div>
+
+      <!-- GitHub card (overlapping top-right) -->
+      <div class="s12-github-card">
+        <div class="s12-github-logo">
+          <img src="assets/github-card-icon.png" alt="GitHub" />
+        </div>
+        <div class="s12-github-divider">
+          <img src="assets/divider-line-vertical.svg" alt="" />
+        </div>
+        <div class="s12-gh-pill s12-gh-pill-1"></div>
+        <div class="s12-gh-pill s12-gh-pill-2"></div>
+        <div class="s12-gh-pill s12-gh-pill-3"></div>
+      </div>
+
+      <!-- GitHub branch diagram -->
+      <div class="s12-github-branch">
+        <img src="assets/github-branch.svg" alt="" />
+      </div>
+
+      <!-- Right side: shape + benefits -->
+      <div class="s12-right">
+        <div class="s10-shape">
+          <img src="assets/arrows-down.svg" alt="" />
+        </div>
+        <div class="s12-benefits">
+          <p>Integrated Workflow</p>
+          <p>Codebase</p>
+          <p>Design System Enforced</p>
+          <p>Professional Collaboration</p>
+          <p>The Power Of Git</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 13 — Visual Hierarchy Instinct ═══════ -->
+  <div class="slide" data-slide="12">
+    <div class="slide-inner" id="s13-inner">
+      <div class="s13-bg"></div>
+      <div class="s13-center">
+        <div class="s13-label">The Unfair Advantage</div>
+        <div class="s13-title">Why Designers Are The Ultimate Builders</div>
+      </div>
+
+      <div class="s13-card s13-card-1">
+        <h3>Visual Hierarchy Instinct</h3>
+        <p>Better UI Decisions</p>
+      </div>
+      <div class="s13-conn s13-conn-1"><img src="assets/conn-ua-4.svg" alt="" /></div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 14 — + User Empathy ═══════ -->
+  <div class="slide" data-slide="13">
+    <div class="slide-inner" id="s14-inner">
+      <div class="s13-bg"></div>
+      <div class="s13-center">
+        <div class="s13-label">The Unfair Advantage</div>
+        <div class="s13-title">Why Designers Are The Ultimate Builders</div>
+      </div>
+
+      <div class="s13-card s13-card-1">
+        <h3>Visual Hierarchy Instinct</h3>
+        <p>Better UI Decisions</p>
+      </div>
+      <div class="s13-conn s13-conn-1"><img src="assets/conn-ua-4.svg" alt="" /></div>
+
+      <div class="s13-card s13-card-2">
+        <h3>User Empathy</h3>
+        <p>Features That Matter</p>
+      </div>
+      <div class="s13-conn s13-conn-2"><img src="assets/conn-ua-1.svg" alt="" /></div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 15 — + Attention To Detail ═══════ -->
+  <div class="slide" data-slide="14">
+    <div class="slide-inner" id="s15-inner">
+      <div class="s13-bg"></div>
+      <div class="s13-center">
+        <div class="s13-label">The Unfair Advantage</div>
+        <div class="s13-title">Why Designers Are The Ultimate Builders</div>
+      </div>
+
+      <div class="s13-card s13-card-1">
+        <h3>Visual Hierarchy Instinct</h3>
+        <p>Better UI Decisions</p>
+      </div>
+      <div class="s13-conn s13-conn-1"><img src="assets/conn-ua-4.svg" alt="" /></div>
+
+      <div class="s13-card s13-card-2">
+        <h3>User Empathy</h3>
+        <p>Features That Matter</p>
+      </div>
+      <div class="s13-conn s13-conn-2"><img src="assets/conn-ua-1.svg" alt="" /></div>
+
+      <div class="s13-card s13-card-3">
+        <h3>Attention To Detail</h3>
+        <p>Polished Experiences</p>
+      </div>
+      <div class="s13-conn s13-conn-3"><img src="assets/conn-ua-3.svg" alt="" /></div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 16 — + System Thinking ═══════ -->
+  <div class="slide" data-slide="15">
+    <div class="slide-inner" id="s16-inner">
+      <div class="s13-bg"></div>
+      <div class="s13-center">
+        <div class="s13-label">The Unfair Advantage</div>
+        <div class="s13-title">Why Designers Are The Ultimate Builders</div>
+      </div>
+
+      <div class="s13-card s13-card-1">
+        <h3>Visual Hierarchy Instinct</h3>
+        <p>Better UI Decisions</p>
+      </div>
+      <div class="s13-conn s13-conn-1"><img src="assets/conn-ua-4.svg" alt="" /></div>
+
+      <div class="s13-card s13-card-2">
+        <h3>User Empathy</h3>
+        <p>Features That Matter</p>
+      </div>
+      <div class="s13-conn s13-conn-2"><img src="assets/conn-ua-1.svg" alt="" /></div>
+
+      <div class="s13-card s13-card-3">
+        <h3>Attention To Detail</h3>
+        <p>Polished Experiences</p>
+      </div>
+      <div class="s13-conn s13-conn-3"><img src="assets/conn-ua-3.svg" alt="" /></div>
+
+      <div class="s13-card s13-card-4">
+        <h3>System Thinking</h3>
+        <p>Scalable Architectures</p>
+      </div>
+      <div class="s13-conn s13-conn-4"><img src="assets/conn-ua-2.svg" alt="" /></div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 17 — The Gap ═══════ -->
+  <div class="slide" data-slide="16">
+    <div class="slide-inner" id="s17-inner">
+      <div class="s13-bg"></div>
+
+      <!-- Vertical line top -->
+      <div class="s17-line-top">
+        <img src="assets/vertical-line.svg" alt="" />
+      </div>
+
+      <!-- Center text -->
+      <div class="s17-center">
+        <div class="s17-label">The Gap?</div>
+        <div class="s17-title">The Gap Was Never Talent. It Was Tooling.</div>
+      </div>
+
+      <!-- Vertical line bottom -->
+      <div class="s17-line-bottom">
+        <img src="assets/vertical-line.svg" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 18 — The Gap + Subtitle (animated) ═══════ -->
+  <div class="slide" data-slide="17">
+    <div class="slide-inner" id="s18-inner">
+      <div class="s13-bg"></div>
+
+      <!-- Vertical line top (same as slide 17) -->
+      <div class="s17-line-top">
+        <img src="assets/vertical-line.svg" alt="" />
+      </div>
+
+      <!-- Center text (same as slide 17) -->
+      <div class="s17-center">
+        <div class="s17-label">The Gap?</div>
+        <div class="s17-title">The Gap Was Never Talent. It Was Tooling.</div>
+      </div>
+
+      <!-- Subtitle — fades in + slides up -->
+      <div class="s18-subtitle">Cursor + Claude Code closes that gap</div>
+
+      <!-- Bottom line — shrinks and moves down -->
+      <div class="s18-line-bottom">
+        <img src="assets/vertical-line-short.svg" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 19 — By The End Of Today ═══════ -->
+  <div class="slide" data-slide="18">
+    <div class="slide-inner" id="s19-inner">
+      <div class="s13-bg"></div>
+
+      <!-- Grid background (small, top center) -->
+      <div class="s19-grid">
+        <img src="assets/grid-small.svg" alt="" />
+      </div>
+
+      <!-- Title -->
+      <div class="s19-center">
+        <div class="s19-label">The Transformation</div>
+        <div class="s19-title">By The End Of Today</div>
+      </div>
+
+      <!-- Step numbers + dashed lines -->
+      <div class="s19-steps">
+        <span class="s19-step-num">1</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s19-step-num">2</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s19-step-num">3</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s19-step-num">4</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+      </div>
+
+      <!-- Cards -->
+      <div class="s19-cards">
+        <div class="s19-card">
+          <h3>Meet Your AI Partners</h3>
+          <p>Cursor, Claude, Git</p>
+        </div>
+        <div class="s19-card">
+          <h3>Tools & Environment Ready</h3>
+          <p>Node, Next.js, Tailwind, shadcn</p>
+        </div>
+        <div class="s19-card">
+          <h3>Dev Logic</h3>
+          <p>localhost</p>
+        </div>
+        <div class="s19-card">
+          <h3>Make First Changes</h3>
+          <p>Real Project Iteration</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 20 — Step 1 Highlight ═══════ -->
+  <div class="slide" data-slide="19">
+    <div class="slide-inner" id="s20-inner">
+      <div class="s13-bg"></div>
+
+      <!-- Grid background (small, top center) -->
+      <div class="s19-grid">
+        <img src="assets/grid-small.svg" alt="" />
+      </div>
+
+      <!-- Title -->
+      <div class="s19-center">
+        <div class="s19-label">The Transformation</div>
+        <div class="s19-title">By The End Of Today</div>
+      </div>
+
+      <!-- Step numbers + dashed lines — step 1 is highlighted -->
+      <div class="s19-steps">
+        <span class="s20-step-num-active">1</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s19-step-num">2</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s19-step-num">3</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s19-step-num">4</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+      </div>
+
+      <!-- Cards — first card highlighted white -->
+      <div class="s19-cards">
+        <div class="s20-card-highlight">
+          <h3>Meet Your AI Partners</h3>
+          <p>Cursor, Claude, Git</p>
+        </div>
+        <div class="s19-card">
+          <h3>Tools & Environment Ready</h3>
+          <p>Node, Next.js, Tailwind, shadcn</p>
+        </div>
+        <div class="s19-card">
+          <h3>Dev Logic</h3>
+          <p>localhost</p>
+        </div>
+        <div class="s19-card">
+          <h3>Make First Changes</h3>
+          <p>Real Project Iteration</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 21 — What Is Cursor ═══════ -->
+  <div class="slide" data-slide="19pre">
+    <div class="slide-inner">
+      <div class="s13-bg"></div>
+
+      <div class="scur-head">
+        <div class="sopt-label">Meet Your IDE</div>
+        <div class="sopt-title">Cursor</div>
+        <div class="sopt-subtitle">An AI-first code editor — write code, run it, and work with AI agents, all in one window</div>
+      </div>
+
+      <img class="scur-img" src="assets/cursor-annotated.png" alt="Cursor IDE" />
+
+      <svg class="scur-svg" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#7bed52" stroke-width="2" stroke-dasharray="6 5" fill="none">
+          <line x1="340" y1="380" x2="540" y2="600" />
+          <line x1="1580" y1="380" x2="1355" y2="400" />
+          <line x1="340" y1="735" x2="935" y2="440" />
+          <line x1="1580" y1="735" x2="935" y2="770" />
+        </g>
+      </svg>
+
+      <div class="scur-dot" style="left: 533px; top: 593px;"></div>
+      <div class="scur-dot" style="left: 1348px; top: 393px;"></div>
+      <div class="scur-dot" style="left: 928px; top: 433px;"></div>
+      <div class="scur-dot" style="left: 928px; top: 763px;"></div>
+
+      <div class="scur-anno scur-anno-tl">Libraries &amp; Files</div>
+      <div class="scur-anno scur-anno-tr">AI Agents</div>
+      <div class="scur-anno scur-anno-bl">Visual Editor</div>
+      <div class="scur-anno scur-anno-br">Terminal</div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 19.1 — Claude Desktop ═══════ -->
+  <div class="slide" data-slide="18a">
+    <div class="slide-inner">
+      <div class="s13-bg"></div>
+      <div class="sopt-head">
+        <div class="sopt-label">Where You Can Use Claude</div>
+        <div class="sopt-title">Claude Desktop</div>
+        <div class="sopt-subtitle">Anthropic's official desktop app — chat with Claude right from your Mac, no browser, no code</div>
+      </div>
+      <div class="sopt-image">
+        <img src="assets/claude-desktop.png" alt="Claude Desktop" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 19.2 — Claude in Terminal ═══════ -->
+  <div class="slide" data-slide="18b">
+    <div class="slide-inner">
+      <div class="s13-bg"></div>
+      <div class="sopt-head">
+        <div class="sopt-label">Where You Can Use Claude</div>
+        <div class="sopt-title">Claude Code in the Terminal</div>
+        <div class="sopt-subtitle">Claude Code runs straight from your terminal — a full coding agent that works on your real project</div>
+      </div>
+      <div class="sopt-image">
+        <img src="assets/claude-terminal.png" alt="Claude Code in Terminal" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 19.3 — Claude in Cursor ═══════ -->
+  <div class="slide" data-slide="18c">
+    <div class="slide-inner">
+      <div class="s13-bg"></div>
+      <div class="sopt-head">
+        <div class="sopt-label">Where You Can Use Claude</div>
+        <div class="sopt-title">Claude Code inside Cursor</div>
+        <div class="sopt-subtitle">Claude Code lives right next to your code as a side panel in the Cursor IDE</div>
+      </div>
+      <div class="sopt-image">
+        <img src="assets/claude-cursor.png" alt="Claude Code inside Cursor" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 19.4 — Claude in Cursor + Terminal ═══════ -->
+  <div class="slide" data-slide="18d">
+    <div class="slide-inner">
+      <div class="s13-bg"></div>
+      <div class="sopt-head">
+        <div class="sopt-label">Where You Can Use Claude</div>
+        <div class="sopt-title">Claude Code in Cursor + Terminal</div>
+        <div class="sopt-subtitle">Run Claude Code in Cursor's built-in terminal — code, files, and agent all in one window</div>
+      </div>
+      <div class="sopt-image">
+        <img src="assets/claude-cursor-terminal.png" alt="Claude Code in Cursor with Terminal" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 19.3b — By The End Of Today (duplicate) ═══════ -->
+  <div class="slide" data-slide="18e">
+    <div class="slide-inner">
+      <div class="s13-bg"></div>
+
+      <div class="s19-grid">
+        <img src="assets/grid-small.svg" alt="" />
+      </div>
+
+      <div class="s19-center">
+        <div class="s19-label">The Transformation</div>
+        <div class="s19-title">By The End Of Today</div>
+      </div>
+
+      <div class="s19-steps">
+        <span class="s19-step-num">1</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s19-step-num">2</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s19-step-num">3</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s19-step-num">4</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+      </div>
+
+      <div class="s19-cards">
+        <div class="s19-card">
+          <h3>Meet Your AI Partners</h3>
+          <p>Cursor, Claude, Git</p>
+        </div>
+        <div class="s19-card">
+          <h3>Tools & Environment Ready</h3>
+          <p>Node, Next.js, Tailwind, shadcn</p>
+        </div>
+        <div class="s19-card">
+          <h3>Dev Logic</h3>
+          <p>localhost</p>
+        </div>
+        <div class="s19-card">
+          <h3>Make First Changes</h3>
+          <p>Real Project Iteration</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 19.3c — By The End Of Today (Step 2 Highlight) ═══════ -->
+  <div class="slide" data-slide="18f">
+    <div class="slide-inner">
+      <div class="s13-bg"></div>
+
+      <div class="s19-grid">
+        <img src="assets/grid-small.svg" alt="" />
+      </div>
+
+      <div class="s19-center">
+        <div class="s19-label">The Transformation</div>
+        <div class="s19-title">By The End Of Today</div>
+      </div>
+
+      <div class="s19-steps">
+        <span class="s19-step-num">1</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s20-step-num-active">2</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s19-step-num">3</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s19-step-num">4</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+      </div>
+
+      <div class="s19-cards">
+        <div class="s19-card">
+          <h3>Meet Your AI Partners</h3>
+          <p>Cursor, Claude, Git</p>
+        </div>
+        <div class="s20-card-highlight">
+          <h3>Tools & Environment Ready</h3>
+          <p>Node, Next.js, Tailwind, shadcn</p>
+        </div>
+        <div class="s19-card">
+          <h3>Dev Logic</h3>
+          <p>localhost</p>
+        </div>
+        <div class="s19-card">
+          <h3>Make First Changes</h3>
+          <p>Real Project Iteration</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 21 — Why Node.js ═══════ -->
+  <div class="slide" data-slide="20">
+    <div class="slide-inner" id="s21-inner">
+      <div class="s13-bg"></div>
+
+      <!-- Grid background (small, top center) -->
+      <div class="s19-grid">
+        <img src="assets/grid-small.svg" alt="" />
+      </div>
+
+      <!-- Title -->
+      <div class="s19-center">
+        <div class="s19-label">Step 2 — The Foundation</div>
+        <div class="s19-title">Node.js</div>
+        <div class="s21-subtitle">Node.js is an <strong>environment</strong> that lets your computer run JavaScript — the ground everything else (Next.js, npm, Tailwind) stands on.</div>
+      </div>
+
+      <!-- Cards (why-first framing) -->
+      <div class="s19-cards">
+        <div class="s21-col">
+          <div class="s21-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+          </div>
+          <div class="s19-card">
+            <h3>No Node, No Preview</h3>
+            <p>localhost won't run</p>
+          </div>
+        </div>
+        <div class="s21-col">
+          <div class="s21-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+          </div>
+          <div class="s19-card">
+            <h3>No Node, No Libraries</h3>
+            <p>npm lives inside Node</p>
+          </div>
+        </div>
+        <div class="s21-col">
+          <div class="s21-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg>
+          </div>
+          <div class="s19-card">
+            <h3>No Node, No Framework</h3>
+            <p>Next.js & React need it</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 22 — npm ═══════ -->
+  <div class="slide" data-slide="21">
+    <div class="slide-inner" id="s22-inner">
+      <div class="s13-bg"></div>
+
+      <!-- Grid background (small, top center) -->
+      <div class="s19-grid">
+        <img src="assets/grid-small.svg" alt="" />
+      </div>
+
+      <!-- Title -->
+      <div class="s19-center">
+        <div class="s19-label">Step 2 — The Foundation</div>
+        <div class="s19-title">npm</div>
+        <div class="s21-subtitle">npm is the <strong>manager</strong> that installs and connects every piece of code you use — it comes built-in with Node.</div>
+      </div>
+
+      <!-- Cards (what npm does) -->
+      <div class="s19-cards">
+        <div class="s21-col">
+          <div class="s21-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          </div>
+          <div class="s19-card">
+            <h3>Install Anything</h3>
+            <p><span class="code">npm install tailwindcss</span></p>
+          </div>
+        </div>
+        <div class="s21-col">
+          <div class="s21-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+          </div>
+          <div class="s19-card">
+            <h3>Manage Versions</h3>
+            <p><span class="code">package.json</span></p>
+          </div>
+        </div>
+        <div class="s21-col">
+          <div class="s21-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>
+          </div>
+          <div class="s19-card">
+            <h3>Run Your Project</h3>
+            <p><span class="code">npm run dev</span></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 23 — How It All Connects ═══════ -->
+  <div class="slide" data-slide="22">
+    <div class="slide-inner" id="s23-inner">
+      <div class="s13-bg"></div>
+
+      <!-- Grid background (small, top center) -->
+      <div class="s19-grid">
+        <img src="assets/grid-small.svg" alt="" />
+      </div>
+
+      <!-- Nested diagram — what's inside what -->
+      <div class="s23-diagram">
+        <div class="s23-box s23-env">
+          <span class="s23-box-tag">node.js <small>environment</small></span>
+
+          <div class="s23-box s23-pkg">
+            <span class="s23-box-tag">npm <small>package manager</small></span>
+            <div class="s23-pkg-note">comes with node · installs everything below</div>
+          </div>
+
+          <div class="s23-box s23-fw placeholder">
+            <span class="s23-box-tag">next.js <small>framework</small></span>
+            <div class="s23-libs">
+              <div class="s23-lib placeholder">
+                <span class="s23-box-tag">library</span>
+                <div class="s23-lib-name">tailwind</div>
+              </div>
+              <div class="s23-lib placeholder">
+                <span class="s23-box-tag">library</span>
+                <div class="s23-lib-name">shadcn</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 24 — Framework + Libraries highlighted ═══════ -->
+  <div class="slide" data-slide="23">
+    <div class="slide-inner" id="s24-inner">
+      <div class="s13-bg"></div>
+
+      <!-- Grid background (small, top center) -->
+      <div class="s19-grid">
+        <img src="assets/grid-small.svg" alt="" />
+      </div>
+
+      <!-- Nested diagram — next.js (orange) + libraries (yellow) highlighted -->
+      <div class="s23-diagram">
+        <div class="s23-box s23-env">
+          <span class="s23-box-tag">node.js <small>environment</small></span>
+
+          <div class="s23-box s23-pkg">
+            <span class="s23-box-tag">npm <small>package manager</small></span>
+            <div class="s23-pkg-note">comes with node · installs everything below</div>
+          </div>
+
+          <div class="s23-box s23-fw active-fw">
+            <span class="s23-box-tag">next.js <small>framework</small></span>
+            <div class="s23-libs">
+              <div class="s23-lib active-lib">
+                <span class="s23-box-tag">library</span>
+                <div class="s23-lib-name">tailwind</div>
+              </div>
+              <div class="s23-lib active-lib">
+                <span class="s23-box-tag">library</span>
+                <div class="s23-lib-name">shadcn</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 25 — Tailwind ═══════ -->
+  <div class="slide" data-slide="24">
+    <div class="slide-inner" id="s25-inner">
+      <div class="s13-bg"></div>
+
+      <!-- Grid background (small, top center) -->
+      <div class="s19-grid">
+        <img src="assets/grid-small.svg" alt="" />
+      </div>
+
+      <!-- Title -->
+      <div class="s19-center">
+        <div class="s19-title">Tailwind<a href="https://tailwindcss.com/" target="_blank" rel="noopener" aria-label="Visit tailwindcss.com" style="color:#7bed52;text-decoration:none;display:inline-flex;vertical-align:top;margin-inline-start:0.1em;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M21 14v7H3V3h7"/></svg></a></div>
+        <div class="s21-subtitle">Tailwind is a huge library of pre-made style <strong>classes</strong>. Instead of writing CSS from scratch, you type short names like <span class="code">p-4</span> (padding) or <span class="code">bg-black</span> — and the style just works.</div>
+        <div class="s21-install"><span class="code">npm install tailwindcss</span></div>
+      </div>
+
+      <!-- Cards (why it saves time) -->
+      <div class="s19-cards">
+        <div class="s21-col">
+          <div class="s21-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div class="s19-card">
+            <h3>Style In Place</h3>
+            <p><span class="code">class="p-4 rounded-lg"</span></p>
+          </div>
+        </div>
+        <div class="s21-col">
+          <div class="s21-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="s19-card">
+            <h3>One Config File</h3>
+            <p><span class="code">tailwind.config.js</span></p>
+          </div>
+        </div>
+        <div class="s21-col">
+          <div class="s21-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg>
+          </div>
+          <div class="s19-card">
+            <h3>Match Figma Names</h3>
+            <p>same names = no translation</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 26 — shadcn ═══════ -->
+  <div class="slide" data-slide="25">
+    <div class="slide-inner" id="s26-inner">
+      <div class="s13-bg"></div>
+
+      <!-- Grid background (small, top center) -->
+      <div class="s19-grid">
+        <img src="assets/grid-small.svg" alt="" />
+      </div>
+
+      <!-- Title -->
+      <div class="s19-center">
+        <div class="s19-title">shadcn<a href="https://ui.shadcn.com/" target="_blank" rel="noopener" aria-label="Visit ui.shadcn.com" style="color:#7bed52;text-decoration:none;display:inline-flex;vertical-align:top;margin-inline-start:0.1em;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M21 14v7H3V3h7"/></svg></a></div>
+        <div class="s21-subtitle">shadcn gives you ready-made <strong>components</strong> — Button, Dialog, Card — that you copy into your project and own the code.</div>
+        <div class="s21-install"><span class="code">npx shadcn@latest init</span></div>
+      </div>
+
+      <!-- Cards -->
+      <div class="s19-cards">
+        <div class="s21-col">
+          <div class="s21-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+          </div>
+          <div class="s19-card">
+            <h3>Ready Components</h3>
+            <p>Button, Dialog, Card...</p>
+          </div>
+        </div>
+        <div class="s21-col">
+          <div class="s21-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          </div>
+          <div class="s19-card">
+            <h3>Copy, Not Install</h3>
+            <p><span class="code">npx shadcn add button</span></p>
+          </div>
+        </div>
+        <div class="s21-col">
+          <div class="s21-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+          </div>
+          <div class="s19-card">
+            <h3>Your Code, Your Brand</h3>
+            <p>tweak Tailwind classes</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 27 — Full Stack Recap (all active) ═══════ -->
+  <div class="slide" data-slide="26">
+    <div class="slide-inner" id="s27-inner">
+      <div class="s13-bg"></div>
+
+      <!-- Grid background (small, top center) -->
+      <div class="s19-grid">
+        <img src="assets/grid-small.svg" alt="" />
+      </div>
+
+      <!-- Nested diagram — all layers active -->
+      <div class="s23-diagram">
+        <div class="s23-box s23-env">
+          <span class="s23-box-tag">node.js <small>environment</small></span>
+
+          <div class="s23-box s23-pkg">
+            <span class="s23-box-tag">npm <small>package manager</small></span>
+            <div class="s23-pkg-note">comes with node · installs everything below</div>
+          </div>
+
+          <div class="s23-box s23-fw active-fw">
+            <span class="s23-box-tag">next.js <small>framework</small></span>
+            <div class="s23-libs">
+              <div class="s23-lib active-lib">
+                <span class="s23-box-tag">library</span>
+                <div class="s23-lib-name">tailwind</div>
+              </div>
+              <div class="s23-lib active-lib">
+                <span class="s23-box-tag">library</span>
+                <div class="s23-lib-name">shadcn</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 34 — By The End Of Today (Step 3 Highlight) ═══════ -->
+  <div class="slide" data-slide="27">
+    <div class="slide-inner">
+      <div class="s13-bg"></div>
+
+      <div class="s19-grid">
+        <img src="assets/grid-small.svg" alt="" />
+      </div>
+
+      <div class="s19-center">
+        <div class="s19-label">The Transformation</div>
+        <div class="s19-title">By The End Of Today</div>
+      </div>
+
+      <div class="s19-steps">
+        <span class="s19-step-num">1</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s19-step-num">2</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s20-step-num-active">3</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+        <span class="s19-step-num">4</span>
+        <div class="s19-step-dash"><img src="assets/dashed-line.svg" alt="" /></div>
+      </div>
+
+      <div class="s19-cards">
+        <div class="s19-card">
+          <h3>Meet Your AI Partners</h3>
+          <p>Cursor, Claude, Git</p>
+        </div>
+        <div class="s19-card">
+          <h3>Tools & Environment Ready</h3>
+          <p>Node, Next.js, Tailwind, shadcn</p>
+        </div>
+        <div class="s20-card-highlight">
+          <h3>Dev Logic</h3>
+          <p>localhost</p>
+        </div>
+        <div class="s19-card">
+          <h3>Make First Changes</h3>
+          <p>Real Project Iteration</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 35 — Files: neutral (middle) ═══════ -->
+  <div class="slide" data-slide="28">
+    <div class="slide-inner">
+      <div class="s13-bg"></div>
+      <div class="s19-grid"><img src="assets/grid-small.svg" alt="" /></div>
+
+      <div class="sloc-stage">
+        <div class="sloc-node sloc-cloud">
+          <svg class="sloc-svg" viewBox="0 0 72 40" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 32 L16 24 L20 24 L20 20 L24 20 L24 14 L32 14 L32 10 L44 10 L44 14 L52 14 L52 20 L56 20 L56 24 L60 24 L60 32 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-node sloc-files sloc-files-mid">
+          <img class="sloc-files-img" src="assets/folders.svg" alt="Libraries & Files" />
+        </div>
+
+        <div class="sloc-node sloc-computer">
+          <svg class="sloc-svg" viewBox="0 0 72 44" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 6 L58 6 L58 30 L14 30 Z" />
+            <path d="M6 32 L66 32 L68 38 L4 38 Z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 36 — Files drop to computer (localhost) ═══════ -->
+  <div class="slide" data-slide="29">
+    <div class="slide-inner">
+      <div class="s13-bg"></div>
+      <div class="s19-grid"><img src="assets/grid-small.svg" alt="" /></div>
+
+      <div class="sloc-stage">
+        <div class="sloc-node sloc-cloud sloc-dim">
+          <svg class="sloc-svg" viewBox="0 0 72 40" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 32 L16 24 L20 24 L20 20 L24 20 L24 14 L32 14 L32 10 L44 10 L44 14 L52 14 L52 20 L56 20 L56 24 L60 24 L60 32 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-node sloc-files sloc-files-bottom sloc-active">
+          <img class="sloc-files-img" src="assets/folders.svg" alt="Libraries & Files" />
+        </div>
+
+        <div class="sloc-node sloc-computer sloc-active">
+          <svg class="sloc-svg" viewBox="0 0 72 44" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 6 L58 6 L58 30 L14 30 Z" />
+            <path d="M6 32 L66 32 L68 38 L4 38 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-anno sloc-anno-computer sloc-anno-show">
+          <div class="sloc-anno-line"></div>
+          <div class="sloc-anno-stack">
+            <div class="sloc-anno-text">localhost</div>
+            <div class="sloc-anno-sub">git</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 37 — Files rise to cloud ═══════ -->
+  <div class="slide" data-slide="30">
+    <div class="slide-inner">
+      <div class="s13-bg"></div>
+      <div class="s19-grid"><img src="assets/grid-small.svg" alt="" /></div>
+
+      <div class="sloc-stage">
+        <div class="sloc-node sloc-cloud sloc-active">
+          <svg class="sloc-svg" viewBox="0 0 72 40" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 32 L16 24 L20 24 L20 20 L24 20 L24 14 L32 14 L32 10 L44 10 L44 14 L52 14 L52 20 L56 20 L56 24 L60 24 L60 32 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-node sloc-files sloc-files-top sloc-active">
+          <img class="sloc-files-img" src="assets/folders.svg" alt="Libraries & Files" />
+        </div>
+
+        <div class="sloc-node sloc-computer sloc-dim">
+          <svg class="sloc-svg" viewBox="0 0 72 44" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 6 L58 6 L58 30 L14 30 Z" />
+            <path d="M6 32 L66 32 L68 38 L4 38 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-anno sloc-anno-cloud sloc-anno-show">
+          <div class="sloc-anno-line"></div>
+          <div class="sloc-anno-stack">
+            <div class="sloc-anno-text">production</div>
+            <div class="sloc-anno-sub">vercel</div>
+            <div class="sloc-anno-sub">domain www</div>
+            <div class="sloc-anno-sub">git</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation Bar -->
+<nav class="nav-bar">
+  <a href="class-2.html" class="nav-home">
+    <svg viewBox="0 0 16 16"><path d="M8 1.4L1 7v7.6h5V10h4v4.6h5V7L8 1.4z"/></svg>
+    All Classes
+  </a>
+  <button class="nav-arrow" id="prev-btn" disabled>&#8592;</button>
+  <div class="nav-dots" id="nav-dots"></div>
+  <span class="nav-counter" id="nav-counter">1 / 26</span>
+  <button class="nav-arrow" id="next-btn">&#8594;</button>
+</nav>
+
+<script>
+  // ── Responsive scaling ──
+  function scaleSlides() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight - 64; // minus nav height
+    const scaleX = vw / 1920;
+    const scaleY = vh / 1080;
+    const scale = Math.min(scaleX, scaleY);
+
+    document.querySelectorAll('.slide-inner').forEach(inner => {
+      inner.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    });
+  }
+
+  scaleSlides();
+  window.addEventListener('resize', scaleSlides);
+
+  // ── Slide navigation ──
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  let currentSlide = 0;
+
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const dotsContainer = document.getElementById('nav-dots');
+  const counter = document.getElementById('nav-counter');
+
+  // Create dots
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+
+  function goToSlide(index) {
+    if (index < 0 || index >= totalSlides) return;
+    slides[currentSlide].classList.remove('active');
+    currentSlide = index;
+    slides[currentSlide].classList.add('active');
+    updateNav();
+  }
+
+  function updateNav() {
+    document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentSlide);
+    });
+    counter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+    prevBtn.disabled = currentSlide === 0;
+    nextBtn.disabled = currentSlide === totalSlides - 1;
+  }
+
+  prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+  nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goToSlide(currentSlide + 1);
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goToSlide(currentSlide - 1);
+  });
+</script>
+
+</body>
+</html>

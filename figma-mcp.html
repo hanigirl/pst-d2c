@@ -1,0 +1,2019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class 02 — Figma MCP</title>
+  <link rel="stylesheet" href="design-system.css" />
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      font-family: var(--font-body);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* ── Slide system ── */
+    .slides-container { position: relative; width: 100%; height: 100%; }
+
+    .slide {
+      position: absolute; inset: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity var(--transition-slide);
+      overflow: hidden;
+    }
+    .slide.active { opacity: 1; pointer-events: auto; }
+
+    .slide-inner {
+      position: absolute; width: 1920px; height: 1080px;
+      top: 50%; left: 50%; transform-origin: center center;
+    }
+
+    /* ── Shared ── */
+    .grid-bg {
+      position: absolute; top: -242px; left: 158px;
+      width: 1564px; height: 1573px;
+      pointer-events: none; opacity: var(--opacity-overlay);
+    }
+    .grid-bg img { width: 100%; height: 100%; display: block; }
+
+    .slide-label {
+      position: absolute; top: 80px; left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-body);
+      font-size: var(--text-body-xs);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--color-accent-green);
+    }
+
+    .slide-heading {
+      position: absolute; top: 120px; left: 50%;
+      transform: translateX(-50%); text-align: center;
+    }
+
+    .slide-heading h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-display-md);
+      text-transform: uppercase;
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tighter);
+    }
+
+    .slide-heading p {
+      font-family: var(--font-body);
+      font-size: var(--text-body-lg);
+      opacity: var(--opacity-overlay);
+      margin-top: var(--space-sm);
+      line-height: var(--leading-normal);
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 1 — The Bridge (Visual)
+    ═══════════════════════════════════════ */
+    .bridge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .bridge-node {
+      width: 340px;
+      height: 340px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-md);
+      position: relative;
+    }
+
+    .bridge-node--figma {
+      background: var(--color-bg-card-dark);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .bridge-node--mcp {
+      background: var(--color-accent-green);
+      width: 380px;
+      height: 380px;
+      z-index: 2;
+      box-shadow: 0 0 120px rgba(123, 237, 82, 0.15);
+    }
+
+    .bridge-node--cursor {
+      background: var(--color-bg-card-dark);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .bridge-node__icon {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-md);
+      object-fit: contain;
+    }
+    .bridge-node__icon--lg {
+      width: 210px;
+      height: 210px;
+      margin: -65px 0;
+    }
+    .figma-extras {
+      position: absolute;
+      top: calc(100% + 24px);
+      left: 0;
+      right: 0;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Fira Code', monospace;
+      font-size: 16px;
+      color: rgba(248, 252, 253, 0.82);
+    }
+
+    .bridge-node__name {
+      font-family: var(--font-display);
+      font-size: var(--text-display-xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-tight);
+      line-height: 1;
+    }
+
+    .bridge-node--mcp .bridge-node__name {
+      color: var(--color-text-on-white);
+    }
+
+    .bridge-node__desc {
+      font-family: var(--font-body);
+      font-size: var(--text-body-sm);
+      opacity: var(--opacity-overlay);
+      text-align: center;
+      max-width: 260px;
+      line-height: 1.3;
+    }
+
+    .bridge-node--mcp .bridge-node__desc {
+      color: var(--color-text-on-white);
+      opacity: 0.7;
+    }
+
+    /* Connector arrows */
+    .bridge-arrow {
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(123,237,82,0.4));
+      position: relative;
+      z-index: 1;
+    }
+
+    .bridge-arrow--right {
+      background: linear-gradient(90deg, rgba(123,237,82,0.4), rgba(255,255,255,0.05));
+    }
+
+    .bridge-arrow::after {
+      content: '';
+      position: absolute;
+      right: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 8px solid rgba(123, 237, 82, 0.4);
+    }
+
+    .bridge-arrow--right::after {
+      border-left-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Floating labels under nodes */
+    .bridge-node__tags {
+      display: flex;
+      gap: var(--space-2xs);
+      margin-top: var(--space-2xs);
+    }
+
+    .bridge-tag {
+      font-family: var(--font-body);
+      font-size: 13px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--color-text-primary);
+      opacity: var(--opacity-medium);
+    }
+
+    .bridge-node--mcp .bridge-tag {
+      background: rgba(0, 0, 0, 0.15);
+      color: var(--color-text-on-white);
+      opacity: 0.6;
+    }
+
+    /* Subtitle below the bridge */
+    .bridge-subtitle {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-body);
+      font-size: var(--text-body-md);
+      color: var(--color-text-primary);
+      opacity: var(--opacity-muted);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 2 — Setup Steps
+    ═══════════════════════════════════════ */
+    .s2-columns {
+      position: absolute;
+      top: 320px;
+      left: 120px;
+      right: 120px;
+      display: flex;
+      gap: var(--space-2xl);
+    }
+
+    .s2-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .s2-col-label {
+      font-family: var(--font-body);
+      font-size: var(--text-body-xs);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .s2-col-label--cursor { color: var(--color-accent-green); }
+    .s2-col-label--claude { color: var(--color-accent-yellow); }
+
+    .step-card {
+      background: transparent;
+      border-radius: 0;
+      padding: var(--space-md) 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: baseline;
+      align-content: start;
+      column-gap: var(--space-sm);
+      row-gap: var(--space-xs);
+      border: none;
+      min-height: 140px;
+    }
+    .step-card > .code-block,
+    .step-card > .cmd-inline {
+      grid-column: 1 / -1;
+    }
+
+    .step-card__num {
+      font-family: var(--font-display);
+      font-size: var(--text-body-sm);
+      text-transform: uppercase;
+      color: var(--color-accent-green);
+      line-height: 1;
+    }
+
+    .step-card--claude .step-card__num {
+      color: var(--color-accent-yellow);
+    }
+
+    .step-card__title {
+      font-family: var(--font-body);
+      font-size: var(--text-body-sm);
+      font-weight: 400;
+      line-height: var(--leading-tight);
+      opacity: 0.85;
+    }
+
+    .step-card__desc {
+      font-family: var(--font-body);
+      font-size: var(--text-body-sm);
+      opacity: var(--opacity-overlay);
+      line-height: 1.3;
+    }
+
+    /* Code block */
+    .code-block {
+      background: #0F0F0F;
+      border-radius: var(--radius-sm);
+      padding: var(--space-sm) var(--space-md);
+      margin-top: var(--space-xs);
+      border: none;
+      position: relative;
+    }
+    .code-block::before {
+      content: attr(data-label);
+      display: block;
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 6px;
+    }
+
+    .code-block code {
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      color: var(--color-text-primary);
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+
+    .ck { color: var(--color-accent-pink); }
+    .cs { color: var(--color-accent-green); }
+    .cb { color: var(--color-accent-yellow); }
+
+    /* Terminal command inline */
+    .cmd-inline {
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      color: var(--color-text-primary);
+      background: #0F0F0F;
+      border-radius: var(--radius-sm);
+      padding: var(--space-sm) var(--space-md);
+      padding-right: 44px;
+      padding-top: 26px;
+      border: none;
+      margin-top: var(--space-xs);
+      display: block;
+      line-height: 1.4;
+      position: relative;
+    }
+    .cmd-inline::before {
+      content: "TERMINAL";
+      position: absolute;
+      top: 8px;
+      left: var(--space-md);
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .cmd-inline .prompt { color: var(--color-accent-yellow); }
+    .cmd-inline .flag { color: var(--color-accent-pink); }
+    .cmd-inline .arg { color: var(--color-accent-green); }
+
+    /* Copy button */
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity var(--transition-fast), background var(--transition-fast);
+    }
+
+    .code-block:hover .copy-btn,
+    .cmd-inline:hover .copy-btn {
+      opacity: 1;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .copy-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.5);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .copy-btn.copied svg {
+      stroke: var(--color-accent-green);
+    }
+
+    /* Divider between columns */
+    .s2-divider {
+      width: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      align-self: stretch;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 3 — Git: The Hub (Visual)
+    ═══════════════════════════════════════ */
+    .git-hub {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .git-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .git-node__circle {
+      width: 180px;
+      height: 180px;
+      border-radius: var(--radius-circle);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2xs);
+    }
+
+    .git-node__circle img {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+    }
+
+    .git-node__circle--you {
+      background: var(--color-bg-card-dark);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .git-node__circle--github {
+      width: 240px;
+      height: 240px;
+      background: var(--color-bg-card-white);
+      box-shadow: 0 0 100px rgba(255, 255, 255, 0.08);
+      z-index: 2;
+    }
+
+    .git-node__circle--github img {
+      width: 64px;
+      height: 64px;
+    }
+
+    .git-node__circle--team {
+      background: var(--color-bg-card-dark);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .git-node__circle-label {
+      font-family: var(--font-display);
+      font-size: var(--text-body-sm);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+      line-height: 1;
+    }
+
+    .git-node__circle--github .git-node__circle-label {
+      color: var(--color-text-on-white);
+    }
+
+    .git-node__label {
+      font-family: var(--font-display);
+      font-size: var(--text-body-lg);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-tight);
+    }
+
+    .git-node__sub {
+      font-family: var(--font-body);
+      font-size: var(--text-body-sm);
+      opacity: var(--opacity-medium);
+    }
+
+    /* Connector lines */
+    .git-line {
+      width: 120px;
+      height: 2px;
+      position: relative;
+    }
+
+    .git-line--push {
+      background: linear-gradient(90deg, rgba(123, 237, 82, 0.1), rgba(123, 237, 82, 0.5));
+    }
+
+    .git-line--push::after {
+      content: '';
+      position: absolute;
+      right: -6px; top: 50%;
+      transform: translateY(-50%);
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 8px solid rgba(123, 237, 82, 0.5);
+    }
+
+    .git-line--pull {
+      background: linear-gradient(90deg, rgba(255, 43, 155, 0.5), rgba(255, 43, 155, 0.1));
+    }
+
+    .git-line--pull::after {
+      content: '';
+      position: absolute;
+      right: -6px; top: 50%;
+      transform: translateY(-50%);
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 8px solid rgba(255, 43, 155, 0.15);
+    }
+
+    .git-line__label {
+      position: absolute;
+      top: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Minecraft', monospace;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .git-line--push .git-line__label { color: var(--color-accent-green); }
+    .git-line--pull .git-line__label { color: var(--color-accent-pink); }
+
+    /* Avatars row under team */
+    .git-avatars {
+      display: flex;
+      margin-top: var(--space-2xs);
+    }
+
+    .git-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-circle);
+      overflow: hidden;
+      border: 2px solid var(--color-bg-primary);
+    }
+
+    .git-avatar + .git-avatar { margin-left: -10px; }
+
+    .git-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ═══════════════════════════════════════
+       SLIDE 4 — Branches (Vertical Tree)
+    ═══════════════════════════════════════ */
+    .tree {
+      position: absolute;
+      top: 220px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1200px;
+      height: 700px;
+    }
+
+    /* Main trunk — vertical green line */
+    .tree-trunk {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 80px;
+      width: 4px;
+      background: var(--color-accent-green);
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    /* Commit nodes on trunk */
+    .tree-node {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-circle);
+      background: var(--color-accent-green);
+      border: 3px solid var(--color-bg-primary);
+      box-shadow: 0 0 0 2px var(--color-accent-green);
+      z-index: 3;
+    }
+
+    .tree-node__label {
+      position: absolute;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Minecraft', monospace;
+      font-size: 15px;
+      color: var(--color-accent-green);
+      white-space: nowrap;
+    }
+
+    .tree-node__label--right {
+      right: auto;
+      left: 40px;
+    }
+
+    /* Branch lines curving out and back */
+    .tree-branch {
+      position: absolute;
+      z-index: 1;
+    }
+
+    .tree-branch svg {
+      display: block;
+      overflow: visible;
+    }
+
+    /* Branch label card */
+    .tree-branch-card {
+      position: absolute;
+      background: var(--color-bg-card-dark);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      z-index: 2;
+      min-width: 200px;
+    }
+
+    .tree-branch-card__name {
+      font-family: 'Minecraft', monospace;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .tree-branch-card__name--yellow { color: var(--color-accent-yellow); }
+    .tree-branch-card__name--pink { color: var(--color-accent-pink); }
+    .tree-branch-card__name--blue { color: #5dadec; }
+
+    .tree-branch-card__desc {
+      font-family: var(--font-body);
+      font-size: var(--text-body-sm);
+      opacity: var(--opacity-medium);
+      line-height: 1.2;
+    }
+
+    .tree-branch-card__badge {
+      display: inline-flex;
+      align-self: flex-start;
+      font-family: 'Minecraft', monospace;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      margin-top: 2px;
+    }
+
+    .tree-branch-card__badge--merged {
+      background: rgba(123, 237, 82, 0.1);
+      color: var(--color-accent-green);
+    }
+
+    .tree-branch-card__badge--open {
+      background: rgba(255, 201, 55, 0.1);
+      color: var(--color-accent-yellow);
+    }
+
+    /* Main label at top */
+    .tree-main-label {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Minecraft', monospace;
+      font-size: var(--text-body-lg);
+      color: var(--color-accent-green);
+      white-space: nowrap;
+      z-index: 3;
+    }
+
+    /* Legend */
+    .tree-legend {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: var(--space-2xl);
+    }
+
+    .tree-legend__item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-family: var(--font-body);
+      font-size: var(--text-body-sm);
+      opacity: var(--opacity-overlay);
+    }
+
+    .tree-legend__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: var(--radius-circle);
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 5 — Workflow (Practical)
+    ═══════════════════════════════════════ */
+    .workflow {
+      position: absolute;
+      top: 280px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    .wf-step {
+      width: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+      text-align: center;
+    }
+
+    .wf-step__circle {
+      width: 100px;
+      height: 100px;
+      border-radius: var(--radius-circle);
+      background: var(--color-bg-card-dark);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Minecraft', monospace;
+      font-size: 16px;
+      color: var(--color-accent-green);
+    }
+
+    .wf-step__title {
+      font-family: var(--font-display);
+      font-size: var(--text-body-lg);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-tight);
+      line-height: 1;
+    }
+
+    .wf-step__desc {
+      font-family: var(--font-body);
+      font-size: var(--text-body-sm);
+      opacity: var(--opacity-medium);
+      line-height: 1.3;
+      max-width: 220px;
+    }
+
+    .wf-arrow {
+      width: 60px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.12);
+      margin-top: 50px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .wf-arrow::after {
+      content: '';
+      position: absolute;
+      right: -5px; top: 50%;
+      transform: translateY(-50%);
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 6px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* ═══════════════════════════════════════
+       Navigation Bar
+    ═══════════════════════════════════════ */
+    .nav-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: 64px; display: flex; align-items: center;
+      justify-content: center; gap: 18px; z-index: 1000;
+      background: var(--color-bg-nav);
+      backdrop-filter: var(--blur-md);
+      -webkit-backdrop-filter: var(--blur-md);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .nav-home {
+      position: absolute; left: 24px;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+      color: var(--color-text-muted);
+      font-family: var(--font-body);
+      font-size: var(--text-body-xxs);
+      transition: color var(--transition-fast);
+    }
+    .nav-home:hover { color: var(--color-text-primary); }
+    .nav-home svg { width: 16px; height: 16px; fill: currentColor; }
+
+    .nav-arrow {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-circle);
+      border: 1px solid var(--color-border-light);
+      background: var(--color-bg-btn);
+      color: var(--color-text-primary);
+      font-size: 18px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background var(--transition-fast), border-color var(--transition-fast);
+    }
+    .nav-arrow:hover { background: var(--color-bg-btn-hover); border-color: rgba(255,255,255,0.35); }
+    .nav-arrow:disabled { opacity: var(--opacity-disabled); cursor: default; }
+    .nav-arrow:disabled:hover { background: var(--color-bg-btn); border-color: var(--color-border-light); }
+
+    .nav-dots { display: flex; gap: var(--space-xs); align-items: center; }
+
+    .nav-dot {
+      width: 10px; height: 10px;
+      border-radius: var(--radius-circle);
+      background: var(--color-border-dot-inactive);
+      cursor: pointer;
+      transition: background var(--transition-base), transform var(--transition-base);
+    }
+    .nav-dot.active { background: var(--color-text-primary); transform: scale(1.35); }
+    .nav-dot:hover:not(.active) { background: rgba(255,255,255,0.4); }
+
+    .nav-counter {
+      font-family: var(--font-body);
+      font-size: var(--text-body-xxs);
+      color: var(--color-text-muted);
+      min-width: 44px; text-align: center;
+    }
+
+    /* ═══════════════════════════════════════
+       Intro — Where Do Your Files Live?
+    ═══════════════════════════════════════ */
+    .sloc-stage {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 1000px;
+      height: 780px;
+    }
+    .sloc-node {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      color: rgba(248, 252, 253, 0.55);
+      transition: color 420ms ease, top 520ms cubic-bezier(.4, 0, .2, 1), opacity 420ms ease;
+    }
+    .sloc-svg { width: 360px; height: auto; display: block; }
+    .sloc-cloud    { top: 0;   left: 320px; }
+    .sloc-computer { top: 560px; left: 320px; }
+    .sloc-active   { color: #7bed52; }
+    [data-slide="intro-5-9"]  .sloc-cloud.sloc-active,
+    [data-slide="intro-5-9"]  .sloc-computer.sloc-active,
+    [data-slide="intro-5-10"] .sloc-cloud.sloc-active,
+    [data-slide="intro-5-10"] .sloc-computer.sloc-active { color: rgba(248, 252, 253, 0.55); }
+    .sloc-dim      { opacity: 0.28; }
+    .sloc-files { left: 0; width: 280px; justify-content: center; }
+    .sloc-files-mid    { top: 300px; }
+    .sloc-files-top    { top: 80px; }
+    .sloc-files-bottom { top: 540px; }
+    .sloc-files-img {
+      width: 144px; height: 144px;
+      object-fit: contain; display: block;
+    }
+    .sloc-anno {
+      position: absolute;
+      left: 720px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      color: #7bed52;
+      opacity: 0;
+      transition: opacity 420ms ease;
+    }
+    .sloc-anno-show { opacity: 1; }
+    .sloc-anno-cloud    { top: 145px; }
+    .sloc-anno-computer { top: 715px; }
+    .sloc-anno-line {
+      width: 120px;
+      height: 2px;
+      margin-top: 18px;
+      background-image: linear-gradient(to right, #7bed52 6px, transparent 6px);
+      background-size: 12px 2px;
+      background-repeat: repeat-x;
+    }
+    .sloc-anno-text {
+      font-family: 'Fira Code', monospace;
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.3px;
+    }
+    .sloc-anno-stack { display: flex; flex-direction: column; gap: 6px; }
+
+    /* Vertical git pipe (intro-4): connects laptop → cloud */
+    .sloc-pipe {
+      position: absolute;
+      left: 494px;
+      top: 190px;
+      width: 2px;
+      height: 410px;
+      background-image: linear-gradient(to bottom, #7bed52 8px, transparent 8px);
+      background-size: 2px 16px;
+      background-repeat: repeat-y;
+    }
+    .sloc-pipe-arrow {
+      position: absolute;
+      left: 486px;
+      top: 175px;
+      width: 0;
+      height: 0;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-bottom: 12px solid #7bed52;
+    }
+    .sloc-pipe-anno {
+      position: absolute;
+      left: 540px;
+      top: 350px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      color: #7bed52;
+    }
+    .sloc-pipe-files-top    { top: 40px; }
+    .sloc-pipe-files-bottom { top: 580px; }
+
+    /* intro-5 sequence — Vertical git branching flow */
+    .gflow-stage {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 1200px;
+      height: 800px;
+    }
+    .gflow-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .gflow-label {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      transform: translateY(-50%);
+      font-family: 'Fira Code', monospace;
+      white-space: nowrap;
+    }
+    .gflow-label-name {
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+    }
+    .gflow-label-cmd {
+      font-size: 13px;
+      color: rgba(248, 252, 253, 0.82);
+      letter-spacing: -0.2px;
+    }
+    .gflow-btn {
+      display: inline-block;
+      background: #ffffff;
+      color: #000000;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-family: 'Fira Code', monospace;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+      cursor: pointer;
+      width: fit-content;
+    }
+    .gflow-btn-stack {
+      position: absolute;
+      left: 0;
+      bottom: calc(100% + 10px);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+    }
+    .gflow-label--right .gflow-btn-stack { left: auto; right: 0; align-items: flex-end; }
+    .gflow-btn-stack--enter > .gflow-btn { opacity: 0; transform: translateY(6px); }
+    .slide.active .gflow-btn-stack--enter > .gflow-btn:nth-child(2) { animation: gbtn-in 0.35s 0.3s ease-out forwards; }
+    .slide.active .gflow-btn-stack--enter > .gflow-btn:nth-child(1) { animation: gbtn-in 0.35s 0.8s ease-out forwards; }
+    @keyframes gbtn-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .gflow-label--right { align-items: flex-end; text-align: right; }
+    .gflow-main-label {
+      position: absolute;
+      top: 40px;
+      left: 185px;
+      color: var(--color-accent-green);
+      font-family: 'Fira Code', monospace;
+      font-size: 18px;
+      font-weight: 500;
+    }
+    .gflow-main-initial {
+      position: absolute;
+      left: 230px;
+      top: 90px;
+      transform: translateY(-50%);
+      color: rgba(248, 252, 253, 0.82);
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+    }
+    .gflow-merge-label {
+      position: absolute;
+      left: 230px;
+      top: 620px;
+      transform: translateY(-50%);
+      color: var(--color-accent-green);
+      font-family: 'Fira Code', monospace;
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.3px;
+    }
+    .gflow-pr {
+      position: absolute;
+      right: 60px;
+      top: 60px;
+      color: var(--color-accent-green);
+      font-family: 'Fira Code', monospace;
+      text-align: right;
+    }
+    .gflow-pr-title {
+      font-size: 42px;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+    }
+    .gflow-pr-sub {
+      font-size: 16px;
+      color: rgba(248, 252, 253, 0.82);
+      line-height: 1.45;
+      letter-spacing: -0.2px;
+    }
+
+    /* intro-5-8 — Merge animation: branch retracts into main line, dot slides down, V appears */
+    .gmerge-branch-path {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 0;
+    }
+    .gmerge-merge-tick {
+      opacity: 0;
+      stroke-dasharray: 40;
+      stroke-dashoffset: 40;
+    }
+
+    /* Phase 1 (0-50% of 1.6s = 0.8s): branch path retracts from endpoint to main line */
+    .slide.active .gmerge-branch-path.gmerge-b1 { animation: gmerge-retract 0.8s 0.3s cubic-bezier(.55, 0, .3, 1) forwards; }
+    .slide.active .gmerge-branch-path.gmerge-b2 { animation: gmerge-retract 0.8s 0.6s cubic-bezier(.55, 0, .3, 1) forwards; }
+    .slide.active .gmerge-branch-path.gmerge-b3 { animation: gmerge-retract 0.8s 0.9s cubic-bezier(.55, 0, .3, 1) forwards; }
+    @keyframes gmerge-retract {
+      from { stroke-dashoffset: 0; }
+      to   { stroke-dashoffset: 100; }
+    }
+
+    /* Branch dot: phase 1 travels back to main-line origin, phase 2 slides down main to merge point */
+    .slide.active .gmerge-branch-dot.gmerge-b1 { animation: gmerge-travel-1 0.8s 0.3s cubic-bezier(.5, 0, .3, 1) forwards; }
+    .slide.active .gmerge-branch-dot.gmerge-b2 { animation: gmerge-travel-2 0.8s 0.6s cubic-bezier(.5, 0, .3, 1) forwards; }
+    .slide.active .gmerge-branch-dot.gmerge-b3 { animation: gmerge-travel-3 0.8s 0.9s cubic-bezier(.5, 0, .3, 1) forwards; }
+    @keyframes gmerge-travel-1 {
+      0%   { transform: translate(0, 0); }
+      100% { transform: translate(-320px, -60px); }   /* arrive at main (600, 200) */
+    }
+    @keyframes gmerge-travel-2 {
+      0%   { transform: translate(0, 0); }
+      100% { transform: translate(-460px, -60px); }   /* arrive at main (600, 300) */
+    }
+    @keyframes gmerge-travel-3 {
+      0%   { transform: translate(0, 0); }
+      100% { transform: translate(320px, -60px); }    /* arrive at main (600, 400) */
+    }
+
+    /* V check appears once the branch dot has landed at its merge point */
+    .slide.active .gmerge-merge-tick.gmerge-b1 { animation: gmerge-tick-draw 0.4s 1.15s ease-out forwards; }
+    .slide.active .gmerge-merge-tick.gmerge-b2 { animation: gmerge-tick-draw 0.4s 1.45s ease-out forwards; }
+    .slide.active .gmerge-merge-tick.gmerge-b3 { animation: gmerge-tick-draw 0.4s 1.75s ease-out forwards; }
+    @keyframes gmerge-tick-draw {
+      0%   { opacity: 0; stroke-dashoffset: 40; }
+      20%  { opacity: 1; }
+      100% { opacity: 1; stroke-dashoffset: 0; }
+    }
+
+    /* Branch label fades out while its branch is merging */
+    .slide.active .gmerge-branch-label.gmerge-b1 { animation: gmerge-label-fade 0.5s 0.3s ease-out forwards; }
+    .slide.active .gmerge-branch-label.gmerge-b2 { animation: gmerge-label-fade 0.5s 0.6s ease-out forwards; }
+    .slide.active .gmerge-branch-label.gmerge-b3 { animation: gmerge-label-fade 0.5s 0.9s ease-out forwards; }
+    @keyframes gmerge-label-fade {
+      from { opacity: 1; }
+      to   { opacity: 0; }
+    }
+
+    /* intro-5-9 entry — smooth transition from merge slide: main line grows, commits pop in */
+    [data-slide="intro-5-9"] .gpr-main-line { transform: scaleY(0); transform-origin: top; }
+    [data-slide="intro-5-9"] .gpr-main-commits > * { opacity: 0; }
+    .slide.active[data-slide="intro-5-9"] .gpr-main-line { animation: gpr-line-grow 0.7s 0.1s cubic-bezier(.5, 0, .2, 1) forwards; }
+    .slide.active[data-slide="intro-5-9"] .gpr-main-commits > *:nth-child(1) { animation: gpr-commit-in 0.35s 0.7s ease-out forwards; }
+    .slide.active[data-slide="intro-5-9"] .gpr-main-commits > *:nth-child(2),
+    .slide.active[data-slide="intro-5-9"] .gpr-main-commits > *:nth-child(3) { animation: gpr-commit-in 0.35s 0.85s ease-out forwards; }
+    .slide.active[data-slide="intro-5-9"] .gpr-main-commits > *:nth-child(4),
+    .slide.active[data-slide="intro-5-9"] .gpr-main-commits > *:nth-child(5) { animation: gpr-commit-in 0.35s 1.00s ease-out forwards; }
+    .slide.active[data-slide="intro-5-9"] .gpr-main-commits > *:nth-child(6),
+    .slide.active[data-slide="intro-5-9"] .gpr-main-commits > *:nth-child(7) { animation: gpr-commit-in 0.35s 1.15s ease-out forwards; }
+    @keyframes gpr-line-grow {
+      from { transform: scaleY(0); }
+      to   { transform: scaleY(1); }
+    }
+    @keyframes gpr-commit-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* intro-5-9 — Pull request: main line between cloud and laptop + PR pill */
+    .gpr-main-line {
+      position: absolute;
+      left: 498px;
+      top: 170px;
+      width: 4px;
+      height: 390px;
+      background: #7bed52;
+      overflow: hidden;
+    }
+    .gpr-main-line::after {
+      content: "";
+      position: absolute;
+      left: -6px;
+      top: 0;
+      width: 16px;
+      height: 70px;
+      background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.95) 50%,
+        rgba(255, 255, 255, 0));
+      opacity: 0;
+      pointer-events: none;
+      filter: blur(1px);
+    }
+    .gpr-main-line.pushing::after {
+      opacity: 1;
+      animation: gpr-shimmer 1.8s ease-in-out infinite;
+    }
+    @keyframes gpr-shimmer {
+      0%   { transform: translateY(390px); }
+      50%  { transform: translateY(-70px); }
+      100% { transform: translateY(390px); }
+    }
+    .gpr-main-commits {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .gpr-pr-pill {
+      position: absolute;
+      left: 50%;
+      top: 495px;
+      transform: translate(-50%, 40px);
+      opacity: 0;
+      background: #7bed52;
+      color: #0A0E14;
+      font-family: 'Fira Code', monospace;
+      font-size: 18px;
+      font-weight: 600;
+      padding: 12px 22px;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 10px 30px rgba(123, 237, 82, 0.35);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -0.2px;
+      white-space: nowrap;
+    }
+    .slide.active .gpr-pr-pill {
+      animation: gpr-slide-up 0.7s 0.4s cubic-bezier(.5, 0, .1, 1.15) forwards;
+    }
+    @keyframes gpr-slide-up {
+      from { opacity: 0; transform: translate(-50%, 40px); }
+      to   { opacity: 1; transform: translate(-50%, 0); }
+    }
+    .gpr-pr-pill:hover { filter: brightness(1.08); }
+    .gpr-pr-pill:active { transform: translate(-50%, 0) scale(0.97); }
+    .sloc-anno-sub {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 18px;
+      color: #f8fcfd;
+      letter-spacing: -0.2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="slides-container">
+
+  <!-- ═══════ INTRO 1 — Files: neutral (middle) ═══════ -->
+  <div class="slide active" data-slide="intro-1">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+
+      <div class="sloc-stage">
+        <div class="sloc-node sloc-cloud">
+          <svg class="sloc-svg" viewBox="0 0 72 40" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 32 L16 24 L20 24 L20 20 L24 20 L24 14 L32 14 L32 10 L44 10 L44 14 L52 14 L52 20 L56 20 L56 24 L60 24 L60 32 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-node sloc-files sloc-files-mid">
+          <img class="sloc-files-img" src="assets/folders.svg" alt="Libraries & Files" />
+        </div>
+
+        <div class="sloc-node sloc-computer">
+          <svg class="sloc-svg" viewBox="0 0 72 44" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 6 L58 6 L58 30 L14 30 Z" />
+            <path d="M6 32 L66 32 L68 38 L4 38 Z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ INTRO 2 — Files drop to computer (localhost) ═══════ -->
+  <div class="slide" data-slide="intro-2">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+
+      <div class="sloc-stage">
+        <div class="sloc-node sloc-cloud sloc-dim">
+          <svg class="sloc-svg" viewBox="0 0 72 40" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 32 L16 24 L20 24 L20 20 L24 20 L24 14 L32 14 L32 10 L44 10 L44 14 L52 14 L52 20 L56 20 L56 24 L60 24 L60 32 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-node sloc-files sloc-files-bottom sloc-active">
+          <img class="sloc-files-img" src="assets/folders.svg" alt="Libraries & Files" />
+        </div>
+
+        <div class="sloc-node sloc-computer sloc-active">
+          <svg class="sloc-svg" viewBox="0 0 72 44" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 6 L58 6 L58 30 L14 30 Z" />
+            <path d="M6 32 L66 32 L68 38 L4 38 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-anno sloc-anno-computer sloc-anno-show">
+          <div class="sloc-anno-line"></div>
+          <div class="sloc-anno-stack">
+            <div class="sloc-anno-text">localhost</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ INTRO 3 — Files rise to cloud (production) ═══════ -->
+  <div class="slide" data-slide="intro-3">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+
+      <div class="sloc-stage">
+        <div class="sloc-node sloc-cloud sloc-active">
+          <svg class="sloc-svg" viewBox="0 0 72 40" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 32 L16 24 L20 24 L20 20 L24 20 L24 14 L32 14 L32 10 L44 10 L44 14 L52 14 L52 20 L56 20 L56 24 L60 24 L60 32 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-node sloc-files sloc-files-top sloc-active">
+          <img class="sloc-files-img" src="assets/folders.svg" alt="Libraries & Files" />
+        </div>
+
+        <div class="sloc-node sloc-computer sloc-dim">
+          <svg class="sloc-svg" viewBox="0 0 72 44" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 6 L58 6 L58 30 L14 30 Z" />
+            <path d="M6 32 L66 32 L68 38 L4 38 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-anno sloc-anno-cloud sloc-anno-show">
+          <div class="sloc-anno-line"></div>
+          <div class="sloc-anno-stack">
+            <div class="sloc-anno-text">production</div>
+            <div class="sloc-anno-sub">vercel</div>
+            <div class="sloc-anno-sub">domain www</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ INTRO 4 — Git: the pipe between localhost & production ═══════ -->
+  <div class="slide" data-slide="intro-4">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+
+      <div class="sloc-stage">
+        <div class="sloc-node sloc-cloud sloc-active">
+          <svg class="sloc-svg" viewBox="0 0 72 40" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 32 L16 24 L20 24 L20 20 L24 20 L24 14 L32 14 L32 10 L44 10 L44 14 L52 14 L52 20 L56 20 L56 24 L60 24 L60 32 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-node sloc-files sloc-pipe-files-top sloc-active">
+          <img class="sloc-files-img" src="assets/folders.svg" alt="Libraries & Files" />
+        </div>
+
+        <div class="sloc-node sloc-files sloc-pipe-files-bottom sloc-active">
+          <img class="sloc-files-img" src="assets/folders.svg" alt="Libraries & Files" />
+        </div>
+
+        <div class="sloc-node sloc-computer sloc-active">
+          <svg class="sloc-svg" viewBox="0 0 72 44" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 6 L58 6 L58 30 L14 30 Z" />
+            <path d="M6 32 L66 32 L68 38 L4 38 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-pipe-arrow"></div>
+        <div class="sloc-pipe"></div>
+
+        <div class="sloc-pipe-anno">
+          <div class="sloc-anno-text">git</div>
+          <div class="sloc-anno-sub">commit</div>
+          <div class="sloc-anno-sub">push</div>
+          <div class="sloc-anno-sub">pull</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ INTRO 5.1 — main line + initial commit ═══════ -->
+  <div class="slide" data-slide="intro-5-1">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="gflow-stage">
+        <svg class="gflow-svg" viewBox="0 0 1200 800">
+          <line x1="600" y1="40" x2="600" y2="760" stroke="#7bed52" stroke-width="4" />
+          <circle cx="600" cy="90" r="11" fill="#7bed52" stroke="#0A0E14" stroke-width="4" />
+        </svg>
+        <div class="gflow-main-label" style="left: 600px; top: 8px; transform: translateX(-50%);">main</div>
+        <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ INTRO 5.2 — branch 1 forks (right, yellow) ═══════ -->
+  <div class="slide" data-slide="intro-5-2">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="gflow-stage">
+        <svg class="gflow-svg" viewBox="0 0 1200 800">
+          <line x1="600" y1="40" x2="600" y2="760" stroke="#7bed52" stroke-width="4" />
+          <circle cx="600" cy="90" r="11" fill="#7bed52" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 600 200 C 720 200, 780 260, 920 260" stroke="#ffc937" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle cx="920" cy="260" r="11" fill="#ffc937" stroke="#0A0E14" stroke-width="4" />
+        </svg>
+        <div class="gflow-main-label" style="left: 600px; top: 8px; transform: translateX(-50%);">main</div>
+        <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
+        <div class="gflow-label" style="left: 945px; top: 260px; color: #ffc937;">
+          <div class="gflow-label-name">feature/navbar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ INTRO 5.3 — branch 1 commit + push ═══════ -->
+  <div class="slide" data-slide="intro-5-3">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="gflow-stage">
+        <svg class="gflow-svg" viewBox="0 0 1200 800">
+          <line x1="600" y1="40" x2="600" y2="760" stroke="#7bed52" stroke-width="4" />
+          <circle cx="600" cy="90" r="11" fill="#7bed52" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 600 200 C 720 200, 780 260, 920 260" stroke="#ffc937" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle cx="920" cy="260" r="11" fill="#ffc937" stroke="#0A0E14" stroke-width="4" />
+        </svg>
+        <div class="gflow-main-label" style="left: 600px; top: 8px; transform: translateX(-50%);">main</div>
+        <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
+        <div class="gflow-label" style="left: 945px; top: 260px; color: #ffc937;">
+          <div class="gflow-btn-stack gflow-btn-stack--enter">
+            <button type="button" class="gflow-btn">push</button>
+            <button type="button" class="gflow-btn">commit</button>
+          </div>
+          <div class="gflow-label-name">feature/navbar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ INTRO 5.4 — branch 2 forks (right, pink) ═══════ -->
+  <div class="slide" data-slide="intro-5-4">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="gflow-stage">
+        <svg class="gflow-svg" viewBox="0 0 1200 800">
+          <line x1="600" y1="40" x2="600" y2="760" stroke="#7bed52" stroke-width="4" />
+          <circle cx="600" cy="90" r="11" fill="#7bed52" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 600 200 C 720 200, 780 260, 920 260" stroke="#ffc937" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle cx="920" cy="260" r="11" fill="#ffc937" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 600 300 C 760 300, 900 360, 1060 360" stroke="#ff2b9b" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle cx="1060" cy="360" r="11" fill="#ff2b9b" stroke="#0A0E14" stroke-width="4" />
+        </svg>
+        <div class="gflow-main-label" style="left: 600px; top: 8px; transform: translateX(-50%);">main</div>
+        <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
+        <div class="gflow-label" style="left: 945px; top: 260px; color: #ffc937;">
+          <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn">push</button>
+            <button type="button" class="gflow-btn">commit</button>
+          </div>
+          <div class="gflow-label-name">feature/navbar</div>
+        </div>
+        <div class="gflow-label" style="left: 1085px; top: 360px; color: #ff2b9b;">
+          <div class="gflow-label-name">fix/button-bug</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ INTRO 5.5 — branch 2 commit + push ═══════ -->
+  <div class="slide" data-slide="intro-5-5">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="gflow-stage">
+        <svg class="gflow-svg" viewBox="0 0 1200 800">
+          <line x1="600" y1="40" x2="600" y2="760" stroke="#7bed52" stroke-width="4" />
+          <circle cx="600" cy="90" r="11" fill="#7bed52" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 600 200 C 720 200, 780 260, 920 260" stroke="#ffc937" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle cx="920" cy="260" r="11" fill="#ffc937" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 600 300 C 760 300, 900 360, 1060 360" stroke="#ff2b9b" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle cx="1060" cy="360" r="11" fill="#ff2b9b" stroke="#0A0E14" stroke-width="4" />
+        </svg>
+        <div class="gflow-main-label" style="left: 600px; top: 8px; transform: translateX(-50%);">main</div>
+        <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
+        <div class="gflow-label" style="left: 945px; top: 260px; color: #ffc937;">
+          <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn">push</button>
+            <button type="button" class="gflow-btn">commit</button>
+          </div>
+          <div class="gflow-label-name">feature/navbar</div>
+        </div>
+        <div class="gflow-label" style="left: 1085px; top: 360px; color: #ff2b9b;">
+          <div class="gflow-btn-stack gflow-btn-stack--enter">
+            <button type="button" class="gflow-btn">push</button>
+            <button type="button" class="gflow-btn">commit</button>
+          </div>
+          <div class="gflow-label-name">fix/button-bug</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ INTRO 5.6 — branch 3 forks (LEFT, blue) ═══════ -->
+  <div class="slide" data-slide="intro-5-6">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="gflow-stage">
+        <svg class="gflow-svg" viewBox="0 0 1200 800">
+          <line x1="600" y1="40" x2="600" y2="760" stroke="#7bed52" stroke-width="4" />
+          <circle cx="600" cy="90" r="11" fill="#7bed52" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 600 200 C 720 200, 780 260, 920 260" stroke="#ffc937" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle cx="920" cy="260" r="11" fill="#ffc937" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 600 300 C 760 300, 900 360, 1060 360" stroke="#ff2b9b" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle cx="1060" cy="360" r="11" fill="#ff2b9b" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 600 400 C 480 400, 420 460, 280 460" stroke="#5dadec" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle cx="280" cy="460" r="11" fill="#5dadec" stroke="#0A0E14" stroke-width="4" />
+        </svg>
+        <div class="gflow-main-label" style="left: 600px; top: 8px; transform: translateX(-50%);">main</div>
+        <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
+        <div class="gflow-label" style="left: 945px; top: 260px; color: #ffc937;">
+          <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn">push</button>
+            <button type="button" class="gflow-btn">commit</button>
+          </div>
+          <div class="gflow-label-name">feature/navbar</div>
+        </div>
+        <div class="gflow-label" style="left: 1085px; top: 360px; color: #ff2b9b;">
+          <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn">push</button>
+            <button type="button" class="gflow-btn">commit</button>
+          </div>
+          <div class="gflow-label-name">fix/button-bug</div>
+        </div>
+        <div class="gflow-label gflow-label--right" style="right: 945px; top: 460px; color: #5dadec;">
+          <div class="gflow-label-name">feature/footer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ INTRO 5.7 — branch 3 commit + push ═══════ -->
+  <div class="slide" data-slide="intro-5-7">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="gflow-stage">
+        <svg class="gflow-svg" viewBox="0 0 1200 800">
+          <line x1="600" y1="40" x2="600" y2="760" stroke="#7bed52" stroke-width="4" />
+          <circle cx="600" cy="90" r="11" fill="#7bed52" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 600 200 C 720 200, 780 260, 920 260" stroke="#ffc937" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle cx="920" cy="260" r="11" fill="#ffc937" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 600 300 C 760 300, 900 360, 1060 360" stroke="#ff2b9b" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle cx="1060" cy="360" r="11" fill="#ff2b9b" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 600 400 C 480 400, 420 460, 280 460" stroke="#5dadec" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle cx="280" cy="460" r="11" fill="#5dadec" stroke="#0A0E14" stroke-width="4" />
+        </svg>
+        <div class="gflow-main-label" style="left: 600px; top: 8px; transform: translateX(-50%);">main</div>
+        <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
+        <div class="gflow-label" style="left: 945px; top: 260px; color: #ffc937;">
+          <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn">push</button>
+            <button type="button" class="gflow-btn">commit</button>
+          </div>
+          <div class="gflow-label-name">feature/navbar</div>
+        </div>
+        <div class="gflow-label" style="left: 1085px; top: 360px; color: #ff2b9b;">
+          <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn">push</button>
+            <button type="button" class="gflow-btn">commit</button>
+          </div>
+          <div class="gflow-label-name">fix/button-bug</div>
+        </div>
+        <div class="gflow-label gflow-label--right" style="right: 945px; top: 460px; color: #5dadec;">
+          <div class="gflow-btn-stack gflow-btn-stack--enter">
+            <button type="button" class="gflow-btn">push</button>
+            <button type="button" class="gflow-btn">commit</button>
+          </div>
+          <div class="gflow-label-name">feature/footer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ INTRO 5.8 — merge: colored check markers on main ═══════ -->
+  <div class="slide" data-slide="intro-5-8">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="gflow-stage">
+        <svg class="gflow-svg" viewBox="0 0 1200 800">
+          <line x1="600" y1="40" x2="600" y2="760" stroke="#7bed52" stroke-width="4" />
+          <circle cx="600" cy="90" r="11" fill="#7bed52" stroke="#0A0E14" stroke-width="4" />
+          <path class="gmerge-branch-path gmerge-b1" pathLength="100" d="M 600 200 C 720 200, 780 260, 920 260" stroke="#ffc937" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle class="gmerge-branch-dot gmerge-b1" cx="920" cy="260" r="11" fill="#ffc937" stroke="#0A0E14" stroke-width="4" />
+          <path class="gmerge-branch-path gmerge-b2" pathLength="100" d="M 600 300 C 760 300, 900 360, 1060 360" stroke="#ff2b9b" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle class="gmerge-branch-dot gmerge-b2" cx="1060" cy="360" r="11" fill="#ff2b9b" stroke="#0A0E14" stroke-width="4" />
+          <path class="gmerge-branch-path gmerge-b3" pathLength="100" d="M 600 400 C 480 400, 420 460, 280 460" stroke="#5dadec" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle class="gmerge-branch-dot gmerge-b3" cx="280" cy="460" r="11" fill="#5dadec" stroke="#0A0E14" stroke-width="4" />
+
+          <!-- V check revealed after branch dot has landed at its merge point on the main line -->
+          <path class="gmerge-merge-tick gmerge-b1" d="M 634 200 l 6 7 l 12 -14" stroke="#ffc937" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <path class="gmerge-merge-tick gmerge-b2" d="M 634 300 l 6 7 l 12 -14" stroke="#ff2b9b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <path class="gmerge-merge-tick gmerge-b3" d="M 634 400 l 6 7 l 12 -14" stroke="#5dadec" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <button type="button" class="gflow-btn" style="position: absolute; left: 600px; top: -40px; transform: translateX(-50%);">merge</button>
+        <div class="gflow-main-label" style="left: 600px; top: 8px; transform: translateX(-50%);">main</div>
+        <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
+        <div class="gflow-label gmerge-branch-label gmerge-b1" style="left: 945px; top: 260px; color: #ffc937;">
+          <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn">push</button>
+            <button type="button" class="gflow-btn">commit</button>
+          </div>
+          <div class="gflow-label-name">feature/navbar</div>
+        </div>
+        <div class="gflow-label gmerge-branch-label gmerge-b2" style="left: 1085px; top: 360px; color: #ff2b9b;">
+          <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn">push</button>
+            <button type="button" class="gflow-btn">commit</button>
+          </div>
+          <div class="gflow-label-name">fix/button-bug</div>
+        </div>
+        <div class="gflow-label gflow-label--right gmerge-branch-label gmerge-b3" style="right: 945px; top: 460px; color: #5dadec;">
+          <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn">push</button>
+            <button type="button" class="gflow-btn">commit</button>
+          </div>
+          <div class="gflow-label-name">feature/footer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ INTRO 5.9 — Merged main between cloud + laptop (smooth entry from merge slide) ═══════ -->
+  <div class="slide" data-slide="intro-5-9">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+
+      <div class="sloc-stage">
+        <div class="sloc-node sloc-files sloc-files-mid">
+          <img class="sloc-files-img" src="assets/folders.svg" alt="Libraries & Files" />
+        </div>
+
+        <div class="sloc-node sloc-cloud sloc-active">
+          <svg class="sloc-svg" viewBox="0 0 72 40" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 32 L16 24 L20 24 L20 20 L24 20 L24 14 L32 14 L32 10 L44 10 L44 14 L52 14 L52 20 L56 20 L56 24 L60 24 L60 32 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-node sloc-computer sloc-active">
+          <svg class="sloc-svg" viewBox="0 0 72 44" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 6 L58 6 L58 30 L14 30 Z" />
+            <path d="M6 32 L66 32 L68 38 L4 38 Z" />
+          </svg>
+        </div>
+
+        <div class="gpr-main-line"></div>
+
+        <svg class="gpr-main-commits" viewBox="0 0 1000 780">
+          <circle cx="500" cy="200" r="11" fill="#7bed52" stroke="#0A0E14" stroke-width="4" />
+          <circle cx="500" cy="290" r="11" fill="#ffc937" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 534 290 l 6 7 l 12 -14" stroke="#ffc937" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="500" cy="370" r="11" fill="#ff2b9b" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 534 370 l 6 7 l 12 -14" stroke="#ff2b9b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="500" cy="450" r="11" fill="#5dadec" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 534 450 l 6 7 l 12 -14" stroke="#5dadec" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ INTRO 5.10 — Pull request: same layout + PR pill, click to push ═══════ -->
+  <div class="slide" data-slide="intro-5-10">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+
+      <div class="sloc-stage">
+        <div class="sloc-node sloc-files sloc-files-mid">
+          <img class="sloc-files-img" src="assets/folders.svg" alt="Libraries & Files" />
+        </div>
+
+        <div class="sloc-node sloc-cloud sloc-active">
+          <svg class="sloc-svg" viewBox="0 0 72 40" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 32 L16 24 L20 24 L20 20 L24 20 L24 14 L32 14 L32 10 L44 10 L44 14 L52 14 L52 20 L56 20 L56 24 L60 24 L60 32 Z" />
+          </svg>
+        </div>
+
+        <div class="sloc-node sloc-computer sloc-active">
+          <svg class="sloc-svg" viewBox="0 0 72 44" shape-rendering="crispEdges" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 6 L58 6 L58 30 L14 30 Z" />
+            <path d="M6 32 L66 32 L68 38 L4 38 Z" />
+          </svg>
+        </div>
+
+        <div class="gpr-main-line" id="gpr-main-line"></div>
+
+        <svg class="gpr-main-commits" viewBox="0 0 1000 780">
+          <circle cx="500" cy="200" r="11" fill="#7bed52" stroke="#0A0E14" stroke-width="4" />
+          <circle cx="500" cy="290" r="11" fill="#ffc937" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 534 290 l 6 7 l 12 -14" stroke="#ffc937" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="500" cy="370" r="11" fill="#ff2b9b" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 534 370 l 6 7 l 12 -14" stroke="#ff2b9b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="500" cy="450" r="11" fill="#5dadec" stroke="#0A0E14" stroke-width="4" />
+          <path d="M 534 450 l 6 7 l 12 -14" stroke="#5dadec" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+        <button type="button" class="gpr-pr-pill" onclick="document.getElementById('gpr-main-line').classList.toggle('pushing')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="18" r="3" />
+            <circle cx="6" cy="6" r="3" />
+            <path d="M13 6h3a2 2 0 0 1 2 2v7" />
+            <line x1="6" y1="9" x2="6" y2="21" />
+          </svg>
+          pull request
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 1 — The Bridge ═══════ -->
+  <div class="slide" data-slide="0">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="slide-heading">
+        <h2>figma mcp</h2>
+      </div>
+      <div class="bridge">
+        <!-- Figma -->
+        <div class="bridge-node bridge-node--figma">
+          <img class="bridge-node__icon" src="assets/figma-logo-noise.svg" alt="" />
+          <span class="bridge-node__name">Figma</span>
+          <span class="bridge-node__desc">Your designs</span>
+          <div class="bridge-node__tags">
+            <span class="bridge-tag">Layout</span>
+            <span class="bridge-tag">Styles</span>
+            <span class="bridge-tag">Tokens</span>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="bridge-arrow"></div>
+
+        <!-- MCP -->
+        <div class="bridge-node bridge-node--mcp">
+          <span class="bridge-node__name">MCP</span>
+          <span class="bridge-node__desc">Reads your design data and feeds it to AI</span>
+          <div class="bridge-node__tags">
+            <span class="bridge-tag">OAuth</span>
+            <span class="bridge-tag">No tokens</span>
+            <span class="bridge-tag">Auto-sync</span>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="bridge-arrow bridge-arrow--right"></div>
+
+        <!-- Cursor / Claude Code -->
+        <div class="bridge-node bridge-node--cursor">
+          <img class="bridge-node__icon bridge-node__icon--lg" src="assets/cursor+claude.svg" alt="" />
+          <span class="bridge-node__name">code</span>
+          <span class="bridge-node__desc">Generates matching code</span>
+          <div class="bridge-node__tags">
+            <span class="bridge-tag">Components</span>
+            <span class="bridge-tag">CSS</span>
+            <span class="bridge-tag">HTML</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 1b — The Bridge w/ Figma extras ═══════ -->
+  <div class="slide" data-slide="0b">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="slide-heading">
+        <h2>figma mcp</h2>
+      </div>
+      <div class="bridge">
+        <!-- Figma -->
+        <div class="bridge-node bridge-node--figma">
+          <img class="bridge-node__icon" src="assets/figma-logo-noise.svg" alt="" />
+          <span class="bridge-node__name">Figma</span>
+          <span class="bridge-node__desc">Your designs</span>
+          <div class="bridge-node__tags">
+            <span class="bridge-tag">Layout</span>
+            <span class="bridge-tag">Styles</span>
+            <span class="bridge-tag">Tokens</span>
+          </div>
+          <ul class="figma-extras">
+            <li>auto-layout</li>
+            <li>variables</li>
+            <li>components</li>
+          </ul>
+        </div>
+
+        <!-- Arrow -->
+        <div class="bridge-arrow"></div>
+
+        <!-- MCP -->
+        <div class="bridge-node bridge-node--mcp">
+          <span class="bridge-node__name">MCP</span>
+          <span class="bridge-node__desc">Reads your design data and feeds it to AI</span>
+          <div class="bridge-node__tags">
+            <span class="bridge-tag">OAuth</span>
+            <span class="bridge-tag">No tokens</span>
+            <span class="bridge-tag">Auto-sync</span>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="bridge-arrow bridge-arrow--right"></div>
+
+        <!-- Cursor / Claude Code -->
+        <div class="bridge-node bridge-node--cursor">
+          <img class="bridge-node__icon bridge-node__icon--lg" src="assets/cursor+claude.svg" alt="" />
+          <span class="bridge-node__name">code</span>
+          <span class="bridge-node__desc">Generates matching code</span>
+          <div class="bridge-node__tags">
+            <span class="bridge-tag">Components</span>
+            <span class="bridge-tag">CSS</span>
+            <span class="bridge-tag">HTML</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 2 — Setup: Cursor + Claude Code ═══════ -->
+  <div class="slide" data-slide="1">
+    <div class="slide-inner">
+      <div class="slide-label">Best Practice Setup</div>
+      <div class="slide-heading">
+        <h2>Connect It</h2>
+      </div>
+
+      <div class="s2-columns">
+        <!-- Cursor column -->
+        <div class="s2-col">
+          <span class="s2-col-label s2-col-label--cursor">Cursor</span>
+
+          <div class="step-card">
+            <span class="step-card__num">01</span>
+            <span class="step-card__title">Open MCP settings</span>
+          </div>
+
+          <div class="step-card">
+            <span class="step-card__num">02</span>
+            <span class="step-card__title">Add new global MCP server</span>
+            <div class="code-block" data-label="~/.cursor/mcp.json" data-copy='{"mcpServers":{"figma":{"url":"https://mcp.figma.com/mcp"}}}'>
+              <button class="copy-btn" onclick="copyBlock(this)"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+              <code><span class="cb">{</span>
+  <span class="ck">"mcpServers"</span>: <span class="cb">{</span>
+    <span class="ck">"figma"</span>: <span class="cb">{</span>
+      <span class="ck">"url"</span>: <span class="cs">"https://mcp.figma.com/mcp"</span>
+    <span class="cb">}</span>
+  <span class="cb">}</span>
+<span class="cb">}</span></code>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <span class="step-card__num">03</span>
+            <span class="step-card__title">Click Connect & allow access</span>
+          </div>
+        </div>
+
+        <div class="s2-divider"></div>
+
+        <!-- Claude Code column -->
+        <div class="s2-col">
+          <span class="s2-col-label s2-col-label--claude">Claude Code (shortcut)</span>
+
+          <div class="step-card step-card--claude">
+            <span class="step-card__num">01</span>
+            <span class="step-card__title">Run one command</span>
+            <span class="cmd-inline" data-copy="claude mcp add --transport http figma https://mcp.figma.com/mcp"><button class="copy-btn" onclick="copyBlock(this)"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button><span class="prompt">$ </span>claude mcp add <span class="flag">--transport http</span> <span class="arg">figma https://mcp.figma.com/mcp</span></span>
+          </div>
+
+          <div class="step-card step-card--claude">
+            <span class="step-card__num">02</span>
+            <span class="step-card__title">Authenticate</span>
+            <span class="cmd-inline" data-copy="/mcp"><button class="copy-btn" onclick="copyBlock(this)"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button><span class="prompt">$ </span><span class="arg">/mcp</span></span>
+          </div>
+
+          <div class="step-card step-card--claude">
+            <span class="step-card__num">Tip</span>
+            <span class="step-card__title">Make it global</span>
+            <span class="cmd-inline" data-copy="claude mcp add --scope user --transport http figma https://mcp.figma.com/mcp"><button class="copy-btn" onclick="copyBlock(this)"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button><span class="prompt">$ </span>claude mcp add <span class="flag">--scope user --transport http</span> <span class="arg">figma https://mcp.figma.com/mcp</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 18 — The Workflow ═══════ -->
+  <div class="slide" data-slide="wf">
+    <div class="slide-inner">
+      <div class="slide-heading">
+        <h2>the workflow</h2>
+        <p>copy link to selection → paste in cursor</p>
+      </div>
+      <div style="position: absolute; top: 300px; bottom: 40px; left: 40px; right: 40px; display: flex; gap: 32px; align-items: center; justify-content: center;">
+        <div style="position: relative; height: 100%; display: flex; align-items: center; justify-content: center;">
+          <img src="assets/copytoselection.png" alt="Copy to selection" style="height: 100%; width: auto; object-fit: contain; display: block;" />
+          <img src="assets/figma-logo-noise.svg" alt="" style="position: absolute; top: 16px; left: 16px; width: 90px; height: 90px; transform: rotate(-8deg); filter: drop-shadow(0 6px 16px rgba(0,0,0,0.6));" />
+        </div>
+        <div style="position: relative; height: 100%; display: flex; align-items: center; justify-content: center;">
+          <img src="assets/pasteincursor.png" alt="Paste in Cursor" style="height: 100%; width: auto; object-fit: contain; display: block;" />
+          <img src="assets/cursor-sticker.svg" alt="" style="position: absolute; top: 16px; left: 16px; width: 90px; height: 90px; transform: rotate(-8deg); filter: drop-shadow(0 6px 16px rgba(0,0,0,0.6));" />
+          <img src="assets/claude-sticker.svg" alt="" style="position: absolute; top: 40px; left: 110px; width: 82px; height: 82px; transform: rotate(11deg); filter: drop-shadow(0 6px 16px rgba(0,0,0,0.6));" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 19 — it's sucks ═══════ -->
+  <div class="slide" data-slide="sucks">
+    <div class="slide-inner" style="background: #000;">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 48px;">
+        <img src="assets/sucks.png" alt="" style="max-width: 1620px; height: auto; display: block; filter: drop-shadow(4px 0 0 #fff) drop-shadow(-4px 0 0 #fff) drop-shadow(0 4px 0 #fff) drop-shadow(0 -4px 0 #fff) drop-shadow(3px 3px 0 #fff) drop-shadow(-3px 3px 0 #fff) drop-shadow(3px -3px 0 #fff) drop-shadow(-3px -3px 0 #fff);" />
+        <h2 style="font-family: var(--font-display); font-size: var(--text-display-lg); text-transform: uppercase; letter-spacing: var(--tracking-tighter); color: #fff; text-align: center; margin: 0;">it's sucks!</h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 20a — the one thing you'll need (figma only) ═══════ -->
+  <div class="slide" data-slide="ds-1">
+    <div class="slide-inner">
+      <div class="slide-label">design system</div>
+      <div class="slide-heading">
+        <h2>the one thing you'll need</h2>
+      </div>
+      <div style="position: absolute; top: 300px; bottom: 80px; left: 160px; right: 160px; display: flex; gap: 48px; align-items: center; justify-content: center;">
+        <img src="assets/figma-ds.png" alt="Figma design system" style="height: 100%; width: auto; object-fit: contain; display: block;" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 20b — the one thing you'll need (figma + code) ═══════ -->
+  <div class="slide" data-slide="ds-2">
+    <div class="slide-inner">
+      <div class="slide-label">design system</div>
+      <div class="slide-heading">
+        <h2>the one thing you'll need</h2>
+      </div>
+      <div style="position: absolute; top: 300px; bottom: 80px; left: 160px; right: 160px; display: flex; gap: 48px; align-items: center; justify-content: center;">
+        <img src="assets/figma-ds.png" alt="Figma design system" style="height: 100%; width: auto; object-fit: contain; display: block;" />
+        <img src="assets/code-ds.png" alt="Code design system" style="height: 100%; width: auto; object-fit: contain; display: block;" />
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<nav class="nav-bar">
+  <a href="class-2.html" class="nav-home">
+    <svg viewBox="0 0 16 16"><path d="M8 1.4L1 7v7.6h5V10h4v4.6h5V7L8 1.4z"/></svg>
+    All Classes
+  </a>
+  <button class="nav-arrow" id="prev-btn" disabled>&#8592;</button>
+  <div class="nav-dots" id="nav-dots"></div>
+  <span class="nav-counter" id="nav-counter">1 / 5</span>
+  <button class="nav-arrow" id="next-btn">&#8594;</button>
+</nav>
+
+<script>
+  function scaleSlides() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight - 64;
+    const scale = Math.min(vw / 1920, vh / 1080);
+    document.querySelectorAll('.slide-inner').forEach(inner => {
+      inner.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    });
+  }
+  scaleSlides();
+  window.addEventListener('resize', scaleSlides);
+
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  let currentSlide = 0;
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const dotsContainer = document.getElementById('nav-dots');
+  const counter = document.getElementById('nav-counter');
+
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+
+  function goToSlide(index) {
+    if (index < 0 || index >= totalSlides) return;
+    slides[currentSlide].classList.remove('active');
+    currentSlide = index;
+    slides[currentSlide].classList.add('active');
+    updateNav();
+  }
+
+  function updateNav() {
+    document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentSlide);
+    });
+    counter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+    prevBtn.disabled = currentSlide === 0;
+    nextBtn.disabled = currentSlide === totalSlides - 1;
+  }
+
+  prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+  nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goToSlide(currentSlide + 1);
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goToSlide(currentSlide - 1);
+  });
+
+  // ── Copy to clipboard ──
+  function copyBlock(btn) {
+    const parent = btn.closest('[data-copy]');
+    const text = parent.getAttribute('data-copy');
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 1500);
+    });
+  }
+</script>
+
+</body>
+</html>

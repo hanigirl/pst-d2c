@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design to Code Workshop</title>
+  <link rel="stylesheet" href="design-system.css" />
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      font-family: var(--font-body);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* ── Slide system ── */
+    .slides-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-slide);
+      overflow: hidden;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .slide-inner {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      top: 50%;
+      left: 50%;
+      transform-origin: center center;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 1 — Opening / Class Hub
+    ═══════════════════════════════════════ */
+
+    /* Grid background */
+    .s1-grid {
+      position: absolute;
+      top: -242px;
+      left: 158px;
+      width: 1564px;
+      height: 1573px;
+      pointer-events: none;
+      opacity: var(--opacity-overlay);
+    }
+
+    .s1-grid img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Label */
+    .s1-label {
+      position: absolute;
+      top: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-body);
+      font-size: var(--text-body-xs);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--color-accent-green);
+    }
+
+    /* Title block */
+    .s1-title-block {
+      position: absolute;
+      top: 170px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    .s1-title {
+      font-family: var(--font-display);
+      font-size: var(--text-display-lg);
+      text-transform: uppercase;
+      color: var(--color-text-primary);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tightest);
+      white-space: nowrap;
+    }
+
+    .s1-title-shadow {
+      position: absolute;
+      top: -4px;
+      left: 4px;
+      font-family: var(--font-display);
+      font-size: var(--text-display-lg);
+      text-transform: uppercase;
+      color: var(--color-accent-yellow);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tightest);
+      white-space: nowrap;
+      z-index: -1;
+    }
+
+    .s1-subtitle {
+      margin-top: var(--space-sm);
+      font-family: var(--font-body);
+      font-size: var(--text-body-lg);
+      color: var(--color-text-primary);
+      opacity: var(--opacity-overlay);
+      line-height: var(--leading-normal);
+    }
+
+    /* Class cards container */
+    .s1-cards {
+      position: absolute;
+      top: 400px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: var(--space-lg);
+    }
+
+    /* Class card */
+    .class-card {
+      width: 386px;
+      height: 280px;
+      border-radius: var(--radius-lg);
+      padding: var(--space-2xl);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .class-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .class-card--dark {
+      background: var(--color-bg-card-dark);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .class-card--dark:hover {
+      border-color: var(--color-border-light);
+    }
+
+    .class-card--active {
+      background: var(--color-bg-card-white);
+      border: 1px solid var(--color-bg-card-white);
+    }
+
+    .class-card--active .class-card__number,
+    .class-card--active .class-card__title,
+    .class-card--active .class-card__desc {
+      color: var(--color-text-on-white);
+    }
+
+    .class-card--active .class-card__badge {
+      background: var(--color-accent-green);
+      color: var(--color-text-on-white);
+    }
+
+    .class-card__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .class-card__number {
+      font-family: var(--font-display);
+      font-size: var(--text-display-sm);
+      text-transform: uppercase;
+      color: var(--color-text-primary);
+      line-height: 1;
+      letter-spacing: var(--tracking-tighter);
+    }
+
+    .class-card__badge {
+      font-family: var(--font-body);
+      font-size: var(--text-body-xxs);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      background: var(--color-bg-pill);
+      color: var(--color-text-primary);
+      border-radius: var(--radius-pill);
+      padding: 6px 16px;
+    }
+
+    .class-card__badge--done {
+      background: rgba(123, 237, 82, 0.15);
+      color: var(--color-accent-green);
+    }
+
+    .class-card__bottom {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2xs);
+    }
+
+    .class-card__title {
+      font-family: var(--font-body);
+      font-size: var(--text-body-lg);
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: var(--leading-tight);
+    }
+
+    .class-card__desc {
+      font-family: var(--font-body);
+      font-size: var(--text-body-sm);
+      color: var(--color-text-primary);
+      opacity: var(--opacity-medium);
+      line-height: var(--leading-normal);
+    }
+
+    .class-card--active .class-card__desc {
+      opacity: 0.5;
+    }
+
+    /* Figma sticker on Class 02 card */
+    .class-card__sticker {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 106px;
+      height: 106px;
+      transform: rotate(12deg);
+      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
+      pointer-events: none;
+      transition: transform var(--transition-fast);
+    }
+    .class-card:hover .class-card__sticker {
+      transform: rotate(8deg) scale(1.04);
+    }
+    .class-card__sticker--lg {
+      width: 133px;
+      height: 133px;
+      top: 0;
+      right: 0;
+    }
+    .class-card__sticker--xl {
+      width: 138px;
+      height: 138px;
+      top: 0;
+      right: 0;
+    }
+    .class-card__sticker--vibrant {
+      filter: url(#sticker-noise)
+              saturate(0.65) brightness(1.55) hue-rotate(15deg) contrast(0.95)
+              drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
+    }
+
+    /* Connector line between cards */
+    .s1-connectors {
+      position: absolute;
+      top: 530px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      width: 1640px;
+      pointer-events: none;
+    }
+
+    /* Dashed line spanning between card centers */
+    .s1-dashed {
+      position: absolute;
+      top: 360px;
+      left: 288px;
+      width: 1344px;
+      display: flex;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .s1-dashed-line {
+      flex: 1;
+      height: 1px;
+      border-top: 2px dashed rgba(255, 255, 255, 0.12);
+    }
+
+    /* Step dots on the dashed line */
+    .s1-step-dots {
+      position: absolute;
+      top: 354px;
+      left: 288px;
+      width: 1344px;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .s1-step-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: var(--radius-circle);
+      background: var(--color-bg-pill);
+      border: 2px solid var(--color-bg-primary);
+    }
+
+    .s1-step-dot--done {
+      background: var(--color-accent-green);
+    }
+
+    .s1-step-dot--active {
+      background: var(--color-bg-card-white);
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.15);
+    }
+  </style>
+</head>
+<body>
+
+<!-- SVG noise filter for stickers -->
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <filter id="sticker-noise">
+    <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="3" seed="3" stitchTiles="stitch" result="turb" />
+    <feColorMatrix in="turb" values="0 0 0 0 0
+                                     0 0 0 0 0
+                                     0 0 0 0 0
+                                     0 0 0 1.2 0" result="grain" />
+    <!-- Mask: 0 on white / transparent, ~1 on any other color (amplified so bright tints still get noise) -->
+    <feColorMatrix in="SourceGraphic" type="matrix"
+                   values="0 0 0 0 0
+                           0 0 0 0 0
+                           0 0 0 0 0
+                           -0.9 -1.77 -0.33 3 0" result="notWhite" />
+    <feComposite in="grain" in2="notWhite" operator="in" result="maskedGrain" />
+    <feBlend in="SourceGraphic" in2="maskedGrain" mode="multiply" />
+  </filter>
+</svg>
+
+<div class="slides-container">
+
+  <!-- ═══════ SLIDE 1 — Opening / Class Hub ═══════ -->
+  <div class="slide active" data-slide="0">
+    <div class="slide-inner" id="s1-inner">
+
+      <!-- Grid background -->
+      <div class="s1-grid">
+        <img src="assets/grid.svg" alt="" />
+      </div>
+
+      <!-- Label -->
+      <div class="s1-label">Design to Code Course</div>
+
+      <!-- Title block -->
+      <div class="s1-title-block">
+        <div style="position: relative; display: inline-block;">
+          <div class="s1-title-shadow">Design to code</div>
+          <div class="s1-title">Design to code</div>
+        </div>
+        <div class="s1-subtitle">Workshop</div>
+      </div>
+
+      <!-- Dashed connector line -->
+      <div class="s1-dashed">
+        <div class="s1-dashed-line"></div>
+      </div>
+
+      <!-- Step dots -->
+      <div class="s1-step-dots">
+        <div class="s1-step-dot"></div>
+        <div class="s1-step-dot"></div>
+        <div class="s1-step-dot"></div>
+        <div class="s1-step-dot"></div>
+      </div>
+
+      <!-- Class cards -->
+      <div class="s1-cards">
+
+        <!-- Class 1 -->
+        <a href="the-shift.html" class="class-card class-card--dark">
+          <img class="class-card__sticker class-card__sticker--vibrant" src="assets/tools.svg" alt="Tools" />
+          <div class="class-card__top">
+            <span class="class-card__number">01</span>
+          </div>
+          <div class="class-card__bottom">
+            <span class="class-card__title">The Shift</span>
+            <span class="class-card__desc">Why designers should code & the tools that make it possible</span>
+          </div>
+        </a>
+
+        <!-- Class 2 -->
+        <a href="figma-mcp.html" class="class-card class-card--dark">
+          <img class="class-card__sticker" src="assets/figma-logo-noise.svg" alt="Figma" />
+          <div class="class-card__top">
+            <span class="class-card__number">02</span>
+          </div>
+          <div class="class-card__bottom">
+            <span class="class-card__title">Figma MCP</span>
+            <span class="class-card__desc">Connect Figma to code with the Model Context Protocol</span>
+          </div>
+        </a>
+
+        <!-- Class 3 -->
+        <a href="#" class="class-card class-card--dark">
+          <img class="class-card__sticker class-card__sticker--lg" src="assets/skill.svg" alt="Skills" />
+          <div class="class-card__top">
+            <span class="class-card__number">03</span>
+          </div>
+          <div class="class-card__bottom">
+            <span class="class-card__title">Skills</span>
+            <span class="class-card__desc">Package reusable workflows Claude can load on demand</span>
+          </div>
+        </a>
+
+        <!-- Class 4 -->
+        <a href="#" class="class-card class-card--dark">
+          <img class="class-card__sticker class-card__sticker--xl" src="assets/agents.svg" alt="Agents" />
+          <div class="class-card__top">
+            <span class="class-card__number">04</span>
+          </div>
+          <div class="class-card__bottom">
+            <span class="class-card__title">Agents</span>
+            <span class="class-card__desc">Build custom agents that work alongside you, autonomously</span>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<nav class="nav-bar">
+  <button class="nav-btn" id="prev-btn" disabled>&#8592;</button>
+  <div class="nav-dots" id="nav-dots"></div>
+  <span class="nav-counter" id="nav-counter">1 / 1</span>
+  <button class="nav-btn" id="next-btn" disabled>&#8594;</button>
+</nav>
+
+<script>
+  // ── Responsive scaling ──
+  function scaleSlides() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight - 64;
+    const scaleX = vw / 1920;
+    const scaleY = vh / 1080;
+    const scale = Math.min(scaleX, scaleY);
+
+    document.querySelectorAll('.slide-inner').forEach(inner => {
+      inner.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    });
+  }
+
+  scaleSlides();
+  window.addEventListener('resize', scaleSlides);
+
+  // ── Slide navigation ──
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  let currentSlide = 0;
+
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const dotsContainer = document.getElementById('nav-dots');
+  const counter = document.getElementById('nav-counter');
+
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'nav-dot' + (i === 0 ? ' nav-dot--active' : '');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+
+  function goToSlide(index) {
+    if (index < 0 || index >= totalSlides) return;
+    slides[currentSlide].classList.remove('active');
+    currentSlide = index;
+    slides[currentSlide].classList.add('active');
+    updateNav();
+  }
+
+  function updateNav() {
+    document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+      dot.classList.toggle('nav-dot--active', i === currentSlide);
+    });
+    counter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+    prevBtn.disabled = currentSlide === 0;
+    nextBtn.disabled = currentSlide === totalSlides - 1;
+  }
+
+  prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+  nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goToSlide(currentSlide + 1);
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goToSlide(currentSlide - 1);
+  });
+</script>
+
+</body>
+</html>
