@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class 04 — Agents</title>
+  <link rel="stylesheet" href="design-system.css" />
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      font-family: var(--font-body);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* ── Slide system ── */
+    .slides-container { position: relative; width: 100%; height: 100%; }
+
+    .slide {
+      position: absolute; inset: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity var(--transition-slide);
+      overflow: hidden;
+    }
+    .slide.active { opacity: 1; pointer-events: auto; }
+
+    .slide-inner {
+      position: absolute; width: 1920px; height: 1080px;
+      top: 50%; left: 50%; transform-origin: center center;
+    }
+
+    .grid-bg {
+      position: absolute; top: -242px; left: 158px;
+      width: 1564px; height: 1573px;
+      pointer-events: none; opacity: var(--opacity-overlay);
+    }
+    .grid-bg img { width: 100%; height: 100%; display: block; }
+
+    .slide-label {
+      position: absolute; top: 60px; left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-body);
+      font-size: var(--text-body-xs);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--color-accent-green);
+    }
+
+    .slide-heading {
+      position: absolute; top: 100px; left: 50%;
+      transform: translateX(-50%); text-align: center;
+      max-width: 1500px;
+    }
+
+    .slide-heading h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-display-md);
+      text-transform: uppercase;
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tighter);
+    }
+
+    .slide-heading p {
+      font-family: var(--font-body);
+      font-size: var(--text-body-md);
+      opacity: var(--opacity-overlay);
+      margin-top: var(--space-sm);
+      line-height: var(--leading-normal);
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE — Evolution timeline
+    ═══════════════════════════════════════ */
+    .timeline {
+      position: absolute;
+      top: 460px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1600px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 138px;
+      left: 8%;
+      right: 8%;
+      height: 2px;
+      border-top: 2px dashed rgba(255,255,255,0.18);
+    }
+
+    .timeline-step {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 12px;
+    }
+
+    .timeline-tag {
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      background: rgba(123, 237, 82, 0.14);
+      color: var(--color-accent-green);
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 36px;
+      transform: rotate(-4deg);
+    }
+
+    .timeline-dot {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--color-bg-card-dark);
+      border: 2px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 32px;
+      color: var(--color-text-primary);
+      margin-bottom: 24px;
+    }
+
+    .timeline-step--active .timeline-dot {
+      background: var(--color-accent-green);
+      color: var(--color-text-on-white);
+      border-color: var(--color-accent-green);
+      box-shadow: 0 0 32px rgba(123,237,82,0.35);
+    }
+
+    .timeline-label {
+      font-family: var(--font-body);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1.3;
+      max-width: 260px;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE — Center stage statement
+    ═══════════════════════════════════════ */
+    .center-stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 32px;
+      padding: 0 120px;
+    }
+
+    .center-stage h1 {
+      font-family: var(--font-display);
+      font-size: var(--text-display-lg);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-tightest);
+      line-height: var(--leading-tight);
+      color: var(--color-text-primary);
+      max-width: 1500px;
+    }
+
+    .center-stage p {
+      font-family: var(--font-body);
+      font-size: var(--text-body-xl);
+      color: var(--color-text-primary);
+      opacity: var(--opacity-overlay);
+      max-width: 1300px;
+      line-height: 1.4;
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    .pill-tag {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 26px;
+      padding: 14px 30px;
+      border-radius: var(--radius-pill);
+      background: rgba(123, 237, 82, 0.14);
+      color: var(--color-accent-green);
+      transform: rotate(var(--rot, -4deg));
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+
+    .pill-tag--yellow { background: rgba(255,201,55,0.16); color: var(--color-accent-yellow); }
+    .pill-tag--pink   { background: rgba(255,43,155,0.18); color: var(--color-accent-pink); }
+
+    /* ═══════════════════════════════════════
+       SLIDE — Main task → Sub-agents (split diagram)
+    ═══════════════════════════════════════ */
+    .split-stage {
+      position: absolute;
+      top: 280px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .split-main {
+      width: 560px;
+      background: linear-gradient(135deg, #1c2914 0%, var(--color-bg-card-dark) 70%);
+      border: 2px solid var(--color-accent-green);
+      border-radius: var(--radius-lg);
+      padding: 32px 40px;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(123,237,82,0.2);
+    }
+
+    .split-main__tag {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      background: var(--color-accent-green);
+      color: var(--color-text-on-white);
+      padding: 4px 14px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 14px;
+    }
+    .split-main__title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-tighter);
+      color: var(--color-text-primary);
+      line-height: 1.1;
+    }
+
+    /* SVG arrows fanning out */
+    .split-arrows {
+      position: relative;
+      width: 1300px;
+      height: 80px;
+      margin-top: -16px;
+      pointer-events: none;
+    }
+    .split-arrows svg { width: 100%; height: 100%; display: block; }
+
+    .split-subs {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .sub-card {
+      background: var(--color-bg-card-dark);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sub-card__tag {
+      font-family: var(--font-display);
+      font-size: 12px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .sub-card__title {
+      font-family: var(--font-body);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1.25;
+    }
+
+    .sub-card__desc {
+      font-family: var(--font-body);
+      font-size: 18px;
+      color: var(--color-text-primary);
+      opacity: 0.65;
+      line-height: 1.4;
+    }
+
+    /* Caption below split */
+    .split-caption {
+      position: absolute;
+      bottom: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1300px;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: var(--text-body-md);
+      color: var(--color-text-primary);
+      opacity: var(--opacity-overlay);
+      line-height: 1.4;
+    }
+    .split-caption strong { color: var(--color-accent-green); opacity: 1; font-weight: 700; }
+
+    /* ═══════════════════════════════════════
+       SLIDE — How to build an agent (4 numbered step cards)
+    ═══════════════════════════════════════ */
+    .steps-grid {
+      position: absolute;
+      top: 290px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1640px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .step-card {
+      position: relative;
+      background: var(--color-bg-card-dark);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 36px 40px 36px 130px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: transform var(--transition-fast), border-color var(--transition-fast);
+    }
+    .step-card:hover { transform: translateY(-4px); border-color: rgba(123,237,82,0.35); }
+
+    .step-card__num {
+      position: absolute;
+      top: 36px;
+      left: 36px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: var(--color-accent-green);
+      color: var(--color-text-on-white);
+      font-family: var(--font-display);
+      font-size: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 32px rgba(123,237,82,0.35);
+    }
+
+    .step-card__tag {
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--color-accent-green);
+    }
+
+    .step-card__title {
+      font-family: var(--font-body);
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1.2;
+    }
+
+    .step-card__desc {
+      font-family: var(--font-body);
+      font-size: 21px;
+      color: var(--color-text-primary);
+      opacity: 0.7;
+      line-height: 1.45;
+      flex: 1;
+    }
+
+    .step-card__desc code {
+      font-family: 'Fira Code', monospace;
+      background: #000;
+      color: var(--color-accent-green);
+      padding: 2px 10px;
+      border-radius: 5px;
+      font-size: 18px;
+    }
+
+    /* ═══════════════════════════════════════
+       Reusable message component
+    ═══════════════════════════════════════ */
+    .message {
+      background: var(--color-bg-card-dark);
+      border: 1px solid rgba(123, 237, 82, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 22px 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .message__title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--color-accent-green);
+      flex-shrink: 0;
+      max-width: 220px;
+      line-height: 1.3;
+    }
+    .message__divider { width: 1px; align-self: stretch; background: rgba(255,255,255,0.12); flex-shrink: 0; }
+    .message__body {
+      flex: 1;
+      font-family: var(--font-body);
+      font-size: 20px;
+      color: var(--color-text-primary);
+      opacity: 0.85;
+      line-height: 1.4;
+    }
+    .message__body strong { color: var(--color-text-primary); opacity: 1; font-weight: 700; }
+    .message--yellow { border-color: rgba(255, 201, 55, 0.35); }
+    .message--yellow .message__title { color: var(--color-accent-yellow); }
+
+    /* ── Nav bar ── */
+    .nav-home {
+      position: absolute; left: 24px; top: 50%; transform: translateY(-50%);
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: var(--radius-pill);
+      border: 1px solid var(--color-border-light);
+      background: var(--color-bg-btn); color: var(--color-text-primary);
+      font-family: var(--font-body); font-size: var(--text-body-xxs);
+      letter-spacing: var(--tracking-wide); text-transform: uppercase;
+      text-decoration: none;
+      transition: background var(--transition-fast), border-color var(--transition-fast);
+    }
+    .nav-home:hover { background: var(--color-bg-btn-hover); border-color: rgba(255,255,255,0.35); }
+    .nav-home svg { width: 14px; height: 14px; fill: currentColor; }
+    .nav-arrow {
+      width: var(--nav-btn-size); height: var(--nav-btn-size);
+      border-radius: var(--radius-circle);
+      border: 1px solid var(--color-border-light);
+      background: var(--color-bg-btn); color: var(--color-text-primary);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background var(--transition-fast), border-color var(--transition-fast);
+    }
+    .nav-arrow:hover { background: var(--color-bg-btn-hover); border-color: rgba(255,255,255,0.35); }
+    .nav-arrow:disabled { opacity: var(--opacity-disabled); cursor: default; }
+    .nav-arrow:disabled:hover { background: var(--color-bg-btn); border-color: var(--color-border-light); }
+    .nav-dot.active { background: var(--color-text-primary); transform: scale(1.35); }
+  </style>
+</head>
+<body>
+
+<div class="slides-container">
+
+  <!-- ═══════ SLIDE 1 — Evolution timeline (Agent highlighted) ═══════ -->
+  <div class="slide active" data-slide="0">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="slide-label">Evolution</div>
+      <div class="slide-heading">
+        <h2>The evolution of running your business</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-step">
+          <span class="timeline-tag">Chat</span>
+          <div class="timeline-dot">1</div>
+          <div class="timeline-label">A conversation</div>
+        </div>
+        <div class="timeline-step">
+          <span class="timeline-tag">Knowledge base</span>
+          <div class="timeline-dot">2</div>
+          <div class="timeline-label">Something to keep coming back to</div>
+        </div>
+        <div class="timeline-step">
+          <span class="timeline-tag">Skill</span>
+          <div class="timeline-dot">3</div>
+          <div class="timeline-label">A set of repeated instructions</div>
+        </div>
+        <div class="timeline-step timeline-step--active">
+          <span class="timeline-tag">Agent</span>
+          <div class="timeline-dot">4</div>
+          <div class="timeline-label">A multi-step task</div>
+        </div>
+        <div class="timeline-step">
+          <span class="timeline-tag">Automation</span>
+          <div class="timeline-dot">5</div>
+          <div class="timeline-label">"Leave me alone, just do it yourself"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 2 — What is an agent? ═══════ -->
+  <div class="slide" data-slide="1">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="slide-label">Definition</div>
+
+      <div class="center-stage">
+        <h1>Agent = a task that finishes itself</h1>
+        <p>A multi-step job that runs end-to-end — using its own toolkit and reaching for resources when it needs them.</p>
+        <div class="pill-row">
+          <span class="pill-tag" style="--rot: -5deg;">Has its own Skills</span>
+          <span class="pill-tag pill-tag--yellow" style="--rot: 4deg;">Pulls Resources on demand</span>
+          <span class="pill-tag pill-tag--pink" style="--rot: -3deg;">Knows when it's done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 3 — Main task → Sub-agents ═══════ -->
+  <div class="slide" data-slide="2">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="slide-label">Composition</div>
+      <div class="slide-heading">
+        <h2>Main task → sub-agents</h2>
+      </div>
+
+      <div class="split-stage">
+        <div class="split-main">
+          <span class="split-main__tag">Main agent</span>
+          <div class="split-main__title">Ship the weekly newsletter</div>
+        </div>
+
+        <div class="split-arrows">
+          <svg viewBox="0 0 1300 80" preserveAspectRatio="none">
+            <path d="M650 0 L240 80" stroke="rgba(123,237,82,0.5)" stroke-width="2" fill="none" />
+            <path d="M650 0 L650 80" stroke="rgba(123,237,82,0.5)" stroke-width="2" fill="none" />
+            <path d="M650 0 L1060 80" stroke="rgba(123,237,82,0.5)" stroke-width="2" fill="none" />
+          </svg>
+        </div>
+
+        <div class="split-subs">
+          <div class="sub-card">
+            <span class="sub-card__tag">Sub-agent · 01</span>
+            <div class="sub-card__title">Read the brand voice</div>
+            <div class="sub-card__desc">Pull tone, do/don'ts, and past examples from the knowledge base.</div>
+          </div>
+          <div class="sub-card">
+            <span class="sub-card__tag">Sub-agent · 02</span>
+            <div class="sub-card__title">Draft the issue</div>
+            <div class="sub-card__desc">Use the newsletter-draft skill on this week's raw material.</div>
+          </div>
+          <div class="sub-card">
+            <span class="sub-card__tag">Sub-agent · 03</span>
+            <div class="sub-card__title">Generate subject lines</div>
+            <div class="sub-card__desc">Run the subject-line skill and rank the candidates.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split-caption">
+        Each agent becomes a <strong>sub-agent</strong>. The success of one is the success of the whole.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 4 — How to build an agent (4 steps) ═══════ -->
+  <div class="slide" data-slide="3">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="slide-label">Build</div>
+      <div class="slide-heading">
+        <h2>How to build an agent</h2>
+        <p>Four things you tell Claude when you spec it out</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-card__num">1</div>
+          <span class="step-card__tag">Knowledge</span>
+          <h3 class="step-card__title">What it should know</h3>
+          <p class="step-card__desc">Define the agent's domain expertise and the experience it draws on — what counts as the "right" answer here.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-card__num">2</div>
+          <span class="step-card__tag">Action</span>
+          <h3 class="step-card__title">What it should do</h3>
+          <p class="step-card__desc">Spell out the process step by step — the method, the tools (skills), and the order of operations.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-card__num">3</div>
+          <span class="step-card__tag">Cadence</span>
+          <h3 class="step-card__title">When and at what pace</h3>
+          <p class="step-card__desc">Set the rhythm — once a week, on a trigger, or always-on — and how aggressively to push toward completion.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-card__num">4</div>
+          <span class="step-card__tag">Decisions</span>
+          <h3 class="step-card__title">How to react to each case</h3>
+          <p class="step-card__desc">Define the edge cases up front: <code>if X, then Y</code> — not <code>X</code>, but <code>Y</code>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<nav class="nav-bar">
+  <a href="class-2.html" class="nav-home">
+    <svg viewBox="0 0 16 16"><path d="M8 1.4L1 7v7.6h5V10h4v4.6h5V7L8 1.4z"/></svg>
+    All Classes
+  </a>
+  <button class="nav-arrow" id="prev-btn" disabled>&#8592;</button>
+  <div class="nav-dots" id="nav-dots"></div>
+  <span class="nav-counter" id="nav-counter">1 / 4</span>
+  <button class="nav-arrow" id="next-btn">&#8594;</button>
+</nav>
+
+<script>
+  function scaleSlides() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight - 64;
+    const scale = Math.min(vw / 1920, vh / 1080);
+    document.querySelectorAll('.slide-inner').forEach(inner => {
+      inner.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    });
+  }
+  scaleSlides();
+  window.addEventListener('resize', scaleSlides);
+
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  let currentSlide = 0;
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const dotsContainer = document.getElementById('nav-dots');
+  const counter = document.getElementById('nav-counter');
+
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+
+  function goToSlide(index) {
+    if (index < 0 || index >= totalSlides) return;
+    slides[currentSlide].classList.remove('active');
+    currentSlide = index;
+    slides[currentSlide].classList.add('active');
+    updateNav();
+  }
+
+  function updateNav() {
+    document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentSlide);
+    });
+    counter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+    prevBtn.disabled = currentSlide === 0;
+    nextBtn.disabled = currentSlide === totalSlides - 1;
+  }
+
+  prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+  nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goToSlide(currentSlide + 1);
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goToSlide(currentSlide - 1);
+  });
+</script>
+
+</body>
+</html>
