@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design to Code — פלייר</title>
+  <style>
+    @font-face {
+      font-family: 'Minecraft';
+      src: url('fonts/1_MinecraftRegular1.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Almoni Tzar';
+      src: url('fonts/almoni-tzar-regular-aaa.otf') format('opentype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Almoni Tzar';
+      src: url('fonts/almoni-tzar-medium-aaa.otf') format('opentype');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'Almoni Tzar';
+      src: url('fonts/almoni-tzar-bold-aaa.otf') format('opentype');
+      font-weight: 700;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #000;
+      color: #fff;
+      font-family: 'Almoni Tzar', sans-serif;
+      direction: rtl;
+      width: 100%;
+      min-height: 100vh;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── Page sized to A4 portrait ── */
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    .flyer {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: #000;
+      position: relative;
+      overflow: hidden;
+      padding: 28mm 18mm 22mm;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12mm;
+    }
+
+    /* Decorative <> scatter */
+    .flyer-deco-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .flyer-deco {
+      position: absolute;
+      font-family: 'Minecraft', monospace;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: 0.05em;
+    }
+
+    .flyer-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12mm;
+    }
+
+    /* Sale badge */
+    .flyer-badge {
+      width: 130mm;
+      background: #ff2b75;
+      padding: 4mm 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(-5.5deg);
+      box-shadow: 0 6mm 12mm rgba(255, 43, 117, 0.18);
+    }
+
+    .flyer-badge-text {
+      font-family: 'Almoni Tzar', sans-serif;
+      font-weight: 400;
+      font-size: 36pt;
+      line-height: 1;
+      color: #ffffff;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .flyer-logo {
+      display: block;
+      width: 145mm;
+      height: auto;
+      margin-top: -4mm;
+    }
+
+    .flyer-subtitle {
+      width: 100%;
+      font-family: 'Almoni Tzar', sans-serif;
+      font-weight: 400;
+      font-size: 38pt;
+      line-height: 1.15;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    /* QR section */
+    .flyer-qr-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6mm;
+      margin-top: 4mm;
+    }
+
+    .flyer-qr {
+      width: 90mm;
+      height: 90mm;
+      background: #ffffff;
+      padding: 5mm;
+      border-radius: 6mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .flyer-qr img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .flyer-cta {
+      font-family: 'Almoni Tzar', sans-serif;
+      font-weight: 700;
+      font-size: 24pt;
+      line-height: 1.15;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .flyer-cta-sub {
+      font-family: 'Almoni Tzar', sans-serif;
+      font-weight: 400;
+      font-size: 16pt;
+      line-height: 1.2;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      margin-top: 2mm;
+      direction: ltr;
+    }
+
+    /* Footer brand strip */
+    .flyer-footer {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12mm;
+      width: 100%;
+    }
+
+    .flyer-footer img {
+      display: block;
+      filter: brightness(0) invert(1);
+      opacity: 0.85;
+    }
+
+    .flyer-footer .uxtra { width: 32mm; height: auto; }
+    .flyer-footer .designai { width: 44mm; height: auto; }
+
+    /* Print specifics */
+    @media print {
+      html, body { background: #000; }
+      .flyer { box-shadow: none; }
+    }
+
+    /* Screen-only nicety so the page is centered */
+    @media screen {
+      body {
+        background: #1a1a1a;
+        padding: 24px 0;
+        min-height: 100vh;
+      }
+      .flyer {
+        box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+      }
+      .flyer-print-hint {
+        position: fixed;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #fff;
+        color: #000;
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        z-index: 1000;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+        direction: ltr;
+      }
+    }
+    @media print {
+      .flyer-print-hint { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <article class="flyer">
+
+    <div class="flyer-deco-layer" aria-hidden="true"></div>
+
+    <div class="flyer-content">
+      <div class="flyer-badge">
+        <span class="flyer-badge-text">מכירה מיוחדת לכנס DesignAI!</span>
+      </div>
+
+      <img class="flyer-logo" src="assets/logo-d2c.png" alt="Design to Code" />
+
+      <p class="flyer-subtitle">לאיזה מחזור לרשום אותך?</p>
+
+      <div class="flyer-qr-block">
+        <div class="flyer-qr">
+          <img src="assets/qr-pst-d2c.svg" alt="QR — pst-d2c.vercel.app" />
+        </div>
+        <div class="flyer-cta">סרקו והצטרפו</div>
+        <div class="flyer-cta-sub">pst-d2c.vercel.app</div>
+      </div>
+
+      <div class="flyer-footer">
+        <img class="uxtra" src="assets/uxtra-logo.svg" alt="UXTRA" />
+        <img class="designai" src="assets/design-ai-logo.svg" alt="DesignAI" />
+      </div>
+    </div>
+
+  </article>
+
+  <button class="flyer-print-hint" onclick="window.print()">⌘P / Ctrl+P — Print or Save as PDF</button>
+
+  <script>
+    // Scatter decorative <> symbols across the flyer (matches landing page vibe)
+    (function () {
+      var layer = document.querySelector('.flyer-deco-layer');
+      if (!layer) return;
+      var count = 18;
+      function rand(min, max) { return min + Math.random() * (max - min); }
+      for (var i = 0; i < count; i++) {
+        var el = document.createElement('span');
+        el.className = 'flyer-deco';
+        el.textContent = '<>';
+        var size = rand(14, 36);
+        var rot = rand(-18, 18);
+        var top = rand(2, 96);
+        var bucket = Math.random();
+        var leftPct;
+        if (bucket < 0.42)      leftPct = rand(2, 14);
+        else if (bucket < 0.84) leftPct = rand(86, 96);
+        else                    leftPct = rand(40, 60);
+        var opacity = rand(0.06, 0.16);
+        el.style.fontSize = size + 'pt';
+        el.style.top = top + '%';
+        el.style.left = leftPct + '%';
+        el.style.opacity = opacity.toFixed(2);
+        el.style.transform = 'rotate(' + rot.toFixed(1) + 'deg)';
+        layer.appendChild(el);
+      }
+    })();
+  </script>
+
+</body>
+</html>
