@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design to Code — סדנה</title>
+  <style>
+    /* ── Fonts ── */
+    @font-face {
+      font-family: 'Minecraft';
+      src: url('fonts/1_MinecraftRegular1.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Minecraft';
+      src: url('fonts/1_MinecraftRegular1.otf') format('opentype');
+      font-weight: 400;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Almoni Tzar';
+      src: url('fonts/almoni-tzar-regular-aaa.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Almoni Tzar';
+      src: url('fonts/almoni-tzar-medium-aaa.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Almoni Tzar';
+      src: url('fonts/almoni-tzar-bold-aaa.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #000;
+      color: #fff;
+      font-family: 'Almoni Tzar', sans-serif;
+      min-height: 100vh;
+      width: 100%;
+      direction: rtl;
+      overflow-x: hidden;
+    }
+
+    .lp-deco-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .lp-frame { position: relative; z-index: 1; }
+
+    /* ───────────────────────────────
+       DECORATIVE < > SCATTER
+    ─────────────────────────────── */
+    .lp-deco {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      font-family: 'Minecraft', monospace;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: 0.05em;
+      will-change: transform, opacity;
+      animation: lp-deco-float 8s ease-in-out infinite;
+    }
+
+    @keyframes lp-deco-float {
+      0%, 100% { transform: translate(0, 0) rotate(var(--deco-rot, 0deg)); }
+      50%      { transform: translate(0, -10px) rotate(var(--deco-rot, 0deg)); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lp-deco { animation: none; }
+    }
+
+    /* ───────────────────────────────
+       STAGGERED FADE-IN
+    ─────────────────────────────── */
+    .lp-fade {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: lp-fade-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes lp-fade-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* The badge has its own loop animation, so fade it in via opacity only */
+    .lp-badge.lp-fade {
+      opacity: 0;
+      transform: rotate(-5.5deg);
+      animation:
+        lp-fade-in-badge 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+        lp-badge-wiggle 3.6s ease-in-out 1.4s infinite;
+    }
+
+    @keyframes lp-fade-in-badge {
+      from { opacity: 0; transform: rotate(-5.5deg) translateY(-12px); }
+      to   { opacity: 1; transform: rotate(-5.5deg) translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lp-fade,
+      .lp-badge.lp-fade { animation: none; opacity: 1; transform: none; }
+      .lp-badge.lp-fade { transform: rotate(-5.5deg); }
+    }
+
+    /* ── Frame: scaled like Figma 1440 wide ── */
+    .lp-frame {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 200px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 80px;
+    }
+
+    /* ───────────────────────────────
+       HERO BLOCK
+    ─────────────────────────────── */
+    .lp-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      position: relative;
+    }
+
+    /* Sale badge — tilted pink ribbon */
+    .lp-badge {
+      width: 413px;
+      max-width: 90%;
+      background: #ff2b75;
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: -8px;
+      z-index: 4;
+      animation: lp-badge-wiggle 3.6s ease-in-out infinite;
+      box-shadow: 0 12px 36px rgba(255, 43, 117, 0.25);
+    }
+
+    @keyframes lp-badge-wiggle {
+      0%   { transform: rotate(-5.5deg) scale(1); }
+      45%  { transform: rotate(-4deg) scale(1.04); }
+      55%  { transform: rotate(-4deg) scale(1.04); }
+      100% { transform: rotate(-5.5deg) scale(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lp-badge { animation: none; transform: rotate(-5.5deg); }
+    }
+
+    .lp-badge-text {
+      font-family: 'Almoni Tzar', sans-serif;
+      font-weight: 400;
+      font-size: 40px;
+      line-height: 1;
+      color: #ffffff;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .lp-logo {
+      display: block;
+      width: 567px;
+      max-width: 90%;
+      height: auto;
+    }
+
+    /* "DESIGN" — yellow */
+    .lp-design {
+      position: absolute;
+      left: 9.81px;
+      top: 98.64px;
+      transform: translateY(-50%);
+      font-family: 'Minecraft', monospace;
+      font-size: 163.904px;
+      font-weight: 400;
+      line-height: 1;
+      text-transform: uppercase;
+      color: #ffc937;
+      white-space: nowrap;
+    }
+
+    /* Triangle ("Cool Shape" rotated 180°) */
+    .lp-triangle {
+      position: absolute;
+      left: 134.85px;
+      top: 166.85px;
+      width: 338.342px;
+      height: 338.342px;
+      transform: rotate(180deg);
+    }
+
+    .lp-triangle-mask {
+      position: absolute;
+      inset: 0;
+      -webkit-mask-image: url('assets/triangle-mask-lp.svg');
+      mask-image: url('assets/triangle-mask-lp.svg');
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: 0 0;
+      mask-position: 0 0;
+      -webkit-mask-size: 200px 200px;
+      mask-size: 200px 200px;
+      overflow: hidden;
+    }
+
+    .lp-triangle-gradient {
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/triangle-gradient-lp.svg');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+
+    .lp-triangle-noise-1 {
+      position: absolute;
+      inset: 0 0.58px 0.58px 0;
+      background-image: url('assets/noise1.png');
+      background-size: 307.2px 307.2px;
+      background-position: top left;
+      mix-blend-mode: overlay;
+      opacity: 0.6 * 0.8;
+      opacity: 0.48;
+      pointer-events: none;
+    }
+
+    .lp-triangle-noise-2 {
+      position: absolute;
+      inset: 0 0.58px 0.58px 0;
+      background-image: url('assets/noise2.png');
+      background-size: 409.6px 409.6px;
+      background-position: top left;
+      mix-blend-mode: overlay;
+      opacity: 0.56;
+      pointer-events: none;
+    }
+
+    /* "CODE" — pink */
+    .lp-code {
+      position: absolute;
+      left: 6.54px;
+      top: 267.99px;
+      font-family: 'Minecraft', monospace;
+      font-size: 242.617px;
+      font-weight: 400;
+      line-height: 1;
+      text-transform: uppercase;
+      color: #ff2b9b;
+      white-space: nowrap;
+    }
+
+    /* "T0" italic */
+    .lp-to {
+      position: absolute;
+      left: 293.01px;
+      top: 237.57px;
+      transform: translate(-50%, -50%);
+      font-family: 'Minecraft', monospace;
+      font-style: italic;
+      font-size: 163.904px;
+      font-weight: 400;
+      line-height: 1;
+      text-transform: uppercase;
+      color: #ff2b9b;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* Subtitle */
+    .lp-subtitle {
+      width: 100%;
+      max-width: 100%;
+      font-family: 'Almoni Tzar', sans-serif;
+      font-size: 72px;
+      font-weight: 400;
+      line-height: 1.15;
+      color: #ffffff;
+      text-align: center;
+      min-height: 1.15em;
+    }
+
+    .lp-caret {
+      display: inline-block;
+      width: 0.06em;
+      background: #ffffff;
+      margin-inline-start: 0.08em;
+      vertical-align: -0.12em;
+      height: 0.85em;
+      animation: lp-caret-blink 0.85s step-end infinite;
+    }
+
+    @keyframes lp-caret-blink {
+      0%, 50%   { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lp-caret { animation: none; opacity: 1; }
+    }
+
+    /* ───────────────────────────────
+       CARDS
+    ─────────────────────────────── */
+    .lp-cards {
+      display: flex;
+      gap: 40px;
+      width: 100%;
+      padding: 0 100px;
+      align-items: stretch;
+      direction: ltr; /* Figma source order: open-registration on left */
+    }
+
+    .lp-card {
+      flex: 1 0 0;
+      min-width: 0;
+      background: #141414;
+      border-radius: 20px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-end;
+    }
+
+    .lp-card-header {
+      display: flex;
+      gap: 40px;
+      width: 100%;
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+
+    .lp-status {
+      width: 136px;
+      padding-top: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .lp-status-inner {
+      width: 100%;
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lp-status-text {
+      font-family: 'Almoni Tzar', sans-serif;
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1;
+      color: #ffffff;
+      text-align: right;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .lp-status-dot {
+      width: 8px;
+      height: 8px;
+      flex-shrink: 0;
+      animation: lp-pulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes lp-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.35; transform: scale(0.7); }
+    }
+
+    .lp-status-dot img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .lp-card-date {
+      flex: 1 0 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-end;
+      color: #ffffff;
+      text-align: right;
+    }
+
+    .lp-card-date-big {
+      font-family: 'Almoni Tzar', sans-serif;
+      font-weight: 700;
+      font-size: 70px;
+      line-height: 87px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .lp-card-date-meet {
+      font-family: 'Almoni Tzar', sans-serif;
+      font-weight: 400;
+      font-size: 40px;
+      line-height: 24px;
+      white-space: nowrap;
+    }
+
+    .lp-meets {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .lp-meets-row {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .lp-meet {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .lp-meet-date {
+      font-family: 'Almoni Tzar', sans-serif;
+      font-weight: 400;
+      font-size: 40px;
+      line-height: 1.2;
+      color: #ffffff;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .lp-meet-badge {
+      background: #41405d;
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .lp-meet-badge-text {
+      font-family: 'Almoni Tzar', sans-serif;
+      font-weight: 700;
+      font-size: 35px;
+      line-height: 1;
+      color: #ffffff;
+      text-align: center;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .lp-cta {
+      width: 100%;
+      height: 44px;
+      background: #ffffff;
+      border-radius: 1000px;
+      padding: 10px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      font-family: 'Almoni Tzar', sans-serif;
+      font-weight: 400;
+      font-size: 35px;
+      line-height: 1;
+      color: #000000;
+      text-align: center;
+      text-decoration: none;
+      transform-origin: center;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .lp-cta:hover {
+      transform: scale(1.06);
+      box-shadow: 0 12px 32px rgba(255,255,255,0.18);
+    }
+
+    .lp-cta:active {
+      transform: scale(1.02);
+    }
+
+    /* ───────────────────────────────
+       FOOTER LOGOS
+    ─────────────────────────────── */
+    .lp-footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lp-logos {
+      display: flex;
+      gap: 66.624px;
+      align-items: center;
+      width: 377.118px;
+      direction: ltr; /* UXTRA on left, DesignAI on right */
+    }
+
+    .lp-logo-uxtra {
+      width: 131.001px;
+      height: 37.61px;
+    }
+
+    .lp-logo-uxtra img,
+    .lp-logo-designai img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .lp-logo-designai {
+      width: 179.493px;
+      height: 47.029px;
+    }
+
+    /* ───────────────────────────────
+       RESPONSIVE
+    ─────────────────────────────── */
+    @media (max-width: 1100px) {
+      .lp-cards { padding: 0 40px; }
+    }
+
+    @media (max-width: 900px) {
+      .lp-frame {
+        padding: 80px 20px;
+        gap: 60px;
+      }
+      .lp-cards {
+        flex-direction: column;
+        padding: 0;
+        gap: 20px;
+      }
+      /* Mobile: מחזור 1 (last spots) on top, מחזור 2 (open) below */
+      .lp-cards .lp-card:nth-child(1) { order: 2; }
+      .lp-cards .lp-card:nth-child(2) { order: 1; }
+      .lp-card { padding: 32px; }
+      .lp-subtitle { font-size: 28px; width: 100%; }
+      .lp-logo { width: 100%; max-width: 480px; }
+      .lp-badge { width: 100%; max-width: 380px; }
+      .lp-badge-text { font-size: 32px; }
+    }
+
+    @media (max-width: 600px) {
+      .lp-frame {
+        padding: 56px 16px;
+        gap: 40px;
+      }
+      .lp-hero { gap: 16px; width: 100%; }
+
+      .lp-badge {
+        width: 100%;
+        max-width: 320px;
+        padding: 6px 12px;
+      }
+      .lp-badge-text { font-size: 22px; }
+
+      .lp-logo { width: 100%; max-width: 360px; }
+
+      .lp-subtitle { font-size: 40px; line-height: 1.15; }
+
+      .lp-card { padding: 20px; gap: 24px; }
+
+      .lp-card-header { gap: 16px; }
+
+      .lp-status { width: auto; padding-top: 8px; }
+      .lp-status-inner { padding: 4px 0; gap: 6px; }
+      .lp-status-text { font-size: 18px; }
+      .lp-status-dot { width: 7px; height: 7px; }
+
+      .lp-card-date { gap: 4px; }
+      .lp-card-date-big { font-size: 48px; line-height: 1; }
+      .lp-card-date-meet { font-size: 22px; line-height: 1.2; }
+
+      .lp-meets { gap: 12px; align-items: stretch; width: 100%; }
+      .lp-meets-row { gap: 12px; justify-content: flex-end; }
+      .lp-meet { gap: 6px; }
+      .lp-meet-date { font-size: 22px; }
+      .lp-meet-badge { padding: 3px 6px; }
+      .lp-meet-badge-text { font-size: 18px; }
+
+      .lp-cta { font-size: 22px; height: 40px; padding: 8px 24px; }
+
+      .lp-logos {
+        width: auto;
+        max-width: 100%;
+        gap: 28px;
+        justify-content: center;
+        align-items: center;
+      }
+      .lp-logo-uxtra { width: 92px; height: 26px; }
+      .lp-logo-designai { width: 126px; height: 33px; }
+    }
+
+    @media (max-width: 380px) {
+      .lp-card-date-big { font-size: 40px; }
+      .lp-meet-date { font-size: 18px; }
+      .lp-meet-badge-text { font-size: 15px; }
+      .lp-status-text { font-size: 15px; }
+      .lp-card-date-meet { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="lp-deco-layer" aria-hidden="true"></div>
+
+  <main class="lp-frame">
+
+    <!-- ═══════ HERO ═══════ -->
+    <section class="lp-hero">
+      <div class="lp-badge lp-fade" style="animation-delay: 0.05s, 1.45s;">
+        <span class="lp-badge-text">מכירה מיוחדת לכנס DesignAI!</span>
+      </div>
+
+      <img class="lp-logo lp-fade" src="assets/logo-d2c.png" alt="Design to Code" style="animation-delay: 0.25s;" />
+
+      <p class="lp-subtitle lp-fade" style="animation-delay: 0.55s;" data-typewriter="לאיזה מחזור לרשום אותך?">
+        <span class="lp-typewriter-text"></span><span class="lp-caret" aria-hidden="true"></span>
+      </p>
+    </section>
+
+    <!-- ═══════ CARDS ═══════ -->
+    <section class="lp-cards">
+
+      <!-- Card 1 — open registration (batch 2) -->
+      <article class="lp-card lp-fade" style="animation-delay: 0.85s;">
+        <header class="lp-card-header">
+          <div class="lp-status">
+            <div class="lp-status-inner">
+              <span class="lp-status-text">פתוח להרשמה</span>
+              <span class="lp-status-dot">
+                <img src="assets/ellipse-green.svg" alt="" />
+              </span>
+            </div>
+          </div>
+          <div class="lp-card-date">
+            <span class="lp-card-date-big">14.06</span>
+            <span class="lp-card-date-meet">מחזור 2</span>
+          </div>
+        </header>
+
+        <div class="lp-meets" data-cohort="2">
+          <div class="lp-meets-row">
+            <div class="lp-meet">
+              <span class="lp-meet-date">15.06</span>
+              <span class="lp-meet-badge"><span class="lp-meet-badge-text">מפגש 2</span></span>
+            </div>
+            <div class="lp-meet">
+              <span class="lp-meet-date">14.06</span>
+              <span class="lp-meet-badge"><span class="lp-meet-badge-text">מפגש 1</span></span>
+            </div>
+          </div>
+          <div class="lp-meets-row">
+            <div class="lp-meet">
+              <span class="lp-meet-date">17.06</span>
+              <span class="lp-meet-badge"><span class="lp-meet-badge-text">מפגש 4</span></span>
+            </div>
+            <div class="lp-meet">
+              <span class="lp-meet-date">16.06</span>
+              <span class="lp-meet-badge"><span class="lp-meet-badge-text">מפגש 3</span></span>
+            </div>
+          </div>
+        </div>
+
+        <a class="lp-cta" href="https://pay.grow.link/OTk1NDI~fea168614ce02c9c6b5e675533438410-MzM4NTIwNw" target="_blank" rel="noopener">תפסו מקום</a>
+      </article>
+
+      <!-- Card 2 — last spots (batch 1) -->
+      <article class="lp-card lp-fade" style="animation-delay: 1.0s;">
+        <header class="lp-card-header">
+          <div class="lp-status">
+            <div class="lp-status-inner">
+              <span class="lp-status-text">מקומות אחרונים</span>
+              <span class="lp-status-dot">
+                <img src="assets/ellipse-red.svg" alt="" />
+              </span>
+            </div>
+          </div>
+          <div class="lp-card-date">
+            <span class="lp-card-date-big">24.05</span>
+            <span class="lp-card-date-meet">מחזור 1</span>
+          </div>
+        </header>
+
+        <div class="lp-meets">
+          <div class="lp-meets-row">
+            <div class="lp-meet">
+              <span class="lp-meet-date">25.05</span>
+              <span class="lp-meet-badge"><span class="lp-meet-badge-text">מפגש 2</span></span>
+            </div>
+            <div class="lp-meet">
+              <span class="lp-meet-date">24.05</span>
+              <span class="lp-meet-badge"><span class="lp-meet-badge-text">מפגש 1</span></span>
+            </div>
+          </div>
+          <div class="lp-meets-row">
+            <div class="lp-meet">
+              <span class="lp-meet-date">27.05</span>
+              <span class="lp-meet-badge"><span class="lp-meet-badge-text">מפגש 4</span></span>
+            </div>
+            <div class="lp-meet">
+              <span class="lp-meet-date">26.05</span>
+              <span class="lp-meet-badge"><span class="lp-meet-badge-text">מפגש 3</span></span>
+            </div>
+          </div>
+        </div>
+
+        <a class="lp-cta" href="https://pay.grow.link/OTk1NDI~feb3a4145549afa5d1c91c925de46757-MzM4NTExNQ" target="_blank" rel="noopener">תפסו מקום</a>
+      </article>
+
+    </section>
+
+    <!-- ═══════ FOOTER ═══════ -->
+    <footer class="lp-footer lp-fade" style="animation-delay: 1.2s;">
+      <div class="lp-logos">
+        <div class="lp-logo-uxtra">
+          <img src="assets/uxtra-logo.svg" alt="UXTRA" />
+        </div>
+        <div class="lp-logo-designai">
+          <img src="assets/design-ai-logo.svg" alt="DesignAI" />
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    // ── Scatter "< >" decorations across the page background ──
+    (function () {
+      var layer = document.querySelector('.lp-deco-layer');
+      if (!layer) return;
+
+      var pageHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+      var pageWidth  = window.innerWidth;
+      var isMobile   = pageWidth < 700;
+      var count      = isMobile ? 12 : 22;
+
+      // Use a deterministic-feeling but varied PRNG so layout looks "random" but consistent on reload
+      function rand(min, max) { return min + Math.random() * (max - min); }
+
+      // Avoid the central column where the hero/cards live
+      var safeZoneTop    = 80;
+      var safeZoneBottom = pageHeight - 80;
+
+      for (var i = 0; i < count; i++) {
+        var el = document.createElement('span');
+        el.className = 'lp-deco';
+        el.textContent = '<>';
+
+        var size  = rand(20, isMobile ? 44 : 72);
+        var rot   = rand(-18, 18);
+        var top   = rand(safeZoneTop, safeZoneBottom);
+
+        // Bias toward edges: prefer left/right thirds, smaller chance for center
+        var bucket = Math.random();
+        var leftPct;
+        if (bucket < 0.45)      leftPct = rand(2, 18);   // left edge
+        else if (bucket < 0.90) leftPct = rand(82, 96);  // right edge
+        else                    leftPct = rand(40, 60);  // center (rare)
+
+        var opacity = rand(0.06, 0.18);
+        var delay   = rand(0, 6);
+
+        el.style.fontSize    = size + 'px';
+        el.style.top         = top + 'px';
+        el.style.left        = leftPct + '%';
+        el.style.opacity     = opacity.toFixed(2);
+        el.style.setProperty('--deco-rot', rot.toFixed(1) + 'deg');
+        el.style.transform   = 'rotate(' + rot.toFixed(1) + 'deg)';
+        el.style.animationDelay = delay.toFixed(1) + 's';
+
+        layer.appendChild(el);
+      }
+    })();
+
+    (function () {
+      var el = document.querySelector('[data-typewriter]');
+      if (!el) return;
+      var target = el.querySelector('.lp-typewriter-text');
+      var full = el.dataset.typewriter;
+      if (!target || !full) return;
+
+      // Respect reduced motion: just print the text.
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        target.textContent = full;
+        return;
+      }
+
+      // Match the lp-fade animation-delay (0.55s) + a small lead-in
+      var startDelay = 900;
+      var perChar = 70;       // ms between characters
+      var jitter = 50;        // randomized to feel human
+      var i = 0;
+
+      function type() {
+        if (i <= full.length) {
+          target.textContent = full.slice(0, i);
+          i++;
+          setTimeout(type, perChar + Math.random() * jitter);
+        }
+      }
+      setTimeout(type, startDelay);
+    })();
+  </script>
+
+</body>
+</html>
