@@ -4,36 +4,36 @@
 
 /* ── Fonts ── */
 @font-face {
-  font-family: 'Minecraft';
-  src: url('fonts/1_MinecraftRegular1.otf') format('opentype');
+  font-family: 'Ploni';
+  src: url('fonts/ploni-regular-aaa.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
-  font-family: 'Almoni';
-  src: url('fonts/Almoni DL AAA.ttf') format('truetype');
+  font-family: 'Ploni';
+  src: url('fonts/ploni-regular-aaa.otf') format('opentype');
   font-weight: 400;
 }
 @font-face {
-  font-family: 'Almoni';
-  src: url('fonts/almoni-dl-aaa-bold.otf') format('opentype');
+  font-family: 'Ploni';
+  src: url('fonts/ploni-demibold-aaa.otf') format('opentype');
   font-weight: 700;
 }
 
 /* ── CSS Custom Properties (Design Tokens) ── */
 :root {
   /* ─── Typography ─── */
-  --font-display: 'Minecraft', monospace;
-  --font-body: 'Almoni', sans-serif;
+  --font-display: 'Ploni', sans-serif;
+  --font-body: 'Ploni', sans-serif;
 
-  /* Font Sizes — Display (Minecraft) */
+  /* Font Sizes — Display (Ploni) */
   --text-display-xl: 124px;   /* Hero titles: "DESIGN", "CODE" */
   --text-display-lg: 80px;    /* Section titles */
   --text-display-md: 72px;    /* Sub-section titles */
   --text-display-sm: 56px;    /* Feature titles */
   --text-display-xs: 40px;    /* Step numbers, names */
 
-  /* Font Sizes — Body (Almoni) */
+  /* Font Sizes — Body (Ploni) */
   --text-body-xl: 44px;       /* Pain points, benefit lists */
   --text-body-lg: 32px;       /* Card titles, subtitles */
   --text-body-md: 28px;       /* Card descriptions, bullet items */
@@ -134,7 +134,7 @@
    TYPOGRAPHY UTILITIES
    ═══════════════════════════════════════════════════════════════ */
 
-/* Display headings (Minecraft) */
+/* Display headings (Ploni) */
 .display-xl {
   font-family: var(--font-display);
   font-size: var(--text-display-xl);
@@ -180,7 +180,7 @@
   color: var(--color-text-primary);
 }
 
-/* Body text (Almoni) */
+/* Body text (Ploni) */
 .body-xl {
   font-family: var(--font-body);
   font-size: var(--text-body-xl);

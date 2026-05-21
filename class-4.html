@@ -210,26 +210,35 @@
     .pill-tag--pink   { background: rgba(255,43,155,0.18); color: var(--color-accent-pink); }
 
     /* ═══════════════════════════════════════
-       SLIDE — Main task → Sub-agents (split diagram)
+       SLIDE — Main task → Sub-agents (project example)
+       Two-column layout: agents stack on the left,
+       floating "on-demand" resources card on the right.
     ═══════════════════════════════════════ */
     .split-stage {
       position: absolute;
       top: 280px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 1500px;
+      left: 80px;
+      right: 80px;
+      bottom: 200px;
+      display: grid;
+      grid-template-columns: 1fr 460px;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .split-agents {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 48px;
+      gap: 36px;
     }
 
     .split-main {
-      width: 560px;
+      width: 620px;
       background: linear-gradient(135deg, #1c2914 0%, var(--color-bg-card-dark) 70%);
       border: 2px solid var(--color-accent-green);
       border-radius: var(--radius-lg);
-      padding: 32px 40px;
+      padding: 28px 36px;
       text-align: center;
       box-shadow: 0 0 60px rgba(123,237,82,0.2);
     }
@@ -248,19 +257,17 @@
     }
     .split-main__title {
       font-family: var(--font-display);
-      font-size: 36px;
+      font-size: 34px;
       text-transform: uppercase;
       letter-spacing: var(--tracking-tighter);
       color: var(--color-text-primary);
       line-height: 1.1;
     }
 
-    /* SVG arrows fanning out */
     .split-arrows {
       position: relative;
-      width: 1300px;
-      height: 80px;
-      margin-top: -16px;
+      width: 720px;
+      height: 60px;
       pointer-events: none;
     }
     .split-arrows svg { width: 100%; height: 100%; display: block; }
@@ -268,16 +275,17 @@
     .split-subs {
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 28px;
+      max-width: 920px;
     }
 
     .sub-card {
       background: var(--color-bg-card-dark);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: var(--radius-lg);
-      padding: 24px 28px;
-      text-align: center;
+      padding: 24px 26px;
+      text-align: left;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -288,7 +296,7 @@
       font-size: 12px;
       letter-spacing: var(--tracking-wide);
       text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
+      color: var(--color-accent-green);
     }
 
     .sub-card__title {
@@ -296,21 +304,151 @@
       font-size: 24px;
       font-weight: 700;
       color: var(--color-text-primary);
-      line-height: 1.25;
+      line-height: 1.2;
     }
 
     .sub-card__desc {
       font-family: var(--font-body);
-      font-size: 18px;
+      font-size: 17px;
       color: var(--color-text-primary);
       opacity: 0.65;
       line-height: 1.4;
     }
 
-    /* Caption below split */
+    .sub-card__skills-label {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--color-accent-green);
+      margin-top: 6px;
+    }
+
+    .sub-card__chips {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .sub-card__chips li {
+      font-family: var(--font-body);
+      font-size: 15px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(255,255,255,0.06);
+      color: var(--color-text-primary);
+      opacity: 0.85;
+    }
+    .sub-card__chips--skill li {
+      font-family: 'Fira Code', monospace;
+      background: #000;
+      color: var(--color-accent-green);
+      opacity: 1;
+      font-size: 14px;
+      padding: 4px 10px;
+      border-radius: 5px;
+    }
+
+    /* Floating on-demand resources card */
+    .resources-floater {
+      position: relative;
+      background: linear-gradient(135deg, #2a2412 0%, var(--color-bg-card-dark) 70%);
+      border: 1px solid rgba(255,201,55,0.4);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 80px;
+      box-shadow: 0 12px 50px rgba(0,0,0,0.5), 0 0 60px rgba(255,201,55,0.08);
+      animation: floatY 4s ease-in-out infinite;
+    }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .resources-floater__badge {
+      position: absolute;
+      top: -16px;
+      left: 24px;
+      background: var(--color-accent-yellow);
+      color: var(--color-text-on-white);
+      font-family: var(--font-display);
+      font-size: 16px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      transform: rotate(-3deg);
+      box-shadow: 0 6px 18px rgba(255,201,55,0.3);
+    }
+
+    .resources-floater__tag {
+      font-family: var(--font-display);
+      font-size: 12px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--color-accent-yellow);
+      margin-top: 10px;
+    }
+
+    .resources-floater__title {
+      font-family: var(--font-body);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1.15;
+    }
+
+    .resources-floater__desc {
+      font-family: var(--font-body);
+      font-size: 17px;
+      color: var(--color-text-primary);
+      opacity: 0.7;
+      line-height: 1.4;
+    }
+    .resources-floater__desc strong {
+      color: var(--color-accent-yellow);
+      opacity: 1;
+      font-weight: 700;
+    }
+
+    .resources-floater__list {
+      list-style: none;
+      padding: 0;
+      margin: 4px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .resources-floater__list li {
+      font-family: var(--font-body);
+      font-size: 16px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(255,201,55,0.14);
+      color: var(--color-accent-yellow);
+    }
+
+    /* Dashed connector from agents toward resources */
+    .resources-connector {
+      position: absolute;
+      top: 280px;
+      bottom: 200px;
+      left: 0;
+      right: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .resources-connector svg { width: 100%; height: 100%; }
+
     .split-caption {
       position: absolute;
-      bottom: 120px;
+      bottom: 90px;
       left: 50%;
       transform: translateX(-50%);
       width: 1300px;
@@ -324,7 +462,295 @@
     .split-caption strong { color: var(--color-accent-green); opacity: 1; font-weight: 700; }
 
     /* ═══════════════════════════════════════
-       SLIDE — How to build an agent (4 numbered step cards)
+       SLIDE — Two sub-agents in detail
+    ═══════════════════════════════════════ */
+    .pair-stage {
+      position: absolute;
+      top: 320px;
+      bottom: 240px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1700px;
+      display: grid;
+      grid-template-columns: 1fr 90px 1fr;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .agent-card {
+      background: var(--color-bg-card-dark);
+      border: 1px solid rgba(123, 237, 82, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow: hidden;
+    }
+
+    .agent-card__header { display: flex; align-items: center; gap: 14px; }
+
+    .agent-card__avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: rgba(123, 237, 82, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 20px;
+      color: var(--color-accent-green);
+      flex-shrink: 0;
+    }
+
+    .agent-card__id {
+      font-family: var(--font-display);
+      font-size: 12px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      line-height: 1;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .agent-card__title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-tighter);
+      color: var(--color-text-primary);
+      line-height: 1;
+    }
+
+    .agent-card__section {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .agent-card__section-label {
+      font-family: var(--font-display);
+      font-size: 12px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--color-accent-green);
+    }
+
+    .agent-card__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .agent-card__list li {
+      font-family: var(--font-body);
+      font-size: 18px;
+      color: var(--color-text-primary);
+      opacity: 0.85;
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.35;
+    }
+    .agent-card__list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--color-accent-green);
+      font-size: 16px;
+    }
+
+    .agent-card__skill {
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      background: #000;
+      color: #7bed52;
+      padding: 3px 9px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    /* connector between the pair */
+    .pair-connector {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pair-connector svg { width: 100%; height: 50px; }
+    .pair-connector__label {
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      background: var(--color-bg-primary);
+      padding: 4px 10px;
+    }
+
+    /* Knowledge base bar at bottom */
+    .pair-resources {
+      position: absolute;
+      bottom: 110px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1500px;
+      background: var(--color-bg-card-dark);
+      border: 1px solid rgba(255,201,55,0.3);
+      border-radius: var(--radius-lg);
+      padding: 20px 30px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .pair-resources__label {
+      font-family: var(--font-display);
+      font-size: 13px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--color-accent-yellow);
+      flex-shrink: 0;
+    }
+    .pair-resources__divider { width: 1px; align-self: stretch; background: rgba(255,255,255,0.12); }
+    .pair-resources__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      flex: 1;
+    }
+    .pair-resources__chips span {
+      font-family: var(--font-body);
+      font-size: 17px;
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(255,201,55,0.14);
+      color: var(--color-accent-yellow);
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE — Levels of agent autonomy
+    ═══════════════════════════════════════ */
+    .autonomy-bar {
+      position: absolute;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1640px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-display);
+      font-size: 13px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .autonomy-bar__line {
+      flex: 1;
+      height: 2px;
+      margin: 0 18px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.25), var(--color-accent-green));
+    }
+    .autonomy-bar__end { color: var(--color-accent-green); }
+
+    .levels-grid {
+      position: absolute;
+      top: 340px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1640px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .level-card {
+      position: relative;
+      background: var(--color-bg-card-dark);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 28px 28px 28px 28px;
+      min-height: 460px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: transform var(--transition-fast), border-color var(--transition-fast);
+    }
+    .level-card:hover { transform: translateY(-4px); }
+
+    .level-card__num {
+      font-family: var(--font-display);
+      font-size: 64px;
+      line-height: 1;
+      color: var(--color-text-primary);
+      letter-spacing: var(--tracking-tightest);
+    }
+
+    .level-card__tag {
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--color-accent-green);
+    }
+
+    .level-card__title {
+      font-family: var(--font-body);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1.2;
+    }
+
+    .level-card__desc {
+      font-family: var(--font-body);
+      font-size: 19px;
+      color: var(--color-text-primary);
+      opacity: 0.7;
+      line-height: 1.45;
+      flex: 1;
+    }
+
+    .level-card__bar {
+      display: flex;
+      gap: 4px;
+      margin-top: 6px;
+    }
+    .level-card__bar i {
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.08);
+    }
+    .level-card__bar i.on { background: var(--color-accent-green); }
+
+    .level-card--01 { border-color: rgba(255,255,255,0.12); }
+    .level-card--04 {
+      border-color: rgba(123,237,82,0.5);
+      background: linear-gradient(135deg, #15201d 0%, var(--color-bg-card-dark) 70%);
+      box-shadow: 0 0 60px rgba(123,237,82,0.15);
+    }
+    .level-card--04 .level-card__num { color: var(--color-accent-green); }
+
+    .level-card__demo {
+      font-family: 'Fira Code', monospace;
+      font-size: 16px;
+      background: #000;
+      color: #7bed52;
+      padding: 8px 12px;
+      border-radius: 6px;
+      line-height: 1.4;
+    }
+    .level-card__demo .accent { color: var(--color-accent-yellow); }
+
+    /* ═══════════════════════════════════════
+       SLIDE — How to build (4 numbered step cards)
     ═══════════════════════════════════════ */
     .steps-grid {
       position: absolute;
@@ -527,7 +953,7 @@
     </div>
   </div>
 
-  <!-- ═══════ SLIDE 3 — Main task → Sub-agents ═══════ -->
+  <!-- ═══════ SLIDE 3 — Main task → Sub-agents (project example) ═══════ -->
   <div class="slide" data-slide="2">
     <div class="slide-inner">
       <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
@@ -536,37 +962,72 @@
         <h2>Main task → sub-agents</h2>
       </div>
 
+      <!-- Dashed connector from sub-agents to floating resources -->
+      <div class="resources-connector">
+        <svg viewBox="0 0 1760 600" preserveAspectRatio="none">
+          <path d="M620 320 Q 1000 280 1380 220" stroke="rgba(255,201,55,0.4)" stroke-width="2" stroke-dasharray="6 8" fill="none" />
+          <path d="M1140 320 Q 1280 270 1380 220" stroke="rgba(255,201,55,0.4)" stroke-width="2" stroke-dasharray="6 8" fill="none" />
+        </svg>
+      </div>
+
       <div class="split-stage">
-        <div class="split-main">
-          <span class="split-main__tag">Main agent</span>
-          <div class="split-main__title">Ship the weekly newsletter</div>
+
+        <!-- LEFT: Main + 2 sub-agents -->
+        <div class="split-agents">
+          <div class="split-main">
+            <span class="split-main__tag">Main agent</span>
+            <div class="split-main__title">Design a new product feature</div>
+          </div>
+
+          <div class="split-arrows">
+            <svg viewBox="0 0 720 60" preserveAspectRatio="none">
+              <path d="M360 0 L180 60" stroke="rgba(123,237,82,0.5)" stroke-width="2" fill="none" />
+              <path d="M360 0 L540 60" stroke="rgba(123,237,82,0.5)" stroke-width="2" fill="none" />
+            </svg>
+          </div>
+
+          <div class="split-subs">
+            <div class="sub-card">
+              <span class="sub-card__tag">Sub-agent · 01</span>
+              <div class="sub-card__title">PM Agent</div>
+              <div class="sub-card__desc">Defines the problem, writes the PRD, and locks the success criteria.</div>
+              <span class="sub-card__skills-label">Skills it uses</span>
+              <ul class="sub-card__chips sub-card__chips--skill">
+                <li>/write-prd</li>
+                <li>/prioritize-features</li>
+                <li>/define-success</li>
+              </ul>
+            </div>
+            <div class="sub-card">
+              <span class="sub-card__tag">Sub-agent · 02</span>
+              <div class="sub-card__title">UI Designer Agent</div>
+              <div class="sub-card__desc">Turns the PRD into wireframes, screens, and ships them in the design system.</div>
+              <span class="sub-card__skills-label">Skills it uses</span>
+              <ul class="sub-card__chips sub-card__chips--skill">
+                <li>/figma-generate-design</li>
+                <li>/apply-design-system</li>
+                <li>/audit-design-system</li>
+              </ul>
+            </div>
+          </div>
         </div>
 
-        <div class="split-arrows">
-          <svg viewBox="0 0 1300 80" preserveAspectRatio="none">
-            <path d="M650 0 L240 80" stroke="rgba(123,237,82,0.5)" stroke-width="2" fill="none" />
-            <path d="M650 0 L650 80" stroke="rgba(123,237,82,0.5)" stroke-width="2" fill="none" />
-            <path d="M650 0 L1060 80" stroke="rgba(123,237,82,0.5)" stroke-width="2" fill="none" />
-          </svg>
+        <!-- RIGHT: Floating resources, on demand -->
+        <div class="resources-floater">
+          <span class="resources-floater__badge">On demand</span>
+          <span class="resources-floater__tag">Resource</span>
+          <div class="resources-floater__title">Knowledge base</div>
+          <div class="resources-floater__desc">
+            Sub-agents pull from this shared truth <strong>only when they need it</strong> — so the PRD and the screens stay aligned without loading everything up front.
+          </div>
+          <ul class="resources-floater__list">
+            <li>Persona</li>
+            <li>Pains</li>
+            <li>Jobs to be done</li>
+            <li>Past decisions</li>
+          </ul>
         </div>
 
-        <div class="split-subs">
-          <div class="sub-card">
-            <span class="sub-card__tag">Sub-agent · 01</span>
-            <div class="sub-card__title">Read the brand voice</div>
-            <div class="sub-card__desc">Pull tone, do/don'ts, and past examples from the knowledge base.</div>
-          </div>
-          <div class="sub-card">
-            <span class="sub-card__tag">Sub-agent · 02</span>
-            <div class="sub-card__title">Draft the issue</div>
-            <div class="sub-card__desc">Use the newsletter-draft skill on this week's raw material.</div>
-          </div>
-          <div class="sub-card">
-            <span class="sub-card__tag">Sub-agent · 03</span>
-            <div class="sub-card__title">Generate subject lines</div>
-            <div class="sub-card__desc">Run the subject-line skill and rank the candidates.</div>
-          </div>
-        </div>
       </div>
 
       <div class="split-caption">
@@ -575,8 +1036,71 @@
     </div>
   </div>
 
-  <!-- ═══════ SLIDE 4 — How to build an agent (4 steps) ═══════ -->
-  <div class="slide" data-slide="3">
+  <!-- ═══════ SLIDE 4 — Levels of agent autonomy ═══════ -->
+  <div class="slide" data-slide="4">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="slide-label">Autonomy</div>
+      <div class="slide-heading">
+        <h2>Agent autonomy</h2>
+        <p>From hands-on to hands-off — and every step in between</p>
+      </div>
+
+      <div class="levels-grid">
+
+        <div class="level-card level-card--01">
+          <div class="level-card__num">01</div>
+          <span class="level-card__tag">Manual</span>
+          <h3 class="level-card__title">You ask, the agent does</h3>
+          <p class="level-card__desc">You stay in the chat. Every step is a request — the agent just executes what you tell it to do, one shot at a time.</p>
+          <div class="level-card__bar">
+            <i class="on"></i><i></i><i></i><i></i>
+          </div>
+        </div>
+
+        <div class="level-card level-card--02">
+          <div class="level-card__num">02</div>
+          <span class="level-card__tag">Connected</span>
+          <h3 class="level-card__title">You ask — across tools</h3>
+          <p class="level-card__desc">Same flow, but now the agent can reach into other apps (Figma, Slack, Notion, GitHub…) and act there on your behalf.</p>
+          <div class="level-card__bar">
+            <i class="on"></i><i class="on"></i><i></i><i></i>
+          </div>
+        </div>
+
+        <div class="level-card level-card--03">
+          <div class="level-card__num">03</div>
+          <span class="level-card__tag">Scheduled</span>
+          <h3 class="level-card__title">You set a routine</h3>
+          <p class="level-card__desc">You define when the agent should run — every Monday, after each PR, at 9am — and it works alone on that cadence.</p>
+          <div class="level-card__bar">
+            <i class="on"></i><i class="on"></i><i class="on"></i><i></i>
+          </div>
+        </div>
+
+        <div class="level-card level-card--04">
+          <div class="level-card__num">04</div>
+          <span class="level-card__tag">Autonomous</span>
+          <h3 class="level-card__title">It decides on its own</h3>
+          <p class="level-card__desc">The agent watches for conditions and acts when they're met — no schedule, no chat, no nudge.</p>
+          <div class="level-card__demo">if <span class="accent">X</span> → then <span class="accent">Y</span></div>
+          <div class="level-card__bar">
+            <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="autonomy-bar">
+        <span>Hands-on</span>
+        <span class="autonomy-bar__line"></span>
+        <span class="autonomy-bar__end">Hands-off</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 5 — How to build an agent (4 steps) ═══════ -->
+  <div class="slide" data-slide="5">
     <div class="slide-inner">
       <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
       <div class="slide-label">Build</div>
@@ -627,7 +1151,7 @@
   </a>
   <button class="nav-arrow" id="prev-btn" disabled>&#8592;</button>
   <div class="nav-dots" id="nav-dots"></div>
-  <span class="nav-counter" id="nav-counter">1 / 4</span>
+  <span class="nav-counter" id="nav-counter">1 / 5</span>
   <button class="nav-arrow" id="next-btn">&#8594;</button>
 </nav>
 

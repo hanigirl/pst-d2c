@@ -562,6 +562,151 @@
     .message--pink .message__title { color: var(--color-accent-pink); }
 
     /* ═══════════════════════════════════════
+       SLIDE — Skills are an open standard
+    ═══════════════════════════════════════ */
+    .disclosure {
+      position: absolute;
+      top: 300px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1640px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .disclosure-stage {
+      position: relative;
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .disclosure-stage + .disclosure-stage {
+      border-left: 1px dashed rgba(255,255,255,0.18);
+    }
+
+    .disclosure-stage__num {
+      font-family: var(--font-display);
+      font-size: 56px;
+      line-height: 1;
+      color: var(--color-accent-green);
+      letter-spacing: var(--tracking-tightest);
+    }
+
+    .disclosure-stage__tag {
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .disclosure-stage__title {
+      font-family: var(--font-body);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1.2;
+    }
+
+    .disclosure-stage__desc {
+      font-family: var(--font-body);
+      font-size: 19px;
+      color: var(--color-text-primary);
+      opacity: 0.7;
+      line-height: 1.4;
+    }
+
+    /* ── Supporting tools strip ── */
+    .tools-section {
+      position: absolute;
+      top: 600px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1640px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .tools-section__label {
+      font-family: var(--font-body);
+      font-size: var(--text-body-xs);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .tools-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      max-width: 1500px;
+    }
+
+    .tool-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 22px;
+      border-radius: var(--radius-pill);
+      background: var(--color-bg-card-dark);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-family: var(--font-body);
+      font-size: 19px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      transition: border-color var(--transition-fast), transform var(--transition-fast);
+    }
+    .tool-chip:hover { border-color: rgba(123,237,82,0.4); transform: translateY(-2px); }
+
+    .tool-chip__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-accent-green);
+      flex-shrink: 0;
+    }
+
+    .tool-chip--more {
+      background: transparent;
+      border-style: dashed;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ── CTA link box at bottom ── */
+    .standard-cta {
+      position: absolute;
+      bottom: 110px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 28px;
+      background: #000;
+      border: 1px solid rgba(123,237,82,0.4);
+      border-radius: var(--radius-lg);
+      font-family: 'Fira Code', monospace;
+      font-size: 24px;
+      color: var(--color-accent-green);
+      box-shadow: 0 0 40px rgba(123,237,82,0.12);
+    }
+    .standard-cta__arrow { color: var(--color-accent-green); }
+    .standard-cta__hint {
+      font-family: var(--font-body);
+      font-size: 14px;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* ═══════════════════════════════════════
        FIGMA SKILLS GRID
     ═══════════════════════════════════════ */
     .skills-page-dot {
@@ -952,7 +1097,65 @@
     </div>
   </div>
 
-  <!-- ═══════ SLIDE 9 — Figma Skills (page 1/2) ═══════ -->
+  <!-- ═══════ SLIDE 9 — Skills are an open standard ═══════ -->
+  <div class="slide" data-slide="open-std">
+    <div class="slide-inner">
+      <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
+      <div class="slide-label">Open Standard</div>
+      <div class="slide-heading">
+        <h2>Skills are an open standard</h2>
+        <p>Anthropic-originated · adopted across 38+ agent tools</p>
+      </div>
+
+      <div class="disclosure">
+        <div class="disclosure-stage">
+          <div class="disclosure-stage__num">01</div>
+          <span class="disclosure-stage__tag">Discovery</span>
+          <h3 class="disclosure-stage__title">Agent scans</h3>
+          <p class="disclosure-stage__desc">At startup the agent loads only the <strong>name and description</strong> of every skill — just enough to know when each might be relevant.</p>
+        </div>
+
+        <div class="disclosure-stage">
+          <div class="disclosure-stage__num">02</div>
+          <span class="disclosure-stage__tag">Activation</span>
+          <h3 class="disclosure-stage__title">Match → load</h3>
+          <p class="disclosure-stage__desc">When a task matches a skill, the agent reads the <strong>full SKILL.md</strong> into context and switches mode.</p>
+        </div>
+
+        <div class="disclosure-stage">
+          <div class="disclosure-stage__num">03</div>
+          <span class="disclosure-stage__tag">Execution</span>
+          <h3 class="disclosure-stage__title">Run + pull</h3>
+          <p class="disclosure-stage__desc">The agent follows the steps and <strong>pulls bundled scripts, references, or assets</strong> only as needed.</p>
+        </div>
+      </div>
+
+      <div class="tools-section">
+        <span class="tools-section__label">Supported by</span>
+        <div class="tools-grid">
+          <span class="tool-chip"><span class="tool-chip__dot"></span>Claude Code</span>
+          <span class="tool-chip"><span class="tool-chip__dot"></span>Cursor</span>
+          <span class="tool-chip"><span class="tool-chip__dot"></span>GitHub Copilot</span>
+          <span class="tool-chip"><span class="tool-chip__dot"></span>OpenAI Codex</span>
+          <span class="tool-chip"><span class="tool-chip__dot"></span>VS Code</span>
+          <span class="tool-chip"><span class="tool-chip__dot"></span>Gemini CLI</span>
+          <span class="tool-chip"><span class="tool-chip__dot"></span>OpenHands</span>
+          <span class="tool-chip"><span class="tool-chip__dot"></span>Goose</span>
+          <span class="tool-chip"><span class="tool-chip__dot"></span>Letta</span>
+          <span class="tool-chip"><span class="tool-chip__dot"></span>Firebender</span>
+          <span class="tool-chip tool-chip--more">+ 28 more</span>
+        </div>
+      </div>
+
+      <div class="standard-cta">
+        <span class="standard-cta__hint">Read the spec</span>
+        <span class="standard-cta__arrow">→</span>
+        agentskills.io
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SLIDE 10 — Figma Skills (page 1/2) ═══════ -->
   <div class="slide" data-slide="7">
     <div class="slide-inner">
       <div class="grid-bg"><img src="assets/grid.svg" alt="" /></div>
@@ -1136,7 +1339,7 @@
   </a>
   <button class="nav-arrow" id="prev-btn" disabled>&#8592;</button>
   <div class="nav-dots" id="nav-dots"></div>
-  <span class="nav-counter" id="nav-counter">1 / 10</span>
+  <span class="nav-counter" id="nav-counter">1 / 11</span>
   <button class="nav-arrow" id="next-btn">&#8594;</button>
 </nav>
 
