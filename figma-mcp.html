@@ -1229,6 +1229,82 @@
       color: #f8fcfd;
       letter-spacing: -0.2px;
     }
+
+    /* ═══════════════════════════════════════
+       "Let's see it in action" — mirrors slide 25 of the-shift.html
+       (hero-template layout: logo + Minecraft title + steps)
+    ═══════════════════════════════════════ */
+    @font-face {
+      font-family: 'MinecraftRegular';
+      src: url('https://fonts.cdnfonts.com/s/25041/1_MinecraftRegular1.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+    }
+    .s13-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(128deg, #000 38.5%, #06150f 97.6%);
+    }
+    .hero-template {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      z-index: 2;
+    }
+    .hero-template-shape {
+      width: 210px;
+      height: 210px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-template-shape img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .hero-template-title {
+      font-family: 'MinecraftRegular', monospace;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 48px;
+      line-height: 1;
+      color: #fff;
+      text-transform: capitalize;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .hero-template-steps {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      list-style: none;
+      text-align: center;
+    }
+    .hero-template-steps li {
+      font-family: 'Inter', 'Ploni', sans-serif;
+      font-weight: 400;
+      font-size: 26px;
+      color: #b7b7b7;
+      letter-spacing: -0.3px;
+      line-height: 1.3;
+    }
+    .hero-template-steps a {
+      color: #7bed52;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      transition: color 0.2s;
+    }
+    .hero-template-steps a:hover {
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -1704,6 +1780,22 @@
     </div>
   </div>
 
+  <!-- ═══════ SLIDE 14b — Let's see it in action (mirrors slide 25 of the-shift.html) ═══════ -->
+  <div class="slide" data-slide="see-in-action">
+    <div class="slide-inner">
+      <div class="s13-bg"></div>
+      <div class="hero-template">
+        <div class="hero-template-shape">
+          <img src="assets/logo-action.png" alt="" />
+        </div>
+        <div class="hero-template-title">let's see it in action</div>
+        <ol class="hero-template-steps">
+          <li>Github demo and <a href="https://www.notion.so/e9514bc16d96827d8002015406d80d6e?v=fc014bc16d9683d3869588dda3a89e5c&source=copy_link" target="_blank" rel="noopener">Practice</a></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══════ SLIDE 1 — The Bridge ═══════ -->
   <div class="slide" data-slide="0">
     <div class="slide-inner">
@@ -1935,6 +2027,22 @@
       <div style="position: absolute; top: 300px; bottom: 80px; left: 160px; right: 160px; display: flex; gap: 48px; align-items: center; justify-content: center;">
         <img src="assets/figma-ds.png" alt="Figma design system" style="height: 100%; width: auto; object-fit: contain; display: block;" />
         <img src="assets/code-ds.png" alt="Code design system" style="height: 100%; width: auto; object-fit: contain; display: block;" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ FINAL SLIDE — Let's practice (mirrors slide 35 of the-shift.html) ═══════ -->
+  <div class="slide" data-slide="practice">
+    <div class="slide-inner">
+      <div class="s13-bg"></div>
+      <div class="hero-template">
+        <div class="hero-template-shape">
+          <img src="assets/logo-action.png" alt="" />
+        </div>
+        <div class="hero-template-title">let's practice</div>
+        <ol class="hero-template-steps">
+          <li>This is our tasks <a href="https://www.notion.so/e9514bc16d96827d8002015406d80d6e?v=fc014bc16d9683d3869588dda3a89e5c&source=copy_link" target="_blank" rel="noopener">Kanban board</a></li>
+        </ol>
       </div>
     </div>
   </div>
