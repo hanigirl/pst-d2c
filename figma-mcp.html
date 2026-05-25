@@ -1015,8 +1015,12 @@
     }
     .gflow-label--right .gflow-btn-stack { left: auto; right: 0; align-items: flex-end; }
     .gflow-btn-stack--enter > .gflow-btn { opacity: 0; transform: translateY(6px); }
-    .slide.active .gflow-btn-stack--enter > .gflow-btn:nth-child(2) { animation: gbtn-in 0.35s 0.3s ease-out forwards; }
-    .slide.active .gflow-btn-stack--enter > .gflow-btn:nth-child(1) { animation: gbtn-in 0.35s 0.8s ease-out forwards; }
+    .slide.active .gflow-btn-stack--enter > .gflow-btn:nth-child(3) { animation: gbtn-in 0.35s 0.3s ease-out forwards; }
+    .slide.active .gflow-btn-stack--enter > .gflow-btn:nth-child(2) { animation: gbtn-in 0.35s 0.8s ease-out forwards; }
+    .slide.active .gflow-btn-stack--enter > .gflow-btn:nth-child(1) { animation: gbtn-in 0.35s 1.3s ease-out forwards; }
+
+    /* Green PR button — to call out the pull-request step */
+    .gflow-btn.gflow-btn--pr { background: #7bed52; color: #0A0E14; }
     @keyframes gbtn-in {
       from { opacity: 0; transform: translateY(6px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -1495,6 +1499,7 @@
         <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
         <div class="gflow-label" style="left: 945px; top: 260px; color: #ffc937;">
           <div class="gflow-btn-stack gflow-btn-stack--enter">
+            <button type="button" class="gflow-btn gflow-btn--pr">pull request</button>
             <button type="button" class="gflow-btn">push</button>
             <button type="button" class="gflow-btn">commit</button>
           </div>
@@ -1521,6 +1526,7 @@
         <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
         <div class="gflow-label" style="left: 945px; top: 260px; color: #ffc937;">
           <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn gflow-btn--pr">pull request</button>
             <button type="button" class="gflow-btn">push</button>
             <button type="button" class="gflow-btn">commit</button>
           </div>
@@ -1550,6 +1556,7 @@
         <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
         <div class="gflow-label" style="left: 945px; top: 260px; color: #ffc937;">
           <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn gflow-btn--pr">pull request</button>
             <button type="button" class="gflow-btn">push</button>
             <button type="button" class="gflow-btn">commit</button>
           </div>
@@ -1557,6 +1564,7 @@
         </div>
         <div class="gflow-label" style="left: 1085px; top: 360px; color: #ff2b9b;">
           <div class="gflow-btn-stack gflow-btn-stack--enter">
+            <button type="button" class="gflow-btn gflow-btn--pr">pull request</button>
             <button type="button" class="gflow-btn">push</button>
             <button type="button" class="gflow-btn">commit</button>
           </div>
@@ -1585,6 +1593,7 @@
         <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
         <div class="gflow-label" style="left: 945px; top: 260px; color: #ffc937;">
           <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn gflow-btn--pr">pull request</button>
             <button type="button" class="gflow-btn">push</button>
             <button type="button" class="gflow-btn">commit</button>
           </div>
@@ -1592,6 +1601,7 @@
         </div>
         <div class="gflow-label" style="left: 1085px; top: 360px; color: #ff2b9b;">
           <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn gflow-btn--pr">pull request</button>
             <button type="button" class="gflow-btn">push</button>
             <button type="button" class="gflow-btn">commit</button>
           </div>
@@ -1623,6 +1633,7 @@
         <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
         <div class="gflow-label" style="left: 945px; top: 260px; color: #ffc937;">
           <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn gflow-btn--pr">pull request</button>
             <button type="button" class="gflow-btn">push</button>
             <button type="button" class="gflow-btn">commit</button>
           </div>
@@ -1630,6 +1641,7 @@
         </div>
         <div class="gflow-label" style="left: 1085px; top: 360px; color: #ff2b9b;">
           <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn gflow-btn--pr">pull request</button>
             <button type="button" class="gflow-btn">push</button>
             <button type="button" class="gflow-btn">commit</button>
           </div>
@@ -1637,6 +1649,7 @@
         </div>
         <div class="gflow-label gflow-label--right" style="right: 945px; top: 460px; color: #5dadec;">
           <div class="gflow-btn-stack gflow-btn-stack--enter">
+            <button type="button" class="gflow-btn gflow-btn--pr">pull request</button>
             <button type="button" class="gflow-btn">push</button>
             <button type="button" class="gflow-btn">commit</button>
           </div>
@@ -1671,6 +1684,7 @@
         <div class="gflow-main-initial" style="left: 630px; top: 90px;">initial commit</div>
         <div class="gflow-label gmerge-branch-label gmerge-b1" style="left: 945px; top: 260px; color: #ffc937;">
           <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn gflow-btn--pr">pull request</button>
             <button type="button" class="gflow-btn">push</button>
             <button type="button" class="gflow-btn">commit</button>
           </div>
@@ -1678,6 +1692,7 @@
         </div>
         <div class="gflow-label gmerge-branch-label gmerge-b2" style="left: 1085px; top: 360px; color: #ff2b9b;">
           <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn gflow-btn--pr">pull request</button>
             <button type="button" class="gflow-btn">push</button>
             <button type="button" class="gflow-btn">commit</button>
           </div>
@@ -1685,6 +1700,7 @@
         </div>
         <div class="gflow-label gflow-label--right gmerge-branch-label gmerge-b3" style="right: 945px; top: 460px; color: #5dadec;">
           <div class="gflow-btn-stack">
+            <button type="button" class="gflow-btn gflow-btn--pr">pull request</button>
             <button type="button" class="gflow-btn">push</button>
             <button type="button" class="gflow-btn">commit</button>
           </div>
@@ -1769,12 +1785,11 @@
 
         <button type="button" class="gpr-pr-pill" onclick="document.getElementById('gpr-main-line').classList.toggle('pushing')">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="18" cy="18" r="3" />
-            <circle cx="6" cy="6" r="3" />
-            <path d="M13 6h3a2 2 0 0 1 2 2v7" />
-            <line x1="6" y1="9" x2="6" y2="21" />
+            <path d="M12 3v12" />
+            <path d="m6 9 6 6 6-6" />
+            <path d="M5 21h14" />
           </svg>
-          pull request
+          git pull
         </button>
       </div>
     </div>
